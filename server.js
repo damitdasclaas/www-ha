@@ -6,7 +6,7 @@ const port = 3000;
 
 (async () => {
   const db = await sqlite.open({
-    filename: "./data/database.db",
+    filename: "./data/database.sqlite",
     driver: sqlite3.Database,
   });
   const config = { port, db };

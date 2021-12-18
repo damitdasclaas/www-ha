@@ -1,28 +1,16 @@
 //@ts-check
 import * as sqlite from "sqlite";
 import Debug from "debug";
-const debug = Debug("bookmark:model");
-
-/**x
- * A bookmark
- * @typedef {{
- * "id": number,
- * "uri": string,
- * "title": string,
- * "description": string,
- * "tags": string,
- * "date_created": string,
- *  }} bookmark
- */
+const debug = Debug("user:model");
 
 /**
- * Returns all bookmarks as array sorted by date.
+ * Returns all user as array sorted by user_id.
  * @param {sqlite.Database} db
  * =>
- * @returns {Promise<bookmark[]>}
+ * @returns {Promise<[]>}
  */
 export async function all(db) {
-  const sql = `SELECT * FROM bookmarks ORDER BY date_created DESC`;
+  const sql = `SELECT * FROM user ORDER BY user_id`;
 
   return await db.all(sql);
 }

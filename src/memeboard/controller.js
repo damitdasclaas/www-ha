@@ -7,7 +7,7 @@ export async function index(ctx) {
   if (accepts == "text/html") {
     ctx.status = 200;
     await ctx.render("index", {
-      bookmarks: data,
+      users: data,
     });
   }
 }

@@ -3,7 +3,7 @@ import views from "koa-views";
 import serve from "koa-static";
 
 import http from "http";
-import router from "./memeboard/router.js";
+import router from "./imageboard/router.js";
 
 export default async function webApp(config) {
   const app = new Koa();

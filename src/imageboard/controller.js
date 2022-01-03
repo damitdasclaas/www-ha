@@ -45,11 +45,28 @@ export async function settings(ctx) {
     await ctx.render("settings");
   }
 }
-export async function upload(ctx) {
+
+export async function renderUpload(ctx) {
   const accepts = ctx.accepts("text/html", "application/json");
 
   if (accepts == "text/html") {
     ctx.status = 200;
     await ctx.render("upload");
   }
+}
+
+export async function upload(ctx) {
+  const accepts = ctx.accepts("text/html", "application/json");
+  const fileName = getFileName(ctx.request.files.image.path);
+  await model.addImage(ctx.db, fileName);
+
+  if (accepts == "text/html") {
+    ctx.status = 200;
+    await ctx.render("upload");
+  }
+}
+
+function getFileName(filePath) {
+  const temp = filePath.split("/");
+  return temp[temp.length - 1];
 }

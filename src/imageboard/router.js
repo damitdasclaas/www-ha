@@ -23,7 +23,7 @@ router.get(
   controller.settings /* settingsseite, kein plan was genau*/
 );
 
-router.get("/files", controller.upload /*uploadcontroller*/);
+router.get("/upload", controller.renderUpload /*uploadcontroller*/);
 router.post(
   "/upload",
   koaBody({
@@ -31,12 +31,6 @@ router.post(
     formidable: {
       uploadDir: process.cwd() + "/web/images/uploads",
       keepExtensions: true,
-      fileName: "upload",
-      onFileBegin: (formName, file) => {
-        console.log(formName);
-        console.log(file);
-        file.path = process.cwd() + "/web/images/uploads/" + file.name;
-      },
     },
   }),
   controller.upload /*uploadcontroller*/

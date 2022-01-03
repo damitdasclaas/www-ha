@@ -4,4 +4,9 @@
 
 {% block content %}
 <h1>Home</h1>
+{% for image in images %}
+    <a href="/image/{{image.id}}"><img src="{{image.src}}" alt="test"></a>
+    <p>{{image.date_uploaded}}</p>
+    <p>{{image.author}}</p>
+{% endfor %}
 {% endblock %}

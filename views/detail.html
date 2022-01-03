@@ -4,4 +4,14 @@
 
 {% block content %}
 <h1>Detail</h1>
+
+<img src="{{ image.src }}" alt="">
+<p>{{image.date_uploaded}}</p>
+<p>{{image.author}}</p>
+
+{%for comment in comments %}
+<p>{{comment.date_uploaded}}</p>
+<p>{{comment.author}}</p>
+<p>{{comment.text}}</p>
+{%endfor%}
 {% endblock %}

@@ -48,6 +48,7 @@ export async function upload(ctx) {
   const accepts = ctx.accepts("text/html", "application/json");
   const fileName = getFileName(ctx.request.files.image.path);
   await model.addImage(ctx.db, fileName);
+  ctx.redirect("/");
 
   if (accepts == "text/html") {
     ctx.status = 200;

@@ -36,3 +36,4 @@ router.post(
 );
 
 // auf image propertie damit nur bilder hochgeladen werden können überprüfen in ctx.request.body oder ctx.request.files oder so
+// das ist eine test zeile

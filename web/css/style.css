@@ -1,3 +1,6 @@
 body {
-  background-color: aquamarine;
+  background-color: lightgrey;
+}
+img {
+  max-width: 30%;
 }

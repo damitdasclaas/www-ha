@@ -5,13 +5,29 @@
 {% block content %}
 <h1>Detail</h1>
 
+<a href="/image/{{ image.id }}/delete">Diesen Eintrag löschen</a>
+
 <img src="/images/uploads/{{ image.src }}" alt="">
 <p>{{image.date_uploaded}}</p>
 <p>{{image.author}}</p>
 
 {%for comment in comments %}
-<p>{{comment.date_uploaded}}</p>
 <p>{{comment.author}}</p>
+<p>{{comment.date_uploaded}}</p>
 <p>{{comment.text}}</p>
 {%endfor%}
+
+<div>
+    <form action="#" method="post">
+
+        <label for="author">Author</label>
+        <input type="text" name="author"/>
+
+        <label for="text">Text</label>
+        <textarea name="text"></textarea>
+
+        <input type="submit" value="Absenden">
+    </form>
+</div>
+
 {% endblock %}

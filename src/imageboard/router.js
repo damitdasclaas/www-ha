@@ -1,4 +1,5 @@
 import * as controller from "./controller.js";
+import * as formController from "./formController.js";
 
 import koaBody from "koa-body";
 import Router from "@koa/router";
@@ -8,20 +9,18 @@ export default router;
 
 router.get("/", controller.index);
 
-router.get(
-  "/image/:id",
-  controller.detail /* detailseitencontroller, mit kommentare etc */
-);
+router.get("/image/:id", formController.detail);
+router.post("/image/:id", koaBody(), formController.addComment);
+
+router.get("/image/:id/delete", controller.askDelete);
+router.post("/image/:id/delete", controller.deleteImageById);
 
 router.get("/profile", controller.profile /* profilseiten controller */);
 
 router.get("/login", controller.login /* Login controller */);
 router.post("/login", koaBody() /* Login controller */);
 
-router.get(
-  "/settings",
-  controller.settings /* settingsseite, kein plan was genau*/
-);
+router.get("/settings", controller.settings /* settingsseite oder so*/);
 
 router.get("/upload", controller.renderUpload /*uploadcontroller*/);
 router.post(

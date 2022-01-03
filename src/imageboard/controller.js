@@ -10,17 +10,6 @@ export async function index(ctx) {
   }
 }
 
-export async function detail(ctx) {
-  const imageData = await model.getSingleImage(ctx.db, ctx.params.id);
-  const commentData = await model.getComments(ctx.db, ctx.params.id);
-
-  const accepts = ctx.accepts("text/html", "application/json");
-
-  if (accepts == "text/html") {
-    ctx.status = 200;
-    await ctx.render("detail", { image: imageData, comments: commentData });
-  }
-}
 export async function profile(ctx) {
   const accepts = ctx.accepts("text/html", "application/json");
 
@@ -69,4 +58,26 @@ export async function upload(ctx) {
 function getFileName(filePath) {
   const temp = filePath.split("/");
   return temp[temp.length - 1];
+}
+
+export async function deleteImageById(ctx) {
+  const imageData = await model.deleteImageById(ctx.db, ctx.params.id);
+  const commentData = await model.deleteCommentsByImage(ctx.db, ctx.params.id);
+  ctx.redirect("/");
+
+  if (imageData != 0 && commentData != 0) {
+    ctx.status = 204;
+    return;
+  } else {
+    ctx.status = 404;
+    return;
+  }
+}
+
+export async function askDelete(ctx) {
+  const imageData = await model.getSingleImage(ctx.db, ctx.params.id);
+
+  await ctx.render("deleteForm", {
+    image: imageData,
+  });
 }

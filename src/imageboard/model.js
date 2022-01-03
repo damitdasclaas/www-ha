@@ -1,7 +1,30 @@
 //@ts-check
 import * as sqlite from "sqlite";
+import fs from "fs";
+
 import Debug from "debug";
 const debug = Debug("user:model");
+
+/**x
+ * An image
+ * @typedef {{
+ * "id": number,
+ * "src": string,
+ * "author": string,
+ * "date_uploaded": string,
+ *  }} image
+ */
+
+/**x
+ * A comment
+ * @typedef {{
+ * "id": number,
+ * "image_id": number,
+ * "author": string,
+ * "text": string,
+ * "date_uploaded": string,
+ *  }} comment
+ */
 
 /**
  * Returns all images as array sorted by date_uploaded.
@@ -33,7 +56,7 @@ export async function getComments(db, id) {
  * @param {sqlite.Database} db
  * @param {number} id
  * =>
- * @returns {Promise<[]>}
+ * @returns {Promise<image>}
  */
 export async function getSingleImage(db, id) {
   const sql = `SELECT * FROM image WHERE id=$id`;
@@ -57,4 +80,59 @@ export async function addImage(db, fileName) {
     $author: "New Author",
     $date_uploaded: new Date().toISOString(),
   });
+}
+
+/**
+ * Adds Image with fileName.
+ * @param {sqlite.Database} db
+ * @param {number} id
+ * @param {comment} comment
+ * =>
+ *
+ */
+export async function addComment(db, id, comment) {
+  const sql = `INSERT INTO comment (image_id, author, text, date_uploaded) 
+  VALUES ($image_id, $author, $text, $date_uploaded)`;
+
+  await db.run(sql, {
+    $image_id: id,
+    $author: comment.author,
+    $text: comment.text,
+    $date_uploaded: new Date().toISOString(),
+  });
+}
+
+/**
+ * Deletes an image from the database and folder.
+ * @param {sqlite.Database} db
+ * @param {number} id
+ * =>
+ * @returns {Promise<number>}
+ */
+export async function deleteImageById(db, id) {
+  const imageData = await getSingleImage(db, id);
+  fs.unlinkSync(process.cwd() + "/web/images/uploads/" + imageData.src);
+
+  if (id != undefined) {
+    const sql = `DELETE FROM image WHERE id=$id`;
+
+    const result = await db.run(sql, { $id: id });
+    return result.changes;
+  }
+}
+
+/**
+ * Deletes all comments from an image from the database.
+ * @param {sqlite.Database} db
+ * @param {number} id
+ * =>
+ * @returns {Promise<number>}
+ */
+export async function deleteCommentsByImage(db, id) {
+  if (id != undefined) {
+    const sql = `DELETE FROM comment WHERE image_id=$id`;
+
+    const result = await db.run(sql, { $id: id });
+    return result.changes;
+  }
 }

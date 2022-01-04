@@ -1,20 +1,26 @@
 {% extends 'layout.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Create User{% endblock %}
 
 {% block content %}
-<h1>Login</h1>
+<h1>Create User</h1>
 
 <div>
     <form action="#" method="post">
 
+        <label for="fullname">Vollständiger Name</label>
+        <input type="text" name = "fullname"/>
+
         <label for="username">Username</label>
         <input type="text" name = "username"/>
+
+        <label for="email">email</label>
+        <input type="text" name = "email"/>
 
         <label for="password">Passwort</label>
         <input type="password" name = "password"/>
 
-        <input type="submit" value="Einloggen">
+        <input type="submit" value="Erstellen">
     </form>
 </div>
 {% endblock %}

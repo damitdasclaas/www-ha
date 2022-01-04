@@ -26,12 +26,12 @@ export async function login(ctx) {
     await ctx.render("login");
   }
 }
-export async function settings(ctx) {
+export async function createUser(ctx) {
   const accepts = ctx.accepts("text/html", "application/json");
 
   if (accepts == "text/html") {
     ctx.status = 200;
-    await ctx.render("settings");
+    await ctx.render("usercreate");
   }
 }
 

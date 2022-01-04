@@ -1,5 +1,5 @@
 import argon2 from "argon2";
-import * as model from "./model.js";
+import * as model from "./userModel.js";
 
 export async function login(ctx) {}
 

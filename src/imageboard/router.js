@@ -3,8 +3,11 @@ import * as commentFormController from "./commentController.js";
 import * as loginFormController from "./loginController.js";
 import * as createFormController from "./createController.js";
 
+import fs from "fs";
+
 import koaBody from "koa-body";
 import Router from "@koa/router";
+import createError from "http-errors";
 
 const router = new Router();
 export default router;
@@ -29,6 +32,13 @@ router.post(
     formidable: {
       uploadDir: process.cwd() + "/web/images/uploads",
       keepExtensions: true,
+      onFileBegin: (formName, file) => {
+        if (file.type != "image/jpeg") {
+          if (file.type != "image/png") {
+            //upload unterbinden
+          }
+        }
+      },
     },
   }),
   controller.upload
@@ -41,6 +51,3 @@ router.get("/image/:id/delete", controller.askDelete);
 router.post("/image/:id/delete", controller.deleteImageById);
 
 router.get("/image/:id/:commentid", controller.deleteCommentById);
-
-// auf image propertie damit nur bilder hochgeladen werden können überprüfen in ctx.request.body oder ctx.request.files oder so
-// das ist eine test zeile

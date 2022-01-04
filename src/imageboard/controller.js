@@ -1,65 +1,38 @@
-import * as model from "./model.js";
+import * as imageModel from "./imageModel.js";
+import * as commentModel from "./commentModel.js";
 
 export async function index(ctx) {
-  const imageData = await model.getAllImages(ctx.db);
-  const accepts = ctx.accepts("text/html", "application/json");
+  const imageData = await imageModel.getAllImages(ctx.db);
 
-  if (accepts == "text/html") {
-    ctx.status = 200;
-    await ctx.render("index", { images: imageData });
-  }
+  await ctx.render("index", { images: imageData });
 }
 
 export async function profile(ctx) {
-  const accepts = ctx.accepts("text/html", "application/json");
-
-  if (accepts == "text/html") {
-    ctx.status = 200;
-    await ctx.render("profile");
-  }
+  await ctx.render("profile");
 }
+
 export async function login(ctx) {
-  const accepts = ctx.accepts("text/html", "application/json");
-
-  if (accepts == "text/html") {
-    ctx.status = 200;
-    await ctx.render("login");
-  }
+  await ctx.render("login");
 }
-export async function createUser(ctx) {
-  const accepts = ctx.accepts("text/html", "application/json");
 
-  if (accepts == "text/html") {
-    ctx.status = 200;
-    await ctx.render("usercreate");
-  }
+export async function createUser(ctx) {
+  await ctx.render("usercreate");
 }
 
 export async function renderUpload(ctx) {
-  const accepts = ctx.accepts("text/html", "application/json");
-
-  if (accepts == "text/html") {
-    ctx.status = 200;
-    await ctx.render("upload");
-  }
+  await ctx.render("upload");
 }
 
 export async function upload(ctx) {
-  const accepts = ctx.accepts("text/html", "application/json");
-
   const fileName = getFileName(ctx.request.files.image.path);
-  await model.addImage(ctx.db, fileName);
-  ctx.redirect("/");
+  await imageModel.addImage(ctx.db, fileName);
 
-  if (accepts == "text/html") {
-    ctx.status = 200;
-    await ctx.render("upload");
-    ctx.redirect("/");
-  }
+  await ctx.render("upload");
+  ctx.redirect("/");
 }
 
 export async function askDelete(ctx) {
-  const imageData = await model.getSingleImage(ctx.db, ctx.params.id);
+  const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
 
   await ctx.render("deleteForm", {
     image: imageData,
@@ -67,8 +40,11 @@ export async function askDelete(ctx) {
 }
 
 export async function deleteImageById(ctx) {
-  const imageData = await model.deleteImageById(ctx.db, ctx.params.id);
-  const commentData = await model.deleteCommentsByImage(ctx.db, ctx.params.id);
+  const imageData = await imageModel.deleteImageById(ctx.db, ctx.params.id);
+  const commentData = await commentModel.deleteCommentsByImage(
+    ctx.db,
+    ctx.params.id
+  );
   ctx.redirect("/");
 
   if (imageData != 0 && commentData != 0) {
@@ -85,7 +61,7 @@ export async function deleteImageById(ctx) {
 }
 
 export async function deleteCommentById(ctx) {
-  const commentData = await model.deleteSingleComment(
+  const commentData = await commentModel.deleteSingleComment(
     ctx.db,
     ctx.params.commentid
   );

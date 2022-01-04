@@ -1,7 +1,17 @@
 body {
   background-color: lightgrey;
-  color: red;
+  color: black;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 img {
   max-width: 30%;
+}
+
+a {
+  text-decoration-line: none;
+}
+
+a:visited {
+  color: grey;
 }

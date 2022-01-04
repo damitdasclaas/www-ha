@@ -5,16 +5,16 @@
 {% block content %}
 <h1>Detail</h1>
 
-<a href="/image/{{ image.id }}/delete">Diesen Eintrag löschen</a>
-
-<img src="/images/uploads/{{ image.src }}" alt="">
 <p>{{image.date_uploaded}}</p>
 <p>{{image.author}}</p>
+<p><img src="/images/uploads/{{ image.src }}" alt=""></p>
+<a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
 
 {%for comment in comments %}
 <p>{{comment.author}}</p>
 <p>{{comment.date_uploaded}}</p>
 <p>{{comment.text}}</p>
+<a href="/image/{{ image.id }}/{{comment.id}}">Kommentar löschen</a>
 {%endfor%}
 
 <div>

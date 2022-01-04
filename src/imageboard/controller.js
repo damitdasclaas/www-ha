@@ -58,8 +58,13 @@ export async function upload(ctx) {
 }
 
 function getFileName(filePath) {
-  const temp = filePath.split("/");
-  return temp[temp.length - 1];
+  if (filePath.includes("/")) {
+    const temp = filePath.split("/");
+    return temp[temp.length - 1];
+  } else {
+    const temp = filePath.split("\\");
+    return temp[temp.length - 1];
+  }
 }
 
 export async function deleteImageById(ctx) {

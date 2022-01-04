@@ -24,7 +24,7 @@ router.post("/login", koaBody() /* Login controller */);
 
 router.get("/settings", controller.settings /* settingsseite oder so*/);
 
-router.get("/upload", controller.renderUpload /*uploadcontroller*/);
+router.get("/upload", controller.renderUpload);
 router.post(
   "/upload",
   koaBody({
@@ -34,7 +34,7 @@ router.post(
       keepExtensions: true,
     },
   }),
-  controller.upload /*uploadcontroller*/
+  controller.upload
 );
 
 // auf image propertie damit nur bilder hochgeladen werden können überprüfen in ctx.request.body oder ctx.request.files oder so

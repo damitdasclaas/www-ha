@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h1>Profile</h1>
+
+<img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture">
+
+<div>
+    <form action="/profile/{{user.username}}/settings/profile_picture" method="post" enctype="multipart/form-data">
+
+        <label for="image">Change Profile Picture</label>
+        <input type="file" name = "image"/>
+
+        <input type="submit" value="Upload">
+    </form>
+</div>
+
+<div>
+    <form action="/profile/{{user.username}}/settings" method="post">
+
+        <label for="fullname">Fullname</label>
+        <input type="text" name="fullname" value="{{ user.fullname }}">
+        
+        {% if form.errors['uri'] %}<p>{{ form.errors['uri'] }}</p>{% endif %}
+
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{ user.email }}">
+
+        <input type="submit" value="Speichern"/>
+    </form>
+</div>
+
+<a href="/profile/{{user.username}}">Cancel</a>
+
+{% endblock %}

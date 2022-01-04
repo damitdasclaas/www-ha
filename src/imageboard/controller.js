@@ -1,5 +1,6 @@
 import * as imageModel from "./imageModel.js";
 import * as commentModel from "./commentModel.js";
+import * as userModel from "./userModel.js";
 
 export async function index(ctx) {
   const imageData = await imageModel.getAllImages(ctx.db);
@@ -8,7 +9,19 @@ export async function index(ctx) {
 }
 
 export async function profile(ctx) {
-  await ctx.render("profile");
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
+
+  await ctx.render("profile", {
+    user: userData,
+  });
+}
+
+export async function editProfile(ctx) {
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
+
+  await ctx.render("profileEdit", {
+    user: userData,
+  });
 }
 
 export async function login(ctx) {
@@ -24,7 +37,9 @@ export async function renderUpload(ctx) {
 }
 
 export async function upload(ctx) {
-  const fileName = getFileName(ctx.request.files.image.path);
+  const uploadPath = ctx.request.files.image.path;
+
+  const fileName = getFileName(uploadPath);
   await imageModel.addImage(ctx.db, fileName);
 
   await ctx.render("upload");

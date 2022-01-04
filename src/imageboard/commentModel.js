@@ -26,7 +26,7 @@ export async function getComments(db, id) {
 }
 
 /**
- * Adds Image with fileName.
+ * Adds Comment to Image.
  * @param {sqlite.Database} db
  * @param {number} id
  * @param {comment} comment
@@ -62,7 +62,7 @@ export async function deleteCommentsByImage(db, id) {
 }
 
 /**
- * Deletes all comments from an image from the database.
+ * Deletes a single comment from an image from the database.
  * @param {sqlite.Database} db
  * @param {number} id
  * =>

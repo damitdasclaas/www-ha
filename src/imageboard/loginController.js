@@ -1,6 +1,21 @@
-import argon2 from "argon2";
-import * as model from "./userModel.js";
+import * as userModel from "./userModel.js";
 
-export async function login(ctx) {}
+export async function login(ctx) {
+  const loginData = ctx.request.body;
+  if (
+    await userModel.validatePassword(
+      ctx.db,
+      loginData.username,
+      loginData.password
+    )
+  ) {
+    const userData = await userModel.getUser(ctx.db, loginData.username);
+    await ctx.render("Profile", { user: userData });
+
+    ctx.redirect("/profile/" + userData.username);
+  } else {
+    ctx.redirect("login", { error: "Wrong Password!" });
+  }
+}
 
 export async function logout(ctx) {}

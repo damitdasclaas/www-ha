@@ -1,6 +1,8 @@
-import argon2 from "argon2";
-import * as model from "./imageModel.js";
+import * as userModel from "./userModel.js";
 
-export async function createUser(ctx) {}
+export async function createUser(ctx) {
+  await userModel.addUser(ctx.db, ctx.request.body);
+  ctx.redirect("/");
+}
 
 export async function deleteUser(ctx) {}

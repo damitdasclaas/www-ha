@@ -2,19 +2,42 @@ import * as controller from "./controller.js";
 import * as commentFormController from "./commentController.js";
 import * as loginFormController from "./loginController.js";
 import * as createFormController from "./createController.js";
-
-import fs from "fs";
+import * as profileFormController from "./profileController.js";
 
 import koaBody from "koa-body";
 import Router from "@koa/router";
-import createError from "http-errors";
 
 const router = new Router();
 export default router;
 
 router.get("/", controller.index);
 
-router.get("/profile", controller.profile /* profilseiten controller */);
+router.get("/profile/:username", controller.profile);
+
+router.get("/profile/:username/settings", controller.editProfile);
+router.post(
+  "/profile/:username/settings",
+  koaBody(),
+  profileFormController.editProfile
+);
+router.post(
+  "/profile/:username/settings/profile_picture",
+  koaBody({
+    multipart: true,
+    formidable: {
+      uploadDir: process.cwd() + "/web/images/profile_pictures",
+      keepExtensions: true,
+      onFileBegin: (formName, file) => {
+        if (file.type != "image/jpeg") {
+          if (file.type != "image/png") {
+            //upload unterbinden
+          }
+        }
+      },
+    },
+  }),
+  profileFormController.uploadProfilePicture
+);
 
 router.get("/login", controller.login);
 router.post("/login", koaBody(), loginFormController.login);

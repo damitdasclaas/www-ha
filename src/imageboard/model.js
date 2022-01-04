@@ -111,7 +111,10 @@ export async function addComment(db, id, comment) {
  */
 export async function deleteImageById(db, id) {
   const imageData = await getSingleImage(db, id);
-  fs.unlinkSync(process.cwd() + "/web/images/uploads/" + imageData.src);
+
+  if (imageData != undefined) {
+    fs.unlinkSync(process.cwd() + "/web/images/uploads/" + imageData.src);
+  }
 
   if (id != undefined) {
     const sql = `DELETE FROM image WHERE id=$id`;
@@ -131,6 +134,22 @@ export async function deleteImageById(db, id) {
 export async function deleteCommentsByImage(db, id) {
   if (id != undefined) {
     const sql = `DELETE FROM comment WHERE image_id=$id`;
+
+    const result = await db.run(sql, { $id: id });
+    return result.changes;
+  }
+}
+
+/**
+ * Deletes all comments from an image from the database.
+ * @param {sqlite.Database} db
+ * @param {number} id
+ * =>
+ * @returns {Promise<number>}
+ */
+export async function deleteSingleComment(db, id) {
+  if (id != undefined) {
+    const sql = `DELETE FROM comment WHERE id=$id`;
 
     const result = await db.run(sql, { $id: id });
     return result.changes;

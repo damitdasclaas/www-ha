@@ -53,6 +53,7 @@ export async function upload(ctx) {
   if (accepts == "text/html") {
     ctx.status = 200;
     await ctx.render("upload");
+    ctx.redirect("/");
   }
 }
 
@@ -81,4 +82,21 @@ export async function askDelete(ctx) {
   await ctx.render("deleteForm", {
     image: imageData,
   });
+}
+
+export async function deleteCommentById(ctx) {
+  const commentData = await model.deleteSingleComment(
+    ctx.db,
+    ctx.params.commentid
+  );
+
+  if (commentData != 0) {
+    ctx.status = 204;
+    ctx.redirect("/image/" + ctx.params.id);
+
+    return;
+  } else {
+    ctx.status = 404;
+    return;
+  }
 }

@@ -15,6 +15,8 @@ router.post("/image/:id", koaBody(), formController.addComment);
 router.get("/image/:id/delete", controller.askDelete);
 router.post("/image/:id/delete", controller.deleteImageById);
 
+router.get("/image/:id/:commentid", controller.deleteCommentById);
+
 router.get("/profile", controller.profile /* profilseiten controller */);
 
 router.get("/login", controller.login /* Login controller */);

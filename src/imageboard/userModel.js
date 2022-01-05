@@ -55,6 +55,20 @@ export async function editUser(db, user, username) {
 }
 
 /**
+ * Deletes user in database.
+ * @param {sqlite.Database} db
+ * @param {String} username
+ * =>
+ *
+ */
+export async function deleteUser(db, username) {
+  const sql = `DELETE FROM user WHERE username=$username`;
+
+  const result = await db.run(sql, { $username: username });
+  return result.changes;
+}
+
+/**
  * Edits profile picture from user.
  * @param {sqlite.Database} db
  * @param {String} username
@@ -65,8 +79,8 @@ export async function editUser(db, user, username) {
 export async function editProfilePicture(db, username, fileName) {
   const userData = await getUser(db, username);
 
-  if (userData.picture_src != undefined) {
-    fs.unlinkSync(
+  if (userData.picture_src != "default_profile_picture.png") {
+    await deleteFile(
       process.cwd() + "/web/images/profile_pictures/" + userData.picture_src
     );
   }
@@ -82,6 +96,22 @@ export async function editProfilePicture(db, username, fileName) {
 }
 
 /**
+ * Deletes profile picture from user.
+ * @param {sqlite.Database} db
+ * @param {String} username
+ * =>
+ */
+export async function deleteProfilePicture(db, username) {
+  const userData = await getUser(db, username);
+
+  if (userData.picture_src != "default_profile_picture.png") {
+    await deleteFile(
+      process.cwd() + "/web/images/profile_pictures/" + userData.picture_src
+    );
+  }
+}
+
+/**
  * Returns user with given username.
  * @param {sqlite.Database} db
  * @param {String} username
@@ -92,6 +122,18 @@ export async function getUser(db, username) {
   const sql = `SELECT * FROM user WHERE username=$username`;
 
   return await db.get(sql, { $username: username });
+}
+
+/**
+ * Returns all users as array sorted by username.
+ * @param {sqlite.Database} db
+ * =>
+ * @returns {Promise<[]]>}
+ */
+export async function getAllUser(db) {
+  const sql = `SELECT * FROM user ORDER BY username`;
+
+  return await db.all(sql);
 }
 
 /**

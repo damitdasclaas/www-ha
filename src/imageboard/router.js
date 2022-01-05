@@ -12,7 +12,10 @@ export default router;
 
 router.get("/", controller.index);
 
-router.get("/profile/:username", controller.profile);
+router.get("/profile", controller.profile);
+
+router.get("/profile/:username", controller.profileDetail);
+router.get("/profile/:username/delete", controller.deleteProfile);
 
 router.get("/profile/:username/settings", controller.editProfile);
 router.post(

@@ -5,13 +5,10 @@
 {% block content %}
 <h1>Profile</h1>
 
-<img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture">
+{% for user in users %}
+<a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture"></a>
 
-<p>Username: {{user.username}}</p>
-
-<p>Fullname: {{user.fullname}}</p>
-<p>Email: {{user.email}}</p>
-
-<a href="/profile/{{user.username}}/settings">Edit Profile</a>
+<a href="/profile/{{user.username}}"><p>Username: {{user.username}}</p></a>
+{% endfor %}
 
 {% endblock %}

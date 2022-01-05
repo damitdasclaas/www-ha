@@ -9,9 +9,17 @@ export async function index(ctx) {
 }
 
 export async function profile(ctx) {
-  const userData = await userModel.getUser(ctx.db, ctx.params.username);
+  const userData = await userModel.getAllUser(ctx.db);
 
   await ctx.render("profile", {
+    users: userData,
+  });
+}
+
+export async function profileDetail(ctx) {
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
+
+  await ctx.render("profileDetail", {
     user: userData,
   });
 }
@@ -22,6 +30,24 @@ export async function editProfile(ctx) {
   await ctx.render("profileEdit", {
     user: userData,
   });
+}
+
+export async function deleteProfile(ctx) {
+  await userModel.deleteProfilePicture(ctx.db, ctx.params.username);
+  const userData = await userModel.deleteUser(ctx.db, ctx.params.username);
+  ctx.redirect("/profile");
+
+  if (userData != 0) {
+    ctx.status = 204;
+    ctx.redirect("/profile");
+
+    return;
+  } else {
+    ctx.status = 404;
+    ctx.redirect("/profile");
+
+    return;
+  }
 }
 
 export async function login(ctx) {

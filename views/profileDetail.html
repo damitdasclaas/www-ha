@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h1>Profile</h1>
+
+<img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture">
+
+<p>Username: {{user.username}}</p>
+
+<p>Fullname: {{user.fullname}}</p>
+<p>Email: {{user.email}}</p>
+
+<a href="/profile/{{user.username}}/settings">Edit Profile</a>
+
+{% endblock %}

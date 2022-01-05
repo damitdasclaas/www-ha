@@ -27,13 +27,6 @@ router.post(
     formidable: {
       uploadDir: process.cwd() + "/web/images/profile_pictures",
       keepExtensions: true,
-      onFileBegin: (formName, file) => {
-        if (file.type != "image/jpeg") {
-          if (file.type != "image/png") {
-            //upload unterbinden
-          }
-        }
-      },
     },
   }),
   profileFormController.uploadProfilePicture
@@ -55,13 +48,6 @@ router.post(
     formidable: {
       uploadDir: process.cwd() + "/web/images/uploads",
       keepExtensions: true,
-      onFileBegin: (formName, file) => {
-        if (file.type != "image/jpeg") {
-          if (file.type != "image/png") {
-            //upload unterbinden
-          }
-        }
-      },
     },
   }),
   controller.upload

@@ -76,3 +76,12 @@ export async function deleteImageById(db, id) {
     return result.changes;
   }
 }
+
+/**
+ * Deletes an image from the folder.
+ * @param {string} path
+ * =>
+ */
+export async function deleteFile(path) {
+  fs.unlinkSync(path);
+}

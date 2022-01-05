@@ -106,3 +106,12 @@ export async function validatePassword(db, username, password) {
   const user = await getUser(db, username);
   return await argon2.verify(user.password_hash, password);
 }
+
+/**
+ * Deletes an image from the folder.
+ * @param {string} path
+ * =>
+ */
+export async function deleteFile(path) {
+  fs.unlinkSync(path);
+}

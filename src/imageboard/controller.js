@@ -38,9 +38,15 @@ export async function renderUpload(ctx) {
 
 export async function upload(ctx) {
   const uploadPath = ctx.request.files.image.path;
+  const fileType = ctx.request.files.image.type;
 
   const fileName = getFileName(uploadPath);
-  await imageModel.addImage(ctx.db, fileName);
+
+  if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
+    await imageModel.addImage(ctx.db, fileName);
+  } else {
+    await imageModel.deleteFile(uploadPath);
+  }
 
   await ctx.render("upload");
   ctx.redirect("/");
@@ -106,4 +112,4 @@ function getFileName(filePath) {
   }
 }
 
-// --------------Helper functions----------------
+// ----------------------------------------------

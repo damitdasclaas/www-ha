@@ -14,7 +14,7 @@ export async function login(ctx) {
 
     ctx.redirect("/profile/" + userData.username);
   } else {
-    ctx.redirect("login", { error: "Wrong Password!" });
+    ctx.render("login", { error: "Wrong Password!" });
   }
 }
 

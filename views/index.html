@@ -7,4 +7,8 @@
 {% for image in images %}
     <a href="/image/{{image.id}}"><img src="/images/uploads/{{image.src}}" alt="test"></a>
 {% endfor %}
+
+{% if flash %}
+    <p></p>
+{% endif %}
 {% endblock %}

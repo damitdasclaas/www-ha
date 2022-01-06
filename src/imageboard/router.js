@@ -23,6 +23,7 @@ router.post(
   koaBody(),
   profileFormController.editProfile
 );
+
 router.post(
   "/profile/:username/settings/profile_picture",
   koaBody({

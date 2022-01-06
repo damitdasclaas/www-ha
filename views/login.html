@@ -14,7 +14,12 @@
         <label for="password">Passwort</label>
         <input type="password" name = "password"/>
 
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+
         <input type="submit" value="Einloggen">
+        {% if error %}
+        <p>{{error}}</p>
+        {% endif %}
     </form>
 </div>
 

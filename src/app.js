@@ -24,10 +24,9 @@ export default async function webApp(config) {
   app.context.db = config.db;
 
   // Insert Middleware here!
-
-  app.use(router.routes());
   app.use(serve(process.cwd() + "/web"));
   app.use(session({ store: new SQLite3Store("./data/session.sqlite") }, app));
+  app.use(router.routes());
 
   return http.createServer(app.callback()).listen(config.port, () => {
     console.log(`Listening on port ${config.port}`);

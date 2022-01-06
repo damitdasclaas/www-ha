@@ -3,6 +3,7 @@ Noch zu erledigen:
 Liste mit allen Profilen
 Login mit Session speichern
 Author mit User Login verbinden damit username immer = author ist
+Profil löschen mit passwort bestätigen
 
 UserPermissions erstellen
     Admin:

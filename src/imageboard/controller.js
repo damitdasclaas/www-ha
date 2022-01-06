@@ -18,6 +18,7 @@ export async function profile(ctx) {
 
 export async function profileDetail(ctx) {
   const userData = await userModel.getUser(ctx.db, ctx.params.username);
+  console.log(userData);
   if (ctx.session.flash) {
     ctx.state.flash = ctx.session.flash;
     ctx.session.flash = undefined;

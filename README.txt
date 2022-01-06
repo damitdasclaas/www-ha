@@ -4,6 +4,8 @@ Liste mit allen Profilen
 Login mit Session speichern
 Author mit User Login verbinden damit username immer = author ist
 
+Bei create user den username auf existenz abfragen und ansonsten fehler schmeißen
+
 Profil löschen mit passwort bestätigen
 
 UserPermissions erstellen

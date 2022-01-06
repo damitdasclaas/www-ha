@@ -11,6 +11,7 @@ import argon2 from "argon2";
  * "email": string,
  * "password": string,
  * "picture_src": string,
+ * "permissions": string,
  *  }} user
  */
 
@@ -22,8 +23,8 @@ import argon2 from "argon2";
  *
  */
 export async function addUser(db, user) {
-  const sql = `INSERT INTO user (fullname, username, email, password_hash, picture_src) 
-      VALUES ($fullname, $username, $email, $password_hash, $picture_src)`;
+  const sql = `INSERT INTO user (fullname, username, email, password_hash, picture_src, role) 
+      VALUES ($fullname, $username, $email, $password_hash, $picture_src, $role)`;
 
   await db.run(sql, {
     $fullname: user.fullname,
@@ -31,6 +32,7 @@ export async function addUser(db, user) {
     $email: user.email,
     $password_hash: await argon2.hash(user.password),
     $picture_src: "default_profile_picture.png",
+    $role: "user",
   });
 }
 

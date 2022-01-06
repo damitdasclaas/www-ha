@@ -138,15 +138,13 @@ export async function getAllUser(db) {
 
 /**
  * Validates password from login.
- * @param {sqlite.Database} db
- * @param {String} username
- * @param {String} password
+ * @param {user} user
+ * @param {String} formPassword
  * =>
  * @returns {Promise<boolean>}
  */
-export async function validatePassword(db, username, password) {
-  const user = await getUser(db, username);
-  return await argon2.verify(user.password_hash, password);
+export async function validatePassword(user, formPassword) {
+  return await argon2.verify(user.password_hash, formPassword);
 }
 
 /**

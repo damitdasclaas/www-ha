@@ -7,19 +7,22 @@
 
 <div>
     <form action="#" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        
 
         <label for="username">Username</label>
         <input type="text" name = "username"/>
 
+        {% if form.errors %}
+        <p>{{form.errors.username}}</p>
+        {% endif %}
+
         <label for="password">Passwort</label>
         <input type="password" name = "password"/>
 
-        <input type="hidden" name="_csrf" value="{{csrf}}">
 
         <input type="submit" value="Einloggen">
-        {% if error %}
-        <p>{{error}}</p>
-        {% endif %}
+
     </form>
 </div>
 

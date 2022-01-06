@@ -36,8 +36,8 @@ router.post(
   profileFormController.uploadProfilePicture
 );
 
-router.get("/login", controller.login);
-router.post("/login", koaBody(), loginFormController.login);
+router.get("/login", loginFormController.login);
+router.post("/login", koaBody(), loginFormController.submitForm);
 
 router.get("/logout", loginFormController.logout);
 

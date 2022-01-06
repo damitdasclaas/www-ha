@@ -11,7 +11,7 @@ import argon2 from "argon2";
  * "email": string,
  * "password": string,
  * "picture_src": string,
- * "permissions": string,
+ * "role": string,
  *  }} user
  */
 

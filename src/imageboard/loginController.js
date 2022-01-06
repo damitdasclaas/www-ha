@@ -30,6 +30,7 @@ export async function submitForm(ctx) {
   if (Object.values(errors).some(Boolean)) {
     loginData.password = undefined;
     loginData = { ...loginData, errors };
+
     await renderForm(ctx, loginData);
   } else {
     const user = await userModel.getUser(ctx.db, loginData.username);
@@ -43,8 +44,10 @@ export async function submitForm(ctx) {
       }
     } else {
       errors = { username: "Dieser Username existiert nicht." };
+
       loginData.password = undefined;
       loginData = { ...loginData, errors };
+
       await renderForm(ctx, loginData);
     }
   }

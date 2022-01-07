@@ -3,7 +3,7 @@
 {% block title %}You sure?{% endblock %}
 
 {% block content %}
-<h2>Wollen Sie den Kommentar #{{image.id}} wirklich löschen?</h2>
+<h2>Wollen Sie den Kommentar #{{comment.id}} wirklich löschen?</h2>
 
 <div>
     <form action="/image/{{image.id}}/{{comment.id}}" method="post">

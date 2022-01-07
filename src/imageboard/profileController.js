@@ -1,10 +1,20 @@
 import * as userModel from "./userModel.js";
+import * as permissionModel from "./permissionModel.js";
 import * as helper from "./helper/helper.js";
 
 export async function editProfile(ctx) {
-  const userData = await userModel.getUser(ctx.db, ctx.params.username);
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
+
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
 
   await ctx.render("profileEdit", {
     user: userData,
@@ -45,9 +55,18 @@ export async function submitEditProfilePicture(ctx) {
 }
 
 export async function askDeleteProfile(ctx) {
-  const userData = await userModel.getUser(ctx.db, ctx.params.username);
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
+
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
 
   await ctx.render("deleteProfileForm", {
     userData: userData,

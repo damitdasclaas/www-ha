@@ -1,6 +1,6 @@
-import * as helper from "./helper/helper.js";
+import * as helper from "../helper/helper.js";
 
-export function hasPermission(permission) {
+export default function hasPermission(permission) {
   return async function (ctx, next) {
     if (!helper.checkPermission(ctx.session.user, permission)) {
       ctx.throw(401);

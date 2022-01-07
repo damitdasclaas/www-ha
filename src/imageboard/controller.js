@@ -8,9 +8,12 @@ export async function index(ctx) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
 
-  if (ctx.session.flash) {
-    ctx.state.flash = ctx.session.flash;
-    ctx.session.flash = undefined;
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
   }
 
   const imageData = await imageModel.getAllImages(ctx.db);
@@ -21,6 +24,14 @@ export async function index(ctx) {
 export async function profile(ctx) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
 
   const userData = await userModel.getAllUser(ctx.db);
 
@@ -46,11 +57,6 @@ export async function profileDetail(ctx) {
       ctx.session.user.role
     );
     ctx.state.user = ctx.session.user;
-  }
-
-  if (ctx.session.flash) {
-    ctx.state.flash = ctx.session.flash;
-    ctx.session.flash = undefined;
   }
 
   const userData = await userModel.getUser(ctx.db, ctx.params.username);

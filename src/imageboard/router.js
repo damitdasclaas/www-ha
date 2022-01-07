@@ -4,7 +4,8 @@ import * as loginFormController from "./loginController.js";
 import * as profileFormController from "./profileController.js";
 import * as imageFormController from "./imageController.js";
 import * as commentFormController from "./commentController.js";
-import * as perms from "./hasPermission.js";
+import hasPermission from "./middleware/hasPermission.js";
+import flash from "./middleware/flash.js";
 
 import koaBody from "koa-body";
 import Router from "@koa/router";
@@ -12,11 +13,11 @@ import Router from "@koa/router";
 const router = new Router();
 export default router;
 
-router.get("/", controller.index);
+router.get("/", flash(), controller.index);
 
 router.get("/profile", controller.profile);
 
-router.get("/profile/:username", controller.profileDetail);
+router.get("/profile/:username", flash(), controller.profileDetail);
 
 router.get("/profile/:username/settings", profileFormController.editProfile);
 router.post(
@@ -66,7 +67,12 @@ router.post(
 );
 
 router.get("/image/:id", commentFormController.detail);
-router.post("/image/:id", koaBody(), commentFormController.submitComment);
+router.post(
+  "/image/:id",
+  hasPermission("test"),
+  koaBody(),
+  commentFormController.submitComment
+);
 
 router.get("/image/:id/delete", imageFormController.askDelete);
 router.post(

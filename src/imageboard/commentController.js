@@ -1,13 +1,22 @@
 import * as commentModel from "./commentModel.js";
+import * as permissionModel from "./permissionModel.js";
 import * as imageModel from "./imageModel.js";
 import * as helper from "./helper/helper.js";
 
 export async function detail(ctx) {
-  const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
-  const commentData = await commentModel.getComments(ctx.db, ctx.params.id);
-
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
+
+  const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
+  const commentData = await commentModel.getComments(ctx.db, ctx.params.id);
 
   await ctx.render("detail", {
     image: imageData,
@@ -30,6 +39,14 @@ export async function submitComment(ctx) {
 export async function askDelete(ctx) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
 
   const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
   const commentData = await commentModel.getSingleComment(

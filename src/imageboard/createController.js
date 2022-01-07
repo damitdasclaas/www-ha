@@ -1,9 +1,18 @@
 import * as userModel from "./userModel.js";
+import * as permissionModel from "./permissionModel.js";
 import * as helper from "./helper/helper.js";
 
 export async function createUser(ctx) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
 
   await ctx.render("create", { csrf: token });
 }
@@ -17,5 +26,3 @@ export async function submitCreateUser(ctx) {
   await userModel.addUser(ctx.db, ctx.request.body);
   ctx.redirect("/login");
 }
-
-export async function deleteUser(ctx) {}

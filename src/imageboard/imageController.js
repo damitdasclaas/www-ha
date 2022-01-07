@@ -8,6 +8,14 @@ export async function upload(ctx) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
 
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
+
   await ctx.render("upload", { csrf: token });
 }
 
@@ -32,10 +40,18 @@ export async function submitUpload(ctx) {
 }
 
 export async function askDelete(ctx) {
-  const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
-
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
+
+  const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
 
   await ctx.render("deleteImageForm", {
     image: imageData,

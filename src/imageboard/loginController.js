@@ -1,9 +1,18 @@
 import * as userModel from "./userModel.js";
+import * as permissionModel from "./permissionModel.js";
 import * as helper from "./helper/helper.js";
 
 async function renderForm(ctx, preparedData) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.session.user.permissions = await permissionModel.getPermissions(
+      ctx.db,
+      ctx.session.user.role
+    );
+    ctx.state.user = ctx.session.user;
+  }
 
   await ctx.render("login", { form: preparedData, csrf: token });
 }

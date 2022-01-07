@@ -17,7 +17,7 @@ export async function getFileName(filePath) {
   }
 }
 
-export async function checkPermission(user, permission) {
+export function checkPermission(user, permission) {
   return user.permissions.includes(permission);
 }
 

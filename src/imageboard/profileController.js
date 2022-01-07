@@ -3,9 +3,12 @@ import * as helper from "./helper/helper.js";
 
 export async function editProfile(ctx) {
   const userData = await userModel.getUser(ctx.db, ctx.params.username);
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
 
   await ctx.render("profileEdit", {
     user: userData,
+    csrf: token,
   });
 }
 
@@ -20,7 +23,7 @@ export async function submitEditProfilePicture(ctx) {
   const uploadPath = ctx.request.files.image.path;
   const fileType = ctx.request.files.image.type;
 
-  const fileName = helper.getFileName(uploadPath);
+  const fileName = await helper.getFileName(uploadPath);
 
   if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
     await userModel.editProfilePicture(ctx.db, ctx.params.username, fileName);
@@ -28,20 +31,23 @@ export async function submitEditProfilePicture(ctx) {
     await userModel.deleteFile(uploadPath);
   }
 
-  const userData = await userModel.getUser(ctx.db, ctx.params.username);
-
-  await ctx.render("profileEdit", { user: userData });
+  ctx.redirect("/profile/" + ctx.params.username + "/settings");
 }
 
 export async function askDeleteProfile(ctx) {
   const userData = await userModel.getUser(ctx.db, ctx.params.username);
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
 
   await ctx.render("deleteProfileForm", {
     userData: userData,
+    csrf: token,
   });
 }
 
 export async function deleteProfile(ctx) {
+  console.log(ctx.request.body);
+
   await userModel.deleteProfilePicture(ctx.db, ctx.params.username);
   const userData = await userModel.deleteUser(ctx.db, ctx.params.username);
 

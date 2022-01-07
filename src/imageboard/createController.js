@@ -1,7 +1,11 @@
 import * as userModel from "./userModel.js";
+import * as helper from "./helper/helper.js";
 
 export async function createUser(ctx) {
-  await ctx.render("usercreate");
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
+
+  await ctx.render("usercreate", { csrf: token });
 }
 
 export async function submitCreateUser(ctx) {

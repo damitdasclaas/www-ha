@@ -5,12 +5,15 @@
 {% block content %}
 <h2>Wollen Sie den Eintrag #{{image.id}} wirklich löschen?</h2>
 <h2>Damit werden alle Kommentare ebenfalls entfernt.</h2>
+
 <div>
     <form action="/image/{{image.id}}/delete" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+
         <input type="submit" value="Löschen"/>
     </form>
-    <p>
-        <a href="/image/{{image.id}}">Abbrechen</a>
-    </p>
 </div>
+<p>
+    <a href="/image/{{image.id}}">Abbrechen</a>
+</p>
 {% endblock %}

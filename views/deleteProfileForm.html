@@ -7,6 +7,8 @@
 <h2>Dies kann nicht ruckgängig gemacht werden.</h2>
 <div>
     <form action="/profile/{{userData.username}}/delete" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+
         <input type="submit" value="Löschen"/>
     </form>
     <p>

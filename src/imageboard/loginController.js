@@ -1,8 +1,8 @@
 import * as userModel from "./userModel.js";
-import * as csrf from "./helper/csrf.js";
+import * as helper from "./helper/helper.js";
 
 async function renderForm(ctx, preparedData) {
-  const token = await csrf.generateToken();
+  const token = await helper.generateToken();
   ctx.session.csrf = token;
 
   await ctx.render("login", { form: preparedData, csrf: token });

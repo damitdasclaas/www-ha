@@ -37,7 +37,11 @@ router.post(
 );
 
 router.get("/profile/:username/delete", profileFormController.askDeleteProfile);
-router.post("/profile/:username/delete", profileFormController.deleteProfile);
+router.post(
+  "/profile/:username/delete",
+  koaBody(),
+  profileFormController.deleteProfile
+);
 
 router.get("/login", loginFormController.login);
 router.post("/login", koaBody(), loginFormController.submitLogin);
@@ -61,9 +65,13 @@ router.post(
 );
 
 router.get("/image/:id", commentFormController.detail);
-router.post("/image/:id", koaBody(), commentFormController.addComment);
+router.post("/image/:id", koaBody(), commentFormController.submitComment);
 
 router.get("/image/:id/delete", imageFormController.askDelete);
-router.post("/image/:id/delete", imageFormController.deleteImageById);
+router.post(
+  "/image/:id/delete",
+  koaBody(),
+  imageFormController.deleteImageById
+);
 
 router.get("/image/:id/:commentid", commentFormController.deleteCommentById);

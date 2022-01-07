@@ -46,7 +46,7 @@ router.post(
 router.get("/login", loginFormController.login);
 router.post("/login", koaBody(), loginFormController.submitLogin);
 
-router.get("/logout", loginFormController.logout);
+router.get("/logout", controller.logout);
 
 router.get("/create", createFormController.createUser);
 router.post("/create", koaBody(), createFormController.submitCreateUser);
@@ -74,4 +74,9 @@ router.post(
   imageFormController.deleteImageById
 );
 
-router.get("/image/:id/:commentid", commentFormController.deleteCommentById);
+router.get("/image/:id/:commentid", commentFormController.askDelete);
+router.post(
+  "/image/:id/:commentid",
+  koaBody(),
+  commentFormController.deleteCommentById
+);

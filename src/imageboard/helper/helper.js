@@ -21,4 +21,19 @@ export async function checkPermission(user, permission) {
   return user.permissions.includes(permission);
 }
 
+export async function validateLoginForm(loginData) {
+  return {
+    username: validateUsername(loginData.username),
+  };
+}
+
+export function containsText(string) {
+  return typeof string == "string" && string.length >= 3;
+}
+
+export function validateUsername(username) {
+  return !containsText(username) ? "Bitte einen Username eingeben." : undefined;
+}
+
+// password auf sicherheit prüfen
 // ISO String aufbereitungs function machen

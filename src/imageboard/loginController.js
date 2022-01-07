@@ -14,13 +14,13 @@ export async function login(ctx) {
 }
 
 export async function submitLogin(ctx) {
-  let loginData = ctx.request.body;
-  let errors = await validateForm(loginData);
-
-  if (ctx.session.csrf !== loginData._csrf) {
+  if (ctx.session.csrf !== ctx.request.body._csrf) {
     ctx.throw(401);
   }
   ctx.session.csrf = undefined;
+
+  let loginData = ctx.request.body;
+  let errors = await helper.validateLoginForm(loginData);
 
   if (Object.values(errors).some(Boolean)) {
     loginData.password = undefined;
@@ -46,24 +46,4 @@ export async function submitLogin(ctx) {
       await renderForm(ctx, loginData);
     }
   }
-}
-
-export async function logout(ctx) {
-  ctx.session.user = undefined;
-  ctx.session.flash = "Erfolgreich ausgeloggt.";
-  ctx.redirect("/");
-}
-
-async function validateForm(loginData) {
-  return {
-    username: validateUsername(loginData.username),
-  };
-}
-
-export function containsText(string) {
-  return typeof string == "string" && string.length >= 3;
-}
-
-export function validateUsername(username) {
-  return !containsText(username) ? "Bitte einen Username eingeben." : undefined;
 }

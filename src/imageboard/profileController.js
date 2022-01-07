@@ -13,6 +13,11 @@ export async function editProfile(ctx) {
 }
 
 export async function submitEditProfile(ctx) {
+  if (ctx.session.csrf !== ctx.request.body._csrf) {
+    ctx.throw(401);
+  }
+  ctx.session.csrf = undefined;
+
   const newUserData = ctx.request.body;
   await userModel.editUser(ctx.db, newUserData, ctx.params.username);
 
@@ -20,6 +25,11 @@ export async function submitEditProfile(ctx) {
 }
 
 export async function submitEditProfilePicture(ctx) {
+  if (ctx.session.csrf !== ctx.request.body._csrf) {
+    ctx.throw(401);
+  }
+  ctx.session.csrf = undefined;
+
   const uploadPath = ctx.request.files.image.path;
   const fileType = ctx.request.files.image.type;
 
@@ -46,7 +56,10 @@ export async function askDeleteProfile(ctx) {
 }
 
 export async function deleteProfile(ctx) {
-  console.log(ctx.request.body);
+  if (ctx.session.csrf !== ctx.request.body._csrf) {
+    ctx.throw(401);
+  }
+  ctx.session.csrf = undefined;
 
   await userModel.deleteProfilePicture(ctx.db, ctx.params.username);
   const userData = await userModel.deleteUser(ctx.db, ctx.params.username);

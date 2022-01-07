@@ -26,6 +26,19 @@ export async function getComments(db, id) {
 }
 
 /**
+ * Returns single comment from specific image with id.
+ * @param {sqlite.Database} db
+ * @param {number} id
+ * =>
+ * @returns {Promise<comment>}
+ */
+export async function getSingleComment(db, id) {
+  const sql = `SELECT * FROM comment WHERE id=$id`;
+
+  return await db.get(sql, { $id: id });
+}
+
+/**
  * Adds Comment to Image.
  * @param {sqlite.Database} db
  * @param {number} id

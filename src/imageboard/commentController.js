@@ -27,7 +27,29 @@ export async function submitComment(ctx) {
   ctx.redirect("/image/" + ctx.params.id);
 }
 
+export async function askDelete(ctx) {
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
+
+  const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
+  const commentData = await commentModel.getSingleComment(
+    ctx.db,
+    ctx.params.commentid
+  );
+
+  await ctx.render("deleteCommentForm", {
+    image: imageData,
+    comment: commentData,
+    csrf: token,
+  });
+}
+
 export async function deleteCommentById(ctx) {
+  if (ctx.session.csrf !== ctx.request.body._csrf) {
+    ctx.throw(401);
+  }
+  ctx.session.csrf = undefined;
+
   const commentData = await commentModel.deleteSingleComment(
     ctx.db,
     ctx.params.commentid

@@ -10,12 +10,14 @@
 <p><img src="/images/uploads/{{ image.src }}" alt=""></p>
 <a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
 
-{%for comment in comments %}
+{% for comment in comments %}
+
 <p>{{comment.author}}</p>
 <p>{{comment.date_uploaded}}</p>
 <p>{{comment.text}}</p>
 <a href="/image/{{ image.id }}/{{comment.id}}">Kommentar löschen</a>
-{%endfor%}
+
+{% endfor %}
 
 <div>
     <form action="#" method="post">

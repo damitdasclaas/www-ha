@@ -7,6 +7,8 @@ Author mit User Login verbinden damit username immer = author ist
 
 Bei create user den username auf existenz abfragen und ansonsten fehler schmeißen !ERLEDIGT
 
+Alle Form Fehler abfangen
+
 Profil löschen mit passwort bestätigen
 
 Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufbar -> nicht mehr erlauben

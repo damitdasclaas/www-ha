@@ -4,6 +4,7 @@ import * as loginFormController from "./loginController.js";
 import * as profileFormController from "./profileController.js";
 import * as imageFormController from "./imageController.js";
 import * as commentFormController from "./commentController.js";
+import * as perms from "./hasPermission.js";
 
 import koaBody from "koa-body";
 import Router from "@koa/router";

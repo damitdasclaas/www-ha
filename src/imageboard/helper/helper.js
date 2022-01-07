@@ -24,6 +24,7 @@ export async function checkPermission(user, permission) {
 export async function validateLoginForm(loginData) {
   return {
     username: validateUsername(loginData.username),
+    password: validatePassword(loginData.password),
   };
 }
 
@@ -33,6 +34,10 @@ export function containsText(string) {
 
 export function validateUsername(username) {
   return !containsText(username) ? "Bitte einen Username eingeben." : undefined;
+}
+
+export function validatePassword(password) {
+  return !containsText(password) ? "Bitte ein Passwort eingeben." : undefined;
 }
 
 // password auf sicherheit prüfen

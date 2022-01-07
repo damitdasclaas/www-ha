@@ -12,15 +12,20 @@
               <li><a href="/">Home</a></li>
               <li><a href="/profile">Profile</a></li>
               <li><a href="/upload">Upload</a></li>
-              <li><a href="/login">Log In</a></li>
-              {% if loggedinVARbenötigt %}
+
+              {% if user %}
               <li><a href="/logout">Log Out</a></li>
+              {% else %}
+              <li><a href="/login">Log In</a></li>
               {% endif %}
+
             </ul>
           </nav>
+
           {% if flash %}
           <p>{{ flash }}</p>
           {% endif %}
+
         {% block content %}
         {% endblock %}
     </main>

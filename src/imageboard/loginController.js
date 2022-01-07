@@ -36,6 +36,13 @@ export async function submitLogin(ctx) {
         ctx.session.flash = "Du bist als " + user.username + " eingeloggt.";
 
         ctx.redirect("/profile/" + user.username);
+      } else {
+        errors = { password: "Das Passwort für diesen Usernamen ist falsch." };
+
+        loginData.password = undefined;
+        loginData = { ...loginData, errors };
+
+        await renderForm(ctx, loginData);
       }
     } else {
       errors = { username: "Dieser Username existiert nicht." };

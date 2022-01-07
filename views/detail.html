@@ -20,11 +20,8 @@
 {% endfor %}
 
 <div>
-    <form action="#" method="post">
+    <form action="/image/{{ image.id }}/addcomment" method="post">
         <input type="hidden" name="_csrf" value="{{csrf}}">
-
-        <label for="author">Author</label>
-        <input type="text" name="author"/>
 
         <label for="text">Text</label>
         <textarea name="text"></textarea>

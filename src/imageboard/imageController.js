@@ -31,7 +31,7 @@ export async function submitUpload(ctx) {
   const fileName = await helper.getFileName(uploadPath);
 
   if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
-    await imageModel.addImage(ctx.db, fileName);
+    await imageModel.addImage(ctx.db, fileName, ctx.session.user.username);
   } else {
     await imageModel.deleteFile(uploadPath);
   }

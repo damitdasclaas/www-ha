@@ -4,8 +4,11 @@ import * as loginFormController from "./loginController.js";
 import * as profileFormController from "./profileController.js";
 import * as imageFormController from "./imageController.js";
 import * as commentFormController from "./commentController.js";
+
 import hasPermission from "./middleware/hasPermission.js";
 import flash from "./middleware/flash.js";
+import isLoggedIn from "./middleware/isLoggedIn.js";
+import isLoggedOut from "./middleware/isLoggedOut.js";
 
 import koaBody from "koa-body";
 import Router from "@koa/router";
@@ -19,15 +22,24 @@ router.get("/profile", controller.profile);
 
 router.get("/profile/:username", flash(), controller.profileDetail);
 
-router.get("/profile/:username/settings", profileFormController.editProfile);
+router.get(
+  "/profile/:username/settings",
+  isLoggedIn(),
+  hasPermission("edit profile"),
+  profileFormController.editProfile
+);
 router.post(
   "/profile/:username/settings",
+  isLoggedIn(),
+  hasPermission("edit profile"),
   koaBody(),
   profileFormController.submitEditProfile
 );
 
 router.post(
   "/profile/:username/settings/profile_picture",
+  isLoggedIn(),
+  hasPermission("edit profile"),
   koaBody({
     multipart: true,
     formidable: {
@@ -38,24 +50,42 @@ router.post(
   profileFormController.submitEditProfilePicture
 );
 
-router.get("/profile/:username/delete", profileFormController.askDeleteProfile);
+router.get(
+  "/profile/:username/delete",
+  isLoggedIn(),
+  hasPermission("delete profile"),
+  profileFormController.askDeleteProfile
+);
 router.post(
   "/profile/:username/delete",
+  isLoggedIn(),
+  hasPermission("delete profile"),
   koaBody(),
   profileFormController.deleteProfile
 );
 
-router.get("/login", loginFormController.login);
-router.post("/login", koaBody(), loginFormController.submitLogin);
+router.get("/login", isLoggedOut(), loginFormController.login);
+router.post(
+  "/login",
+  isLoggedOut(),
+  koaBody(),
+  loginFormController.submitLogin
+);
 
-router.get("/logout", controller.logout);
+router.get("/logout", isLoggedIn(), controller.logout);
 
-router.get("/create", createFormController.createUser);
-router.post("/create", koaBody(), createFormController.submitCreateUser);
+router.get("/create", isLoggedOut(), createFormController.createUser);
+router.post(
+  "/create",
+  isLoggedOut(),
+  koaBody(),
+  createFormController.submitCreateUser
+);
 
-router.get("/upload", imageFormController.upload);
+router.get("/upload", isLoggedIn(), imageFormController.upload);
 router.post(
   "/upload",
+  isLoggedIn(),
   koaBody({
     multipart: true,
     formidable: {
@@ -68,22 +98,28 @@ router.post(
 
 router.get("/image/:id", commentFormController.detail);
 router.post(
-  "/image/:id",
-  hasPermission("test"),
+  "/image/:id/addcomment",
+  isLoggedIn(),
   koaBody(),
   commentFormController.submitComment
 );
 
-router.get("/image/:id/delete", imageFormController.askDelete);
+router.get("/image/:id/delete", isLoggedIn(), imageFormController.askDelete);
 router.post(
   "/image/:id/delete",
+  isLoggedIn(),
   koaBody(),
   imageFormController.deleteImageById
 );
 
-router.get("/image/:id/:commentid", commentFormController.askDelete);
+router.get(
+  "/image/:id/:commentid",
+  isLoggedIn(),
+  commentFormController.askDelete
+);
 router.post(
   "/image/:id/:commentid",
+  isLoggedIn(),
   koaBody(),
   commentFormController.deleteCommentById
 );

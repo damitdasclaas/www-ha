@@ -42,17 +42,18 @@ export async function getSingleComment(db, id) {
  * Adds Comment to Image.
  * @param {sqlite.Database} db
  * @param {number} id
+ * @param {string} author
  * @param {comment} comment
  * =>
  *
  */
-export async function addComment(db, id, comment) {
+export async function addComment(db, id, author, comment) {
   const sql = `INSERT INTO comment (image_id, author, text, date_uploaded) 
     VALUES ($image_id, $author, $text, $date_uploaded)`;
 
   await db.run(sql, {
     $image_id: id,
-    $author: comment.author,
+    $author: author,
     $text: comment.text,
     $date_uploaded: new Date().toISOString(),
   });

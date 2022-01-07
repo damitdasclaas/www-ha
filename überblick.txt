@@ -1,0 +1,46 @@
+immer erlaubt:
+
+get auf "/"
+
+get auf "/profile"
+
+get auf "/profile/:username"
+
+get auf "/login"
+post auf "/login"
+
+get auf "/create"
+post auf "/create"
+
+get auf "/image/:id
+
+user:
+
+"edit profile"
+get auf "/profile/:username/settings"
+post auf "/profile/:username/settings"
+post auf "/profile/:username/settings/profile_pictures"
+
+get auf "/logout"
+
+"add image"
+get auf "/upload"
+post auf "/upload"
+
+"add comment"
+post auf "/image/:id/addcomment"
+
+(wenn möglich nur eigene beiträge)
+"delete image"
+get auf "/image/:id/delete"
+post auf "/image/:id/delete"
+
+"delete comment"
+get auf "/image/:id/:commentid"
+post auf "/image/:id/:commentid"
+
+admin:
+
+"delete profile"
+get auf "/profile/:username/delete"
+post auf "/profile/:username/delete"

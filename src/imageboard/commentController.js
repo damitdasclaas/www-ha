@@ -31,7 +31,12 @@ export async function submitComment(ctx) {
   }
   ctx.session.csrf = undefined;
 
-  await commentModel.addComment(ctx.db, ctx.params.id, ctx.request.body);
+  await commentModel.addComment(
+    ctx.db,
+    ctx.params.id,
+    ctx.session.user.username,
+    ctx.request.body
+  );
 
   ctx.redirect("/image/" + ctx.params.id);
 }

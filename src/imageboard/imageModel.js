@@ -41,16 +41,17 @@ export async function getSingleImage(db, id) {
  * Adds Image with fileName.
  * @param {sqlite.Database} db
  * @param {String} fileName
+ * @param {String} username
  * =>
  *
  */
-export async function addImage(db, fileName) {
+export async function addImage(db, fileName, username) {
   const sql = `INSERT INTO image (src, author, date_uploaded) 
   VALUES ($src, $author, $date_uploaded)`;
 
   await db.run(sql, {
     $src: fileName,
-    $author: "New Author",
+    $author: username,
     $date_uploaded: new Date().toISOString(),
   });
 }

@@ -1,9 +1,9 @@
 Noch zu erledigen:
 
 Liste mit allen Profilen !ERLEDIGT
-Login mit Session speichern 
+Login mit Session speichern !ERLEDIGT
 
-Author mit User Login verbinden damit username immer = author ist
+Author mit User Login verbinden damit username immer = author ist !ERLEDIGT
 
 Bei create user den username auf existenz abfragen und ansonsten fehler schmeißen !ERLEDIGT
 
@@ -11,7 +11,7 @@ Alle Form Fehler abfangen
 
 Profil löschen mit passwort bestätigen
 
-Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufbar -> nicht mehr erlauben
+Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufbar -> nicht mehr erlauben !ERLEDIGT
 
 passwort soll sonderzeichen, großbuchstaben und Zahl enthalten
 
@@ -34,3 +34,5 @@ UserPermissions erstellen
 Dokuseite und Zeitstrahlseite
 Doku Inhalt
 Zeitstrahl Inhalt
+
+rollen erben nicht

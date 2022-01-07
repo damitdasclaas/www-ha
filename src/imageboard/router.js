@@ -1,8 +1,9 @@
 import * as controller from "./controller.js";
-import * as commentFormController from "./commentController.js";
-import * as loginFormController from "./loginController.js";
 import * as createFormController from "./createController.js";
+import * as loginFormController from "./loginController.js";
 import * as profileFormController from "./profileController.js";
+import * as imageFormController from "./imageController.js";
+import * as commentFormController from "./commentController.js";
 
 import koaBody from "koa-body";
 import Router from "@koa/router";
@@ -15,13 +16,12 @@ router.get("/", controller.index);
 router.get("/profile", controller.profile);
 
 router.get("/profile/:username", controller.profileDetail);
-router.get("/profile/:username/delete", controller.deleteProfile);
 
-router.get("/profile/:username/settings", controller.editProfile);
+router.get("/profile/:username/settings", profileFormController.editProfile);
 router.post(
   "/profile/:username/settings",
   koaBody(),
-  profileFormController.editProfile
+  profileFormController.submitEditProfile
 );
 
 router.post(
@@ -33,18 +33,21 @@ router.post(
       keepExtensions: true,
     },
   }),
-  profileFormController.uploadProfilePicture
+  profileFormController.submitEditProfilePicture
 );
 
+router.get("/profile/:username/delete", profileFormController.askDeleteProfile);
+router.post("/profile/:username/delete", profileFormController.deleteProfile);
+
 router.get("/login", loginFormController.login);
-router.post("/login", koaBody(), loginFormController.submitForm);
+router.post("/login", koaBody(), loginFormController.submitLogin);
 
 router.get("/logout", loginFormController.logout);
 
-router.get("/create", controller.createUser);
-router.post("/create", koaBody(), createFormController.createUser);
+router.get("/create", createFormController.createUser);
+router.post("/create", koaBody(), createFormController.submitCreateUser);
 
-router.get("/upload", controller.renderUpload);
+router.get("/upload", imageFormController.upload);
 router.post(
   "/upload",
   koaBody({
@@ -54,13 +57,13 @@ router.post(
       keepExtensions: true,
     },
   }),
-  controller.upload
+  imageFormController.submitUpload
 );
 
 router.get("/image/:id", commentFormController.detail);
 router.post("/image/:id", koaBody(), commentFormController.addComment);
 
-router.get("/image/:id/delete", controller.askDelete);
-router.post("/image/:id/delete", controller.deleteImageById);
+router.get("/image/:id/delete", imageFormController.askDelete);
+router.post("/image/:id/delete", imageFormController.deleteImageById);
 
-router.get("/image/:id/:commentid", controller.deleteCommentById);
+router.get("/image/:id/:commentid", commentFormController.deleteCommentById);

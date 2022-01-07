@@ -11,6 +11,8 @@ Profil löschen mit passwort bestätigen
 
 Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufbar -> nicht mehr erlauben
 
+passwort soll sonderzeichen, großbuchstaben und Zahl enthalten
+
 UserPermissions erstellen
     Admin kann alles was User kann und:
     -kann alles entfernen und erstellen

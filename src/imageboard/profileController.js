@@ -1,17 +1,26 @@
 import * as userModel from "./userModel.js";
+import * as helper from "./helper/helper.js";
 
 export async function editProfile(ctx) {
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
+
+  await ctx.render("profileEdit", {
+    user: userData,
+  });
+}
+
+export async function submitEditProfile(ctx) {
   const newUserData = ctx.request.body;
   await userModel.editUser(ctx.db, newUserData, ctx.params.username);
 
   ctx.redirect("/profile/" + ctx.params.username);
 }
 
-export async function uploadProfilePicture(ctx) {
+export async function submitEditProfilePicture(ctx) {
   const uploadPath = ctx.request.files.image.path;
   const fileType = ctx.request.files.image.type;
 
-  const fileName = getFileName(uploadPath);
+  const fileName = helper.getFileName(uploadPath);
 
   if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
     await userModel.editProfilePicture(ctx.db, ctx.params.username, fileName);
@@ -24,16 +33,28 @@ export async function uploadProfilePicture(ctx) {
   await ctx.render("profileEdit", { user: userData });
 }
 
-// --------------Helper functions----------------
+export async function askDeleteProfile(ctx) {
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
 
-function getFileName(filePath) {
-  if (filePath.includes("/")) {
-    const temp = filePath.split("/");
-    return temp[temp.length - 1];
-  } else {
-    const temp = filePath.split("\\");
-    return temp[temp.length - 1];
-  }
+  await ctx.render("deleteProfileForm", {
+    userData: userData,
+  });
 }
 
-// --------------Helper functions----------------
+export async function deleteProfile(ctx) {
+  await userModel.deleteProfilePicture(ctx.db, ctx.params.username);
+  const userData = await userModel.deleteUser(ctx.db, ctx.params.username);
+
+  ctx.redirect("/profile");
+  if (userData != 0) {
+    ctx.status = 204;
+    ctx.redirect("/profile");
+
+    return;
+  } else {
+    ctx.status = 404;
+    ctx.redirect("/profile");
+
+    return;
+  }
+}

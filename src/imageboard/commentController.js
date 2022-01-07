@@ -21,3 +21,22 @@ export async function addComment(ctx) {
 async function renderDetailForm(ctx, imageData, commentData) {
   await ctx.render("detail", { image: imageData, comments: commentData });
 }
+
+export async function deleteCommentById(ctx) {
+  const commentData = await commentModel.deleteSingleComment(
+    ctx.db,
+    ctx.params.commentid
+  );
+
+  if (commentData != 0) {
+    ctx.status = 204;
+    ctx.redirect("/image/" + ctx.params.id);
+
+    return;
+  } else {
+    ctx.status = 404;
+    ctx.redirect("/");
+
+    return;
+  }
+}

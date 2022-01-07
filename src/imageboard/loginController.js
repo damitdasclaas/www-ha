@@ -1,5 +1,5 @@
 import * as userModel from "./userModel.js";
-import * as csrf from "./csrf.js";
+import * as csrf from "./helper/csrf.js";
 
 async function renderForm(ctx, preparedData) {
   const token = await csrf.generateToken();
@@ -13,7 +13,7 @@ export async function login(ctx) {
   await renderForm(ctx, preparedData);
 }
 
-export async function submitForm(ctx) {
+export async function submitLogin(ctx) {
   let loginData = ctx.request.body;
   let errors = await validateForm(loginData);
 

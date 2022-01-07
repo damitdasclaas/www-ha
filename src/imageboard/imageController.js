@@ -1,6 +1,7 @@
 import * as imageModel from "./imageModel.js";
 import * as commentModel from "./commentModel.js";
 import * as userModel from "./userModel.js";
+import * as helper from "./helper/helper.js";
 import * as permissionModel from "./permissionModel.js";
 
 async function renderForm(ctx, preparedData) {
@@ -11,26 +12,14 @@ async function renderForm(ctx, preparedData) {
 }
 
 export async function upload(ctx) {
-  const uploadPath = ctx.request.files.image.path;
-  const fileType = ctx.request.files.image.type;
-
-  const fileName = getFileName(uploadPath);
-
-  if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
-    await imageModel.addImage(ctx.db, fileName);
-  } else {
-    await imageModel.deleteFile(uploadPath);
-  }
-
   await ctx.render("upload");
-  ctx.redirect("/");
 }
 
-export async function upload(ctx) {
+export async function submitUpload(ctx) {
   const uploadPath = ctx.request.files.image.path;
   const fileType = ctx.request.files.image.type;
 
-  const fileName = getFileName(uploadPath);
+  const fileName = helper.getFileName(uploadPath);
 
   if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
     await imageModel.addImage(ctx.db, fileName);
@@ -38,14 +27,13 @@ export async function upload(ctx) {
     await imageModel.deleteFile(uploadPath);
   }
 
-  await ctx.render("upload");
   ctx.redirect("/");
 }
 
 export async function askDelete(ctx) {
   const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
 
-  await ctx.render("deleteForm", {
+  await ctx.render("deleteImageForm", {
     image: imageData,
   });
 }
@@ -70,39 +58,3 @@ export async function deleteImageById(ctx) {
     return;
   }
 }
-
-export async function deleteCommentById(ctx) {
-  const commentData = await commentModel.deleteSingleComment(
-    ctx.db,
-    ctx.params.commentid
-  );
-
-  if (commentData != 0) {
-    ctx.status = 204;
-    ctx.redirect("/image/" + ctx.params.id);
-
-    return;
-  } else {
-    ctx.status = 404;
-    ctx.redirect("/");
-
-    return;
-  }
-}
-
-// --------------Helper functions----------------
-
-function getFileName(filePath) {
-  if (filePath.includes("/")) {
-    const temp = filePath.split("/");
-    return temp[temp.length - 1];
-  } else {
-    const temp = filePath.split("\\");
-    return temp[temp.length - 1];
-  }
-}
-
-function checkPermission(user, permission) {
-  return user.permissions.includes(permission);
-}
-// ----------------------------------------------

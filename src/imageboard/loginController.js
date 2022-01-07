@@ -5,11 +5,6 @@ async function renderForm(ctx, preparedData) {
   const token = await csrf.generateToken();
   ctx.session.csrf = token;
 
-  if (ctx.session.flash) {
-    ctx.state.flash = ctx.session.flash;
-    ctx.session.flash = undefined;
-  }
-
   await ctx.render("login", { form: preparedData, csrf: token });
 }
 

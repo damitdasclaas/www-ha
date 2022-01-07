@@ -3,73 +3,27 @@ import * as commentModel from "./commentModel.js";
 import * as userModel from "./userModel.js";
 import * as permissionModel from "./permissionModel.js";
 
-export async function index(ctx) {
-  const imageData = await imageModel.getAllImages(ctx.db);
+async function renderForm(ctx, preparedData) {
+  const token = await csrf.generateToken();
+  ctx.session.csrf = token;
 
-  await ctx.render("index", { images: imageData });
+  await ctx.render("upload", { form: preparedData, csrf: token });
 }
 
-export async function profile(ctx) {
-  const userData = await userModel.getAllUser(ctx.db);
+export async function upload(ctx) {
+  const uploadPath = ctx.request.files.image.path;
+  const fileType = ctx.request.files.image.type;
 
-  await ctx.render("profile", {
-    users: userData,
-  });
-}
+  const fileName = getFileName(uploadPath);
 
-export async function profileDetail(ctx) {
-  const userData = await userModel.getUser(ctx.db, ctx.params.username);
-
-  if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
-    ctx.state.user = ctx.session.user;
-  }
-
-  if (ctx.session.flash) {
-    ctx.state.flash = ctx.session.flash;
-    ctx.session.flash = undefined;
-  }
-
-  await ctx.render("profileDetail", {
-    userData: userData,
-  });
-}
-
-export async function editProfile(ctx) {
-  const userData = await userModel.getUser(ctx.db, ctx.params.username);
-
-  await ctx.render("profileEdit", {
-    user: userData,
-  });
-}
-
-export async function deleteProfile(ctx) {
-  await userModel.deleteProfilePicture(ctx.db, ctx.params.username);
-  const userData = await userModel.deleteUser(ctx.db, ctx.params.username);
-
-  ctx.redirect("/profile");
-  if (userData != 0) {
-    ctx.status = 204;
-    ctx.redirect("/profile");
-
-    return;
+  if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
+    await imageModel.addImage(ctx.db, fileName);
   } else {
-    ctx.status = 404;
-    ctx.redirect("/profile");
-
-    return;
+    await imageModel.deleteFile(uploadPath);
   }
-}
 
-export async function createUser(ctx) {
-  await ctx.render("usercreate");
-}
-
-export async function renderUpload(ctx) {
   await ctx.render("upload");
+  ctx.redirect("/");
 }
 
 export async function upload(ctx) {

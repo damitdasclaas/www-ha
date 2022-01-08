@@ -37,6 +37,28 @@ export async function logout(ctx) {
   ctx.redirect("/");
 }
 
+export async function documentation(ctx) {
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.state.user = ctx.session.user;
+  }
+
+  ctx.render("documentation");
+}
+
+export async function diary(ctx) {
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.state.user = ctx.session.user;
+  }
+
+  ctx.render("diary");
+}
+
 export async function profileDetail(ctx) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;

@@ -108,3 +108,6 @@ dist
 
 # databases
 */data
+
+# DS Store
+.DS_Store

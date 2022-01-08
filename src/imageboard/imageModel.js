@@ -79,6 +79,33 @@ export async function deleteImageById(db, id) {
 }
 
 /**
+ * Deletes an image from the database and folder.
+ * @param {sqlite.Database} db
+ * @param {String} username
+ * =>
+ */
+export async function deleteImagesByUser(db, username) {
+  if (username != undefined) {
+    let sql = `SELECT * FROM image WHERE author=$username`;
+
+    const imageData = await db.all(sql, { $username: username });
+
+    function deleteFile(image) {
+      if (image != undefined) {
+        fs.unlinkSync(process.cwd() + "/web/images/uploads/" + image.src);
+      }
+    }
+
+    imageData.map((image) => deleteFile(image));
+
+    sql = `DELETE FROM image WHERE author=$username`;
+
+    const result = await db.run(sql, { $username: username });
+    return result.changes;
+  }
+}
+
+/**
  * Deletes an image from the folder.
  * @param {string} path
  * =>

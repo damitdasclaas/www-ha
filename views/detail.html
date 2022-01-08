@@ -9,7 +9,7 @@
 <p>{{image.author}}</p>
 <p><img src="/images/uploads/{{ image.src }}" alt="Upload {{ image.id }}"></p>
 
-{% if user.username == image.author %}
+{% if user.username == image.author or user.role == "admin" %}
 <a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
 {% endif %}
 
@@ -20,7 +20,7 @@
 <p>{{comment.date_uploaded}}</p>
 <p>{{comment.text}}</p>
 
-{% if user.username == comment.author %}
+{% if user.username == comment.author or user.role == "admin" %}
 <a href="/image/{{ image.id }}/{{comment.id}}">Kommentar löschen</a>
 {% endif %}
 

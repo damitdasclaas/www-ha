@@ -76,6 +76,21 @@ export async function deleteCommentsByImage(db, id) {
 }
 
 /**
+ * Deletes all comments from a user from the database.
+ * @param {sqlite.Database} db
+ * @param {String} username
+ * =>
+ */
+export async function deleteCommentsByUser(db, username) {
+  if (username != undefined) {
+    const sql = `DELETE FROM comment WHERE author=$username`;
+
+    const result = await db.run(sql, { $username: username });
+    return result.changes;
+  }
+}
+
+/**
  * Deletes a single comment from an image from the database.
  * @param {sqlite.Database} db
  * @param {number} id

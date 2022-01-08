@@ -1,4 +1,6 @@
 import * as userModel from "./userModel.js";
+import * as imageModel from "./imageModel.js";
+import * as commentModel from "./commentModel.js";
 import * as helper from "./helper/helper.js";
 
 export async function renderForm(ctx, errors) {
@@ -91,6 +93,9 @@ export async function deleteProfile(ctx) {
   ctx.session.csrf = undefined;
 
   await userModel.deleteProfilePicture(ctx.db, ctx.params.username);
+  await imageModel.deleteImagesByUser(ctx.db, ctx.params.username);
+  await commentModel.deleteCommentsByUser(ctx.db, ctx.params.username);
+
   const userData = await userModel.deleteUser(ctx.db, ctx.params.username);
 
   if (userData != 0) {

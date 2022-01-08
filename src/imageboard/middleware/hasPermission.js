@@ -10,6 +10,8 @@ export default function hasPermission(permission) {
     } else {
       const sessionUsername = ctx.session.user.username;
       let user;
+      let image;
+      let comment;
 
       switch (permission) {
         case "edit profile":
@@ -37,7 +39,7 @@ export default function hasPermission(permission) {
           break;
 
         case "delete image":
-          const image = await imageModel.getSingleImage(ctx.db, ctx.params.id);
+          image = await imageModel.getSingleImage(ctx.db, ctx.params.id);
 
           if (image.author == sessionUsername) {
             await next();
@@ -47,7 +49,7 @@ export default function hasPermission(permission) {
           break;
 
         case "delete comment":
-          const comment = await commentModel.getSingleComment(
+          comment = await commentModel.getSingleComment(
             ctx.db,
             ctx.params.commentid
           );

@@ -6,6 +6,7 @@
 <h1>Home</h1>
 {% for image in images %}
     <a href="/image/{{image.id}}"><img src="/images/uploads/{{image.src}}" alt="Upload {{ image.id }}"></a>
+    <a href="/image/{{image.d}}">Kommentare sehen</a>
 {% endfor %}
 
 {% endblock %}

@@ -7,7 +7,7 @@
 
 <p>{{image.date_uploaded}}</p>
 <p>{{image.author}}</p>
-<p><img src="/images/uploads/{{ image.src }}" alt=""></p>
+<p><img src="/images/uploads/{{ image.src }}" alt="Upload {{ image.id }}"></p>
 <a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
 
 {% for comment in comments %}
@@ -19,6 +19,7 @@
 
 {% endfor %}
 
+{% if user %}
 <div>
     <form action="/image/{{ image.id }}/addcomment" method="post">
         <input type="hidden" name="_csrf" value="{{csrf}}">
@@ -29,5 +30,10 @@
         <input type="submit" value="Absenden">
     </form>
 </div>
+{% endif %}
+
+{% if error %}
+<p>{{error.comment}}</p>
+{% endif %}
 
 {% endblock %}

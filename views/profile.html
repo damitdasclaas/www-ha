@@ -6,7 +6,7 @@
 <h1>Profile</h1>
 
 {% for user in users %}
-<a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture"></a>
+<a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture from {{ user.username }}"></a>
 
 <a href="/profile/{{user.username}}"><p>Username: {{user.username}}</p></a>
 {% endfor %}

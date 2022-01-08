@@ -32,6 +32,25 @@ export async function validateLoginForm(loginData) {
   };
 }
 
+export async function validateCommentForm(comment) {
+  return {
+    comment: validateComment(comment),
+  };
+}
+
+export async function validateCreateForm(formData) {
+  return {
+    username: validateUsername(formData.username),
+    password: validatePassword(formData.password),
+  };
+}
+
+export async function validateUploadFile(fileType) {
+  return {
+    fileType: validateFileType(fileType),
+  };
+}
+
 export function containsText(string) {
   return typeof string == "string" && string.length >= 3;
 }
@@ -44,5 +63,22 @@ export function validatePassword(password) {
   return !containsText(password) ? "Bitte ein Passwort eingeben." : undefined;
 }
 
+export function validateComment(comment) {
+  return !containsText(comment) ? "Bitte Text eingeben." : undefined;
+}
+
+export function validateFileType(fileType) {
+  if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
+    return undefined;
+  } else {
+    return "Bitte .PNG oder .JPEG hochladen.";
+  }
+}
+
+export function formatISODate(isodate) {
+  const dateAndTime = isodate.split("T");
+  const date = dateAndTime[0].split("-").reverse().join(".");
+  const time = dateAndTime[1].slice(0, 5);
+  return date + " at " + time;
+}
 // password auf sicherheit prüfen
-// ISO String aufbereitungs function machen

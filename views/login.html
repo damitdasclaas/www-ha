@@ -10,14 +10,14 @@
         <input type="hidden" name="_csrf" value="{{csrf}}">
         
         <label for="username">Username</label>
-        <input type="text" name = "username" value="{{ form.username }}"/>
+        <input type="text" name = "username" required="required" value="{{ form.username }}"/>
 
         {% if form.errors %}
         <p>{{form.errors.username}}</p>
         {% endif %}
 
         <label for="password">Passwort</label>
-        <input type="password" name = "password"/>
+        <input type="password" name="password" required="required"/>
 
         {% if form.errors %}
         <p>{{form.errors.password}}</p>

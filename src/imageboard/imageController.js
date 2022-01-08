@@ -1,22 +1,20 @@
 import * as imageModel from "./imageModel.js";
 import * as commentModel from "./commentModel.js";
-import * as userModel from "./userModel.js";
 import * as helper from "./helper/helper.js";
-import * as permissionModel from "./permissionModel.js";
 
-export async function upload(ctx) {
+export async function renderForm(ctx, errors) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 
-  await ctx.render("upload", { csrf: token });
+  await ctx.render("upload", { csrf: token, error: errors });
+}
+
+export async function upload(ctx) {
+  await renderForm(ctx, undefined);
 }
 
 export async function submitUpload(ctx) {
@@ -30,13 +28,17 @@ export async function submitUpload(ctx) {
 
   const fileName = await helper.getFileName(uploadPath);
 
-  if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
-    await imageModel.addImage(ctx.db, fileName, ctx.session.user.username);
-  } else {
-    await imageModel.deleteFile(uploadPath);
-  }
+  const errors = await helper.validateUploadFile(fileType);
 
-  ctx.redirect("/");
+  if (Object.values(errors).some(Boolean)) {
+    await imageModel.deleteFile(uploadPath);
+
+    await renderForm(ctx, errors);
+  } else {
+    await imageModel.addImage(ctx.db, fileName, ctx.session.user.username);
+
+    ctx.redirect("/");
+  }
 }
 
 export async function askDelete(ctx) {
@@ -44,10 +46,6 @@ export async function askDelete(ctx) {
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 

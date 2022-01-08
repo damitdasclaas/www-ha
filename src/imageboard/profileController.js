@@ -1,25 +1,29 @@
 import * as userModel from "./userModel.js";
-import * as permissionModel from "./permissionModel.js";
 import * as helper from "./helper/helper.js";
 
-export async function editProfile(ctx) {
+export async function renderForm(ctx, errors) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 
   const userData = await userModel.getUser(ctx.db, ctx.params.username);
 
-  await ctx.render("profileEdit", {
-    user: userData,
-    csrf: token,
-  });
+  if (userData != undefined) {
+    await ctx.render("profileEdit", {
+      user: userData,
+      csrf: token,
+      error: errors,
+    });
+  } else {
+    ctx.throw(404);
+  }
+}
+
+export async function editProfile(ctx) {
+  await renderForm(ctx, undefined);
 }
 
 export async function submitEditProfile(ctx) {
@@ -45,13 +49,17 @@ export async function submitEditProfilePicture(ctx) {
 
   const fileName = await helper.getFileName(uploadPath);
 
-  if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
-    await userModel.editProfilePicture(ctx.db, ctx.params.username, fileName);
-  } else {
-    await userModel.deleteFile(uploadPath);
-  }
+  const errors = await helper.validateUploadFile(fileType);
 
-  ctx.redirect("/profile/" + ctx.params.username + "/settings");
+  if (Object.values(errors).some(Boolean)) {
+    await userModel.deleteFile(uploadPath);
+
+    await renderForm(ctx, errors);
+  } else {
+    await userModel.editProfilePicture(ctx.db, ctx.params.username, fileName);
+
+    ctx.redirect("/profile/" + ctx.params.username + "/settings");
+  }
 }
 
 export async function askDeleteProfile(ctx) {
@@ -59,10 +67,6 @@ export async function askDeleteProfile(ctx) {
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 

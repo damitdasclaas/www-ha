@@ -104,10 +104,16 @@ router.post(
   commentFormController.submitComment
 );
 
-router.get("/image/:id/delete", isLoggedIn(), imageFormController.askDelete);
+router.get(
+  "/image/:id/delete",
+  isLoggedIn(),
+  hasPermission("delete image"),
+  imageFormController.askDelete
+);
 router.post(
   "/image/:id/delete",
   isLoggedIn(),
+  hasPermission("delete image"),
   koaBody(),
   imageFormController.deleteImageById
 );
@@ -115,11 +121,13 @@ router.post(
 router.get(
   "/image/:id/:commentid",
   isLoggedIn(),
+  hasPermission("delete comment"),
   commentFormController.askDelete
 );
 router.post(
   "/image/:id/:commentid",
   isLoggedIn(),
+  hasPermission("delete comment"),
   koaBody(),
   commentFormController.deleteCommentById
 );

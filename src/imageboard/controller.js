@@ -1,7 +1,5 @@
 import * as imageModel from "./imageModel.js";
-import * as commentModel from "./commentModel.js";
 import * as userModel from "./userModel.js";
-import * as permissionModel from "./permissionModel.js";
 import * as helper from "./helper/helper.js";
 
 export async function index(ctx) {
@@ -9,10 +7,6 @@ export async function index(ctx) {
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 
@@ -26,10 +20,6 @@ export async function profile(ctx) {
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 
@@ -52,16 +42,16 @@ export async function profileDetail(ctx) {
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 
   const userData = await userModel.getUser(ctx.db, ctx.params.username);
 
-  await ctx.render("profileDetail", {
-    userData: userData,
-  });
+  if (userData != undefined) {
+    await ctx.render("profileDetail", {
+      userData: userData,
+    });
+  } else {
+    ctx.throw(404);
+  }
 }

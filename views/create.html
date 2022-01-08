@@ -10,16 +10,25 @@
         <input type="hidden" name="_csrf" value="{{csrf}}">
 
         <label for="fullname">Fullname</label>
-        <input type="text" name = "fullname"/>
+        <input type="text" name = "fullname" value="{{form.fullname}}"/>
 
         <label for="username">Username</label>
-        <input type="text" name = "username"/>
+        <input type="text" name = "username" required="required" value="{{form.username}}"/>
+
+        {% if error %}
+            <p>{{error.username}}</p>
+         {% endif %}
+
 
         <label for="email">Email</label>
-        <input type="text" name = "email"/>
+        <input type="text" name = "email" value="{{form.email}}"/>
 
         <label for="password">Password</label>
-        <input type="password" name = "password"/>
+        <input type="password" name="password" required="required"/>
+
+        {% if error %}
+            <p>{{error.password}}</p>
+        {% endif %}
 
         <input type="submit" value="Create">
     </form>

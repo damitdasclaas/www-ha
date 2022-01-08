@@ -1,28 +1,35 @@
 import * as commentModel from "./commentModel.js";
-import * as permissionModel from "./permissionModel.js";
 import * as imageModel from "./imageModel.js";
 import * as helper from "./helper/helper.js";
 
-export async function detail(ctx) {
+export async function renderForm(ctx, errors) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 
-  const imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
-  const commentData = await commentModel.getComments(ctx.db, ctx.params.id);
+  let imageData = await imageModel.getSingleImage(ctx.db, ctx.params.id);
+  imageData.date_uploaded = helper.formatISODate(imageData.date_uploaded);
+
+  let commentData = await commentModel.getComments(ctx.db, ctx.params.id);
+
+  commentData.map(
+    (comment) =>
+      (comment.date_uploaded = helper.formatISODate(comment.date_uploaded))
+  );
 
   await ctx.render("detail", {
     image: imageData,
     comments: commentData,
     csrf: token,
+    error: errors,
   });
+}
+
+export async function detail(ctx) {
+  await renderForm(ctx);
 }
 
 export async function submitComment(ctx) {
@@ -31,14 +38,22 @@ export async function submitComment(ctx) {
   }
   ctx.session.csrf = undefined;
 
-  await commentModel.addComment(
-    ctx.db,
-    ctx.params.id,
-    ctx.session.user.username,
-    ctx.request.body
-  );
+  const comment = ctx.request.body.text;
 
-  ctx.redirect("/image/" + ctx.params.id);
+  const errors = await helper.validateCommentForm(comment);
+
+  if (Object.values(errors).some(Boolean)) {
+    await renderForm(ctx, errors);
+  } else {
+    await commentModel.addComment(
+      ctx.db,
+      ctx.params.id,
+      ctx.session.user.username,
+      ctx.request.body
+    );
+
+    ctx.redirect("/image/" + ctx.params.id);
+  }
 }
 
 export async function askDelete(ctx) {
@@ -46,10 +61,6 @@ export async function askDelete(ctx) {
   ctx.session.csrf = token;
 
   if (ctx.session.user) {
-    ctx.session.user.permissions = await permissionModel.getPermissions(
-      ctx.db,
-      ctx.session.user.role
-    );
     ctx.state.user = ctx.session.user;
   }
 

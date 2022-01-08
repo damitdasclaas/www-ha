@@ -18,6 +18,10 @@
     </form>
 </div>
 
+{% if error %}
+<p>{{error.fileType}}</p>
+{% endif %}
+
 <div>
     <form action="/profile/{{user.username}}/settings" method="post">
         <input type="hidden" name="_csrf" value="{{csrf}}">

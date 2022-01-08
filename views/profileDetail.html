@@ -12,6 +12,8 @@
 <p>Fullname: {{userData.fullname}}</p>
 <p>Email: {{userData.email}}</p>
 
+{% if user.role == "admin" or user.username == userData.username %}
 <a href="/profile/{{userData.username}}/settings">Edit Profile</a>
+{% endif %}
 
 {% endblock %}

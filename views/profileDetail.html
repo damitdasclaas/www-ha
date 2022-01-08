@@ -7,6 +7,10 @@
 
 <img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture">
 
+{% if userData.role == "admin" %}
+<p>Admin</p>
+{% endif %}
+
 <p>Username: {{userData.username}}</p>
 
 <p>Fullname: {{userData.fullname}}</p>

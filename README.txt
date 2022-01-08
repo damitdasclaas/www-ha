@@ -7,7 +7,7 @@ Author mit User Login verbinden damit username immer = author ist !ERLEDIGT
 
 Bei create user den username auf existenz abfragen und ansonsten fehler schmeißen !ERLEDIGT
 
-Alle Form Fehler abfangen 
+Alle Form Fehler abfangen !ERLEDIGT glaube ich
 
 Profil löschen mit passwort bestätigen
 
@@ -15,7 +15,7 @@ Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufba
 
 passwort soll sonderzeichen, großbuchstaben und Zahl enthalten
 
-UserPermissions erstellen !sollte ERLEDIGT sein
+UserPermissions erstellen !ERLEDIGT glaube ich
     Admin kann alles was User kann und:
     -kann alles entfernen und erstellen
 
@@ -34,5 +34,3 @@ UserPermissions erstellen !sollte ERLEDIGT sein
 Dokuseite und Zeitstrahlseite
 Doku Inhalt
 Zeitstrahl Inhalt
-
-rollen erben nicht

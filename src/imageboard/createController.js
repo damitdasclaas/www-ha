@@ -9,7 +9,10 @@ export async function renderForm(ctx, formData, errors) {
     ctx.state.user = ctx.session.user;
   }
 
-  formData.password = undefined;
+  if (formData) {
+    formData.password = undefined;
+  }
+
   await ctx.render("create", { csrf: token, form: formData, error: errors });
 }
 

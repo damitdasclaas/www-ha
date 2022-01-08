@@ -57,6 +57,24 @@ export async function editUser(db, user, username) {
 }
 
 /**
+ * Edits user role in database.
+ * @param {sqlite.Database} db
+ * @param {String} username
+ * @param {String} role
+ * =>
+ *
+ */
+export async function editUserRole(db, username, role) {
+  const sql = `UPDATE user
+    SET role = $role WHERE username=$username`;
+
+  await db.run(sql, {
+    $role: role,
+    $username: username,
+  });
+}
+
+/**
  * Deletes user in database.
  * @param {sqlite.Database} db
  * @param {String} username

@@ -13,7 +13,7 @@ export async function renderForm(ctx, errors) {
 
   if (userData != undefined) {
     await ctx.render("profileEdit", {
-      user: userData,
+      userData: userData,
       csrf: token,
       error: errors,
     });
@@ -33,7 +33,13 @@ export async function submitEditProfile(ctx) {
   ctx.session.csrf = undefined;
 
   const newUserData = ctx.request.body;
+
   await userModel.editUser(ctx.db, newUserData, ctx.params.username);
+  await userModel.editUserRole(ctx.db, ctx.params.username, newUserData.role);
+
+  if (ctx.session.user.username == ctx.params.username) {
+    ctx.session.user = await userModel.getUser(ctx.db, ctx.params.username);
+  }
 
   ctx.redirect("/profile/" + ctx.params.username);
 }
@@ -87,16 +93,9 @@ export async function deleteProfile(ctx) {
   await userModel.deleteProfilePicture(ctx.db, ctx.params.username);
   const userData = await userModel.deleteUser(ctx.db, ctx.params.username);
 
-  ctx.redirect("/profile");
   if (userData != 0) {
-    ctx.status = 204;
-    ctx.redirect("/profile");
-
-    return;
+    ctx.redirect("/logout");
   } else {
-    ctx.status = 404;
-    ctx.redirect("/profile");
-
-    return;
+    ctx.throw(404);
   }
 }

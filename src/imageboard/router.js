@@ -37,6 +37,14 @@ router.post(
 );
 
 router.post(
+  "/profile/:username/settings/change_role",
+  isLoggedIn(),
+  hasPermission("edit role"),
+  koaBody(),
+  profileFormController.submitEditProfile
+);
+
+router.post(
   "/profile/:username/settings/profile_picture",
   isLoggedIn(),
   hasPermission("edit profile"),

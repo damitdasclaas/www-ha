@@ -22,6 +22,10 @@ export default function hasPermission(permission) {
           }
           break;
 
+        case "edit role":
+          ctx.throw(401);
+          break;
+
         case "delete profile":
           user = await userModel.getUser(ctx.db, ctx.params.username);
 

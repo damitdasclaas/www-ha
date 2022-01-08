@@ -5,10 +5,10 @@
 {% block content %}
 <h1>Profile</h1>
 
-{% for user in users %}
-<a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture from {{ user.username }}"></a>
+{% for userData in users %}
+<a href="/profile/{{userData.username}}"><img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture from {{ userData.username }}"></a>
 
-<a href="/profile/{{user.username}}"><p>Username: {{user.username}}</p></a>
+<a href="/profile/{{userData.username}}"><p>Username: {{userData.username}}</p></a>
 {% endfor %}
 
 {% endblock %}

@@ -5,10 +5,10 @@
 {% block content %}
 <h1>Profile</h1>
 
-<img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture">
+<img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture">
 
 <div>
-    <form action="/profile/{{user.username}}/settings/profile_picture" method="post" enctype="multipart/form-data">
+    <form action="/profile/{{userData.username}}/settings/profile_picture" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="{{csrf}}">
 
         <label for="image">Change Profile Picture</label>
@@ -23,22 +23,56 @@
 {% endif %}
 
 <div>
-    <form action="/profile/{{user.username}}/settings" method="post">
+    <form action="/profile/{{userData.username}}/settings" method="post">
         <input type="hidden" name="_csrf" value="{{csrf}}">
 
         <label for="fullname">Fullname</label>
-        <input type="text" name="fullname" value="{{ user.fullname }}">
-        
-        {% if form.errors['uri'] %}<p>{{ form.errors['uri'] }}</p>{% endif %}
+        <input type="text" name="fullname" value="{{ userData.fullname }}">
 
         <label for="email">Email</label>
-        <input type="text" name="email" value="{{ user.email }}">
+        <input type="text" name="email" value="{{ userData.email }}">
 
         <input type="submit" value="Speichern"/>
     </form>
 </div>
+{% if user.role == "admin" %}
+<p>{{user.role}}</p>
+    {% if userData.role == "admin" %}
+        <div>
+            <form action="/profile/{{userData.username}}/settings/change_role" method="post">
+                <input type="hidden" name="_csrf" value="{{csrf}}">
 
-<a href="/profile/{{user.username}}/delete">Delete User</a>
-<a href="/profile/{{user.username}}">Cancel</a>
+                <p>Role:</p>
+                <label for="admin">Admin</label>
+                <input type="radio" id="admin" name="role" value="admin" checked>
+
+                <label for="user">User</label>
+                <input type="radio" id="user" name="role" value="user">
+
+                <input type="submit" value="Speichern"/>
+            </form>
+        </div>
+    {% endif %}
+    {% if userData.role == "user" %}
+        <div>
+            <form action="/profile/{{userData.username}}/settings/change_role" method="post">
+                <input type="hidden" name="_csrf" value="{{csrf}}">
+
+                <p>Role:</p>
+                <label for="admin">Admin</label>
+                <input type="radio" id="admin" name="role" value="admin">
+
+                <label for="user">User</label>
+                <input type="radio" id="user" name="role" value="user" checked>
+
+                <input type="submit" value="Speichern"/>
+            </form>
+        </div>
+    {% endif %}
+{% endif %}
+
+
+<a href="/profile/{{userData.username}}/delete">Delete User</a>
+<a href="/profile/{{userData.username}}">Cancel</a>
 
 {% endblock %}

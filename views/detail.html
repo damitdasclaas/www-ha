@@ -8,14 +8,22 @@
 <p>{{image.date_uploaded}}</p>
 <p>{{image.author}}</p>
 <p><img src="/images/uploads/{{ image.src }}" alt="Upload {{ image.id }}"></p>
+
+{% if user.username == image.author %}
 <a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
+{% endif %}
+
 
 {% for comment in comments %}
 
 <p>{{comment.author}}</p>
 <p>{{comment.date_uploaded}}</p>
 <p>{{comment.text}}</p>
+
+{% if user.username == comment.author %}
 <a href="/image/{{ image.id }}/{{comment.id}}">Kommentar löschen</a>
+{% endif %}
+
 
 {% endfor %}
 
@@ -24,8 +32,7 @@
     <form action="/image/{{ image.id }}/addcomment" method="post">
         <input type="hidden" name="_csrf" value="{{csrf}}">
 
-        <label for="text">Text</label>
-        <textarea name="text"></textarea>
+        <textarea name="text" placeholder="Kommentar hinzufügen..."></textarea>
 
         <input type="submit" value="Absenden">
     </form>

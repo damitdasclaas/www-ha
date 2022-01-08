@@ -9,8 +9,6 @@ Bei create user den username auf existenz abfragen und ansonsten fehler schmeiß
 
 Alle Form Fehler abfangen !ERLEDIGT glaube ich
 
-Profil löschen mit passwort bestätigen
-
 Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufbar -> nicht mehr erlauben !ERLEDIGT
 
 passwort soll sonderzeichen, großbuchstaben und Zahl enthalten

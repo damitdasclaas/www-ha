@@ -3,7 +3,7 @@
 {% block title %}You sure?{% endblock %}
 
 {% block content %}
-<h2>Wollen Sie das Profil mit dem Username #{{userData.username}} wirklich löschen?</h2>
+<h2>Wollen Sie das Profil mit dem Username {{userData.username}} wirklich löschen?</h2>
 <h2>Dies kann nicht ruckgängig gemacht werden.</h2>
 <div>
     <form action="/profile/{{userData.username}}/delete" method="post">

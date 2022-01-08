@@ -36,7 +36,6 @@
     </form>
 </div>
 {% if user.role == "admin" %}
-<p>{{user.role}}</p>
     {% if userData.role == "admin" %}
         <div>
             <form action="/profile/{{userData.username}}/settings/change_role" method="post">

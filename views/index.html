@@ -4,9 +4,18 @@
 
 {% block content %}
 <h1>Home</h1>
-{% for image in images %}
-    <a href="/image/{{image.id}}"><img src="/images/uploads/{{image.src}}" alt="Upload {{ image.id }}"></a>
-    <a href="/image/{{image.d}}">Kommentare sehen</a>
-{% endfor %}
+
+<div class="index_allUploads">
+    {% for image in images %}
+        <div class="index_upload">
+            <div class="upload_image">
+                <a href="/image/{{image.id}}"><img src="/images/uploads/{{image.src}}" alt="Upload {{ image.id }}"></a>
+            </div>
+            <div class="upload_linkToComments">
+                <a href="/image/{{image.id}}">Kommentare sehen</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

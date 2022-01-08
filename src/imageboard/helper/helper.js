@@ -41,7 +41,7 @@ export async function validateCommentForm(comment) {
 export async function validateCreateForm(formData) {
   return {
     username: validateUsername(formData.username),
-    password: validatePassword(formData.password),
+    password: validateCreatePassword(formData.password),
   };
 }
 
@@ -64,6 +64,10 @@ export function validateUsername(username) {
 }
 
 export function validatePassword(password) {
+  return !containsText(password) ? "Bitte gib ein Passwort ein." : undefined;
+}
+
+export function validateCreatePassword(password) {
   return !containsSecurePassword(password)
     ? "Das Passwort muss aus mindestens 7 Zeichen bestehen."
     : undefined;

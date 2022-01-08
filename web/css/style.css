@@ -1,11 +1,15 @@
 body {
-  background-color: lightgrey;
+  background-color: hsl(216, 15%, 32%);
   color: black;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: Geneva;
 }
-img {
-  max-width: 30%;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 a {
@@ -23,4 +27,34 @@ nav ul {
 
 nav ul li {
   margin: 2em;
+}
+
+.index_allUploads {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 2em;
+}
+
+.index_upload {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload_image img {
+  max-width: 100%;
+  border: 3px solid hsl(216, 100%, 32%);
+}
+
+.upload_linkToComments a {
+}
+
+.mini_profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav_profile_picture {
+  max-width: 3.5rem;
+  border-radius: 50%;
 }

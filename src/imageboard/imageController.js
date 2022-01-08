@@ -36,6 +36,7 @@ export async function submitUpload(ctx) {
     await renderForm(ctx, errors);
   } else {
     await imageModel.addImage(ctx.db, fileName, ctx.session.user.username);
+    ctx.session.flash = "Bild erfolgreich hochgeladen.";
 
     ctx.redirect("/");
   }
@@ -63,22 +64,10 @@ export async function deleteImageById(ctx) {
   }
   ctx.session.csrf = undefined;
 
-  const imageData = await imageModel.deleteImageById(ctx.db, ctx.params.id);
-  const commentData = await commentModel.deleteCommentsByImage(
-    ctx.db,
-    ctx.params.id
-  );
+  await imageModel.deleteImageById(ctx.db, ctx.params.id);
+  await commentModel.deleteCommentsByImage(ctx.db, ctx.params.id);
+
+  ctx.session.flash = "Eintrag wurde gelöscht.";
+
   ctx.redirect("/");
-
-  if (imageData != 0 && commentData != 0) {
-    ctx.status = 204;
-    ctx.redirect("/");
-
-    return;
-  } else {
-    ctx.status = 404;
-    ctx.redirect("/");
-
-    return;
-  }
 }

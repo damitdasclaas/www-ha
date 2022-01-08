@@ -99,7 +99,11 @@ export async function deleteProfile(ctx) {
   const userData = await userModel.deleteUser(ctx.db, ctx.params.username);
 
   if (userData != 0) {
-    ctx.redirect("/logout");
+    ctx.session.user = undefined;
+    ctx.session.flash =
+      "Der User " + ctx.params.username + " wurde erfolgreich gelöscht.";
+
+    ctx.redirect("/");
   } else {
     ctx.throw(404);
   }

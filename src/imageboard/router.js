@@ -72,7 +72,7 @@ router.post(
   profileFormController.deleteProfile
 );
 
-router.get("/login", isLoggedOut(), loginFormController.login);
+router.get("/login", isLoggedOut(), flash(), loginFormController.login);
 router.post(
   "/login",
   isLoggedOut(),
@@ -104,7 +104,7 @@ router.post(
   imageFormController.submitUpload
 );
 
-router.get("/image/:id", commentFormController.detail);
+router.get("/image/:id", flash(), commentFormController.detail);
 router.post(
   "/image/:id/addcomment",
   isLoggedIn(),

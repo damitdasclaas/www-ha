@@ -90,6 +90,9 @@ export async function deleteCommentById(ctx) {
 
   if (commentData != 0) {
     ctx.status = 204;
+
+    ctx.session.flash = "Kommentar wurde gelöscht.";
+
     ctx.redirect("/image/" + ctx.params.id);
 
     return;

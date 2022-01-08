@@ -61,7 +61,6 @@ export async function addImage(db, fileName, username) {
  * @param {sqlite.Database} db
  * @param {number} id
  * =>
- * @returns {Promise<number>}
  */
 export async function deleteImageById(db, id) {
   const imageData = await getSingleImage(db, id);
@@ -70,12 +69,9 @@ export async function deleteImageById(db, id) {
     fs.unlinkSync(process.cwd() + "/web/images/uploads/" + imageData.src);
   }
 
-  if (id != undefined) {
-    const sql = `DELETE FROM image WHERE id=$id`;
+  const sql = `DELETE FROM image WHERE id=$id`;
 
-    const result = await db.run(sql, { $id: id });
-    return result.changes;
-  }
+  await db.run(sql, { $id: id });
 }
 
 /**
@@ -90,18 +86,13 @@ export async function deleteImagesByUser(db, username) {
 
     const imageData = await db.all(sql, { $username: username });
 
-    function deleteFile(image) {
-      if (image != undefined) {
-        fs.unlinkSync(process.cwd() + "/web/images/uploads/" + image.src);
-      }
-    }
-
-    imageData.map((image) => deleteFile(image));
+    imageData.map((image) =>
+      deleteFile(process.cwd() + "/web/images/uploads/" + image.src)
+    );
 
     sql = `DELETE FROM image WHERE author=$username`;
 
-    const result = await db.run(sql, { $username: username });
-    return result.changes;
+    await db.run(sql, { $username: username });
   }
 }
 

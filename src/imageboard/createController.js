@@ -38,6 +38,9 @@ export async function submitCreateUser(ctx) {
     await renderForm(ctx, formData, errors);
   } else {
     await userModel.addUser(ctx.db, ctx.request.body);
+    ctx.session.flash =
+      "Der User " + formData.username + " wurde erfolgreich erstellt.";
+
     ctx.redirect("/login");
   }
 }

@@ -11,8 +11,6 @@ Alle Form Fehler abfangen !ERLEDIGT glaube ich
 
 Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufbar -> nicht mehr erlauben !ERLEDIGT
 
-passwort soll sonderzeichen, großbuchstaben und Zahl enthalten
-
 UserPermissions erstellen !ERLEDIGT glaube ich
     Admin kann alles was User kann und:
     -kann alles entfernen und erstellen

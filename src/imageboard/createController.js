@@ -30,6 +30,10 @@ export async function submitCreateUser(ctx) {
 
   let errors = await helper.validateCreateForm(formData);
 
+  if ((await userModel.getUser(ctx.db, formData.username)) != undefined) {
+    errors = { username: "Dieser Username wird bereits verwendet." };
+  }
+
   if (Object.values(errors).some(Boolean)) {
     await renderForm(ctx, formData, errors);
   } else {

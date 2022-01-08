@@ -55,12 +55,18 @@ export function containsText(string) {
   return typeof string == "string" && string.length >= 3;
 }
 
+export function containsSecurePassword(string) {
+  return typeof string == "string" && string.length >= 7;
+}
+
 export function validateUsername(username) {
   return !containsText(username) ? "Bitte einen Username eingeben." : undefined;
 }
 
 export function validatePassword(password) {
-  return !containsText(password) ? "Bitte ein Passwort eingeben." : undefined;
+  return !containsSecurePassword(password)
+    ? "Das Passwort muss aus mindestens 7 Zeichen bestehen."
+    : undefined;
 }
 
 export function validateComment(comment) {
@@ -81,4 +87,3 @@ export function formatISODate(isodate) {
   const time = dateAndTime[1].slice(0, 5);
   return date + " at " + time;
 }
-// password auf sicherheit prüfen

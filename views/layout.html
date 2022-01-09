@@ -13,20 +13,20 @@
               <li><a href="/profile">All Profiles</a></li>
 
               {% if user %}
-              <li><a href="/profile/{{user.username}}">Own Profile</a></li>
               <li><a href="/upload">Upload</a></li>
-              <li><a href="/logout">Logout</a></li>
+              <li><a href="/logout">Logout</a></li>            
+              
               <div class="mini_profile">
-                <a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture form {{user.username}}" class="nav_profile_picture"></a>
+                <a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture from {{user.username}}" class="nav_profile_picture"></a>
                 <a href="/profile/{{user.username}}">{{user.username}}</a>
               </div>
-              
-
               {% else %}
               <li><a href="/login">Login</a></li>
               {% endif %}
 
+
             </ul>
+
           </nav>
 
           {% if flash %}
@@ -35,11 +35,12 @@
 
         {% block content %}
         {% endblock %}
-        <p>
-        <a href="/documentation">Doku</a>
-        </p>
 
-        <a href="/diary">Projekttagebuch</a>
-        <p></p>
+        <footer>
+          <a href="/documentation">Doku</a>
+          <a href="/diary">Projekttagebuch</a>
+          <a href="/impressum">Impressum</a>
+        </footer>
     </main>
 </body>
+

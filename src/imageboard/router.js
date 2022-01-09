@@ -22,6 +22,7 @@ router.get("/profile", controller.profile);
 
 router.get("/documentation", controller.documentation);
 router.get("/diary", controller.diary);
+router.get("/impressum", controller.impressum);
 
 router.get("/profile/:username", flash(), controller.profileDetail);
 

@@ -59,6 +59,17 @@ export async function diary(ctx) {
   ctx.render("diary");
 }
 
+export async function impressum(ctx) {
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.state.user = ctx.session.user;
+  }
+
+  ctx.render("impressum");
+}
+
 export async function profileDetail(ctx) {
   const token = await helper.generateToken();
   ctx.session.csrf = token;

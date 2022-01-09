@@ -11,8 +11,9 @@
             <div class="upload_image">
                 <a href="/image/{{image.id}}"><img src="/images/uploads/{{image.src}}" alt="Upload {{ image.id }}"></a>
             </div>
-            <div class="upload_linkToComments">
-                <a href="/image/{{image.id}}">Kommentare sehen</a>
+            <div class="upload_infos">
+                <p><a href="/image/{{image.id}}">Kommentare sehen</a></p>
+                <p>Uploaded by <a href="/profile/{{image.author}}">{{image.author}}</a></p>
             </div>
         </div>
     {% endfor %}

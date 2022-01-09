@@ -30,3 +30,6 @@ UserPermissions erstellen !ERLEDIGT glaube ich
 Dokuseite und Zeitstrahlseite
 Doku Inhalt
 Zeitstrahl Inhalt
+
+<li><a href="/profile/{{user.username}}">Own Profile</a></li>
+

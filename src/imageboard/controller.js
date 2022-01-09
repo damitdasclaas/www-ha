@@ -52,7 +52,7 @@ export async function documentation(ctx) {
     ctx.state.user = ctx.session.user;
   }
 
-  ctx.render("documentation");
+  await ctx.render("documentation");
 }
 
 export async function diary(ctx) {
@@ -63,7 +63,7 @@ export async function diary(ctx) {
     ctx.state.user = ctx.session.user;
   }
 
-  ctx.render("diary");
+  await ctx.render("diary");
 }
 
 export async function impressum(ctx) {
@@ -74,7 +74,7 @@ export async function impressum(ctx) {
     ctx.state.user = ctx.session.user;
   }
 
-  ctx.render("impressum");
+  await ctx.render("impressum");
 }
 
 export async function profileDetail(ctx) {

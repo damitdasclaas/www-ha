@@ -31,7 +31,7 @@ main {
 
   width: 80%;
   max-width: 800px;
-  min-width: 500px;
+  min-width: 350px;
 }
 
 img {
@@ -51,19 +51,42 @@ a:hover {
   color: grey;
 }
 
+.topbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  margin-top: 1em;
+}
+
+.logo_top {
+  margin-top: auto;
+  margin-bottom: auto;
+  max-width: 550px;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .logo_top img {
   background-color: hsl(216, 15%, 25%);
   border: 1px solid aliceblue;
-  min-width: 300px;
+  max-width: 100%;
+  min-width: 350px;
+}
+
+.nav_logout {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .nav_logout ul {
-  background-color: hsl(216, 15%, 20%);
+  background-color: hsl(216, 15%, 25%);
   padding: 1em;
 
   border: 1px solid aliceblue;
 
-  min-width: 500px;
+  min-width: 350px;
   max-width: 800px;
 
   margin-left: auto;
@@ -85,7 +108,7 @@ a:hover {
 }
 
 .nav_logout ul li a {
-  background-color: hsl(216, 15%, 25%);
+  background-color: hsl(216, 15%, 20%);
   text-align: center;
   border-left: 1px solid #f0f8ff;
   padding: 0.5em;
@@ -101,16 +124,16 @@ a:hover {
 }
 
 .nav_login ul {
-  background-color: hsl(216, 15%, 20%);
+  background-color: hsl(216, 15%, 25%);
   padding: 1em;
 
   border: 1px solid aliceblue;
 
-  min-width: 500px;
+  min-width: 350px;
   max-width: 800px;
 
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
 
   list-style-type: none;
 
@@ -126,7 +149,7 @@ a:hover {
 }
 
 .nav_login ul li a {
-  background-color: hsl(216, 15%, 25%);
+  background-color: hsl(216, 15%, 20%);
   text-align: center;
   border-left: 1px solid #f0f8ff;
   padding: 0.5em;
@@ -145,6 +168,9 @@ a:hover {
   color: rgb(0, 77, 0);
   background-color: hsl(120, 30%, 60%);
   text-align: center;
+
+  min-width: 350px;
+  max-width: 800px;
 
   max-width: 800px;
   border: 2px solid rgb(0, 77, 0);
@@ -165,7 +191,7 @@ footer {
   margin-bottom: 0.5em;
   padding: 1em;
 
-  min-width: 500px;
+  min-width: 350px;
 
   display: flex;
   flex-direction: row;
@@ -595,4 +621,36 @@ footer {
   min-height: 100px;
   color: aliceblue;
   resize: vertical;
+}
+
+.diary {
+  text-align: left;
+}
+
+.diary_title {
+  border-bottom: 2px solid aliceblue;
+}
+
+.timeline {
+  margin-top: 4em;
+  border-left: 5px solid aliceblue;
+}
+
+.timeline ul {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+
+.timeline ul li h3 {
+  border-bottom: 2px solid aliceblue;
+}
+
+@media only screen and (min-width: 1200px) {
+  .topbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

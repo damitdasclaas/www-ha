@@ -6,32 +6,34 @@
 </head>
 
 <body>
-  <div class="logo_top">
-    <a href="/"><img src="/images/logo_memeboard.png" alt="Logo Memeboard"></a>
-  </div>
-  {% if user %}
-    <nav class="nav_logout">
+  <div class="topbar">
+    <div class="logo_top">
+      <a href="/"><img src="/images/logo_memeboard.png" alt="Logo Memeboard"></a>
+    </div>
+    {% if user %}
+      <nav class="nav_logout">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile">All Profiles</a></li>
+            <li><a href="/upload">Upload</a></li>
+            <li><a href="/logout">Logout</a></li>            
+            
+            <div class="mini_profile">
+              <a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture from {{user.username}}" class="nav_profile_picture"></a>
+              <a href="/profile/{{user.username}}">{{user.username}}</a>
+            </div>
+          </ul>
+      </nav>
+      {% else %}
+      <nav class="nav_login">
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/profile">All Profiles</a></li>
-          <li><a href="/upload">Upload</a></li>
-          <li><a href="/logout">Logout</a></li>            
-          
-          <div class="mini_profile">
-            <a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture from {{user.username}}" class="nav_profile_picture"></a>
-            <a href="/profile/{{user.username}}">{{user.username}}</a>
-          </div>
+          <li><a href="/login">Login</a></li>
         </ul>
     </nav>
-    {% else %}
-    <nav class="nav_login">
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/profile">All Profiles</a></li>
-        <li><a href="/login">Login</a></li>
-      </ul>
-  </nav>
-  {% endif %}
+    {% endif %}  
+  </div>
 
         {% if flash %}
       <div class="flash">

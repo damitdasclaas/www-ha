@@ -18,63 +18,9 @@ export default router;
 
 router.get("/", flash(), controller.index);
 
-router.get("/profile", controller.profile);
-
 router.get("/documentation", controller.documentation);
 router.get("/diary", controller.diary);
 router.get("/impressum", controller.impressum);
-
-router.get("/profile/:username", flash(), controller.profileDetail);
-
-router.get(
-  "/profile/:username/settings",
-  isLoggedIn(),
-  hasPermission("edit profile"),
-  profileFormController.editProfile
-);
-router.post(
-  "/profile/:username/settings",
-  isLoggedIn(),
-  hasPermission("edit profile"),
-  koaBody(),
-  profileFormController.submitEditProfile
-);
-
-router.post(
-  "/profile/:username/settings/change_role",
-  isLoggedIn(),
-  hasPermission("edit role"),
-  koaBody(),
-  profileFormController.submitEditProfile
-);
-
-router.post(
-  "/profile/:username/settings/profile_picture",
-  isLoggedIn(),
-  hasPermission("edit profile"),
-  koaBody({
-    multipart: true,
-    formidable: {
-      uploadDir: process.cwd() + "/web/images/profile_pictures",
-      keepExtensions: true,
-    },
-  }),
-  profileFormController.submitEditProfilePicture
-);
-
-router.get(
-  "/profile/:username/delete",
-  isLoggedIn(),
-  hasPermission("delete profile"),
-  profileFormController.askDeleteProfile
-);
-router.post(
-  "/profile/:username/delete",
-  isLoggedIn(),
-  hasPermission("delete profile"),
-  koaBody(),
-  profileFormController.deleteProfile
-);
 
 router.get("/login", isLoggedOut(), flash(), loginFormController.login);
 router.post(
@@ -106,6 +52,60 @@ router.post(
     },
   }),
   imageFormController.submitUpload
+);
+
+router.get("/profile", controller.profile);
+
+router.get("/profile/:username", flash(), controller.profileDetail);
+
+router.get(
+  "/profile/:username/settings",
+  isLoggedIn(),
+  hasPermission("edit profile"),
+  profileFormController.editProfile
+);
+router.post(
+  "/profile/:username/settings",
+  isLoggedIn(),
+  hasPermission("edit profile"),
+  koaBody(),
+  profileFormController.submitEditProfile
+);
+
+router.post(
+  "/profile/:username/settings/change_role",
+  isLoggedIn(),
+  hasPermission("edit role"),
+  koaBody(),
+  profileFormController.submitEditProfileRole
+);
+
+router.post(
+  "/profile/:username/settings/profile_picture",
+  isLoggedIn(),
+  hasPermission("edit profile"),
+  koaBody({
+    multipart: true,
+    formidable: {
+      uploadDir: process.cwd() + "/web/images/profile_pictures",
+      keepExtensions: true,
+    },
+  }),
+  profileFormController.submitEditProfilePicture
+);
+
+router.get(
+  "/profile/:username/delete",
+  isLoggedIn(),
+  hasPermission("delete profile"),
+  profileFormController.askDeleteProfile
+);
+router.post(
+  "/profile/:username/delete",
+  isLoggedIn(),
+  hasPermission("delete profile"),
+  koaBody(),
+  profileFormController.deleteProfile
 );
 
 router.get("/image/:id", flash(), commentFormController.detail);

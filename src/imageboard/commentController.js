@@ -15,10 +15,12 @@ export async function renderForm(ctx, errors) {
 
   let commentData = await commentModel.getComments(ctx.db, ctx.params.id);
 
-  commentData.map(
-    (comment) =>
-      (comment.date_uploaded = helper.formatISODate(comment.date_uploaded))
-  );
+  if (commentData[0] != undefined) {
+    commentData.map(
+      (comment) =>
+        (comment.date_uploaded = helper.formatISODate(comment.date_uploaded))
+    );
+  }
 
   await ctx.render("detail", {
     image: imageData,

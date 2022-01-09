@@ -3,21 +3,34 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h1>Profile</h1>
+<h1>{{userData.username}}s Profile</h1>
 
-<img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture">
+<div class="detailProfile">
+    <div class="detailProfile_profile_picture">
+        <img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture">
+    </div>
 
-{% if userData.role == "admin" %}
-<p>Admin</p>
-{% endif %}
+    {% if userData.role == "admin" %}
+    <p class="adminP">Admin</p>
+    {% endif %}
 
-<p>Username: {{userData.username}}</p>
-
-<p>Fullname: {{userData.fullname}}</p>
-<p>Email: {{userData.email}}</p>
-
-{% if user.role == "admin" or user.username == userData.username %}
-<a href="/profile/{{userData.username}}/settings">Edit Profile</a>
-{% endif %}
+    <div class="detailProfile_profile_infos">
+    
+        <p>Username:</p>
+        <p>{{userData.username}}</p>
+    
+        <p>Fullname:</p>
+        <p>{{userData.fullname}}</p>
+    
+        <p>Email:</p>
+        <p>{{userData.email}}</p>
+    
+    </div> 
+    <div class="detailProfile_profile_edit">
+        {% if user.role == "admin" or user.username == userData.username %}
+        <a href="/profile/{{userData.username}}/settings">Edit Profile</a>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

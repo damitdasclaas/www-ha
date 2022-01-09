@@ -46,7 +46,7 @@ export async function addUser(db, user) {
  */
 export async function editUser(db, user, username) {
   const sql = `UPDATE user
-    SET fullname = $fullname, email = $email
+    SET fullname=$fullname, email=$email
     WHERE username=$username`;
 
   await db.run(sql, {
@@ -66,7 +66,7 @@ export async function editUser(db, user, username) {
  */
 export async function editUserRole(db, username, role) {
   const sql = `UPDATE user
-    SET role = $role WHERE username=$username`;
+    SET role=$role WHERE username=$username`;
 
   await db.run(sql, {
     $role: role,

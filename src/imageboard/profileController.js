@@ -37,13 +37,29 @@ export async function submitEditProfile(ctx) {
   const newUserData = ctx.request.body;
 
   await userModel.editUser(ctx.db, newUserData, ctx.params.username);
-  await userModel.editUserRole(ctx.db, ctx.params.username, newUserData.role);
 
   if (ctx.session.user.username == ctx.params.username) {
     ctx.session.user = await userModel.getUser(ctx.db, ctx.params.username);
   }
 
   ctx.redirect("/profile/" + ctx.params.username);
+}
+
+export async function submitEditProfileRole(ctx) {
+  if (ctx.session.csrf !== ctx.request.body._csrf) {
+    ctx.throw(401);
+  }
+  ctx.session.csrf = undefined;
+
+  const newUserRole = ctx.request.body;
+
+  await userModel.editUserRole(ctx.db, ctx.params.username, newUserRole.role);
+
+  if (ctx.session.user.username == ctx.params.username) {
+    ctx.session.user = await userModel.getUser(ctx.db, ctx.params.username);
+  }
+
+  ctx.redirect("/profile/" + ctx.params.username + "/settings");
 }
 
 export async function submitEditProfilePicture(ctx) {

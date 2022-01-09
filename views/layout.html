@@ -7,6 +7,9 @@
 
 <body>
     <main>
+      <div class="logo_top">
+        <a href="/"><img src="/images/logo_memeboard.png" alt="Logo Memeboard"></a>
+      </div>
         <nav>
             <ul>
               <li><a href="/">Home</a></li>
@@ -29,9 +32,11 @@
 
           </nav>
 
-          {% if flash %}
-          <p>{{ flash }}</p>
-          {% endif %}
+            {% if flash %}
+          <div class="flash">
+            <p>{{ flash }}</p> 
+          </div>
+            {% endif %}
 
         {% block content %}
         {% endblock %}

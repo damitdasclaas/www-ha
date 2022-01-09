@@ -2,6 +2,12 @@ body {
   background-color: hsl(216, 15%, 32%);
   color: aliceblue;
   font-family: Geneva;
+
+  margin-top: 0;
+  margin-bottom: 0;
+
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 * {
@@ -12,6 +18,15 @@ html {
   scroll-behavior: smooth;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  text-align: center;
+}
+
 a {
   color: hsl(208, 100%, 90%);
   text-decoration-line: none;
@@ -19,6 +34,12 @@ a {
 
 a:hover {
   color: grey;
+}
+
+.logo_top img {
+  max-width: 100%;
+  background-color: hsl(216, 15%, 25%);
+  border: 1px solid aliceblue;
 }
 
 nav {
@@ -32,7 +53,7 @@ nav ul {
   margin-left: 1em;
   margin-right: 1em;
 
-  min-width: 320px;
+  min-width: 360px;
 
   border: 1px solid aliceblue;
 
@@ -47,7 +68,7 @@ nav ul {
 nav ul li {
   background-color: hsl(216, 15%, 25%);
   text-align: center;
-  border-left: 1px solid aliceblue;
+  border-left: 1px solid #f0f8ff;
   padding: 0.5em;
 
   min-width: 100px;
@@ -58,6 +79,14 @@ nav ul li {
 
 nav ul li:hover {
   background-color: hsl(216, 15%, 35%);
+}
+
+.flash {
+  color: rgb(0, 77, 0);
+  background-color: hsl(120, 30%, 60%);
+  text-align: center;
+
+  border: 2px solid rgb(0, 77, 0);
 }
 
 main {
@@ -130,4 +159,96 @@ footer {
 .upload_infos p {
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.allProfiles {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 0.5em;
+}
+
+.allProfiles_profile {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 2em;
+}
+
+.allProfiles_profile_picture img {
+  max-width: 100%;
+  border: 3px solid aliceblue;
+  border-radius: 50%;
+}
+
+.allProfiles_profile_username {
+  padding: 0.5em;
+}
+
+.allProfiles_profile_username p {
+  border-bottom: 1px solid aliceblue;
+  margin: 0;
+  text-align: center;
+}
+
+.adminP {
+  color: red;
+  text-align: center;
+}
+
+.detailProfile_profile_infos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin-top: 2em;
+
+  text-align: right;
+}
+
+.detailProfile_profile_infos :nth-child(even) {
+  text-align: left;
+}
+
+.detailProfile_profile_infos p {
+  padding-right: 3em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid aliceblue;
+}
+
+.detailProfile_profile_picture img {
+  max-width: 100%;
+  border: 3px solid aliceblue;
+  border-radius: 50%;
+}
+
+.detailProfile_profile_edit {
+  margin-top: 2em;
+}
+
+.detailProfile_profile_edit a {
+  background-color: hsl(216, 15%, 20%);
+
+  border: 1px solid aliceblue;
+
+  padding: 0.5em;
+  text-align: center;
+}
+
+.editProfile {
+  display: flex;
+  flex-direction: column;
+
+  row-gap: 2em;
+}
+
+.editProfile img {
+  max-width: 100%;
+  border: 3px solid aliceblue;
+  border-radius: 50%;
+}
+
+.editProfile_infoForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }

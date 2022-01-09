@@ -1,14 +1,21 @@
 {% extends 'layout.html' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Profiles{% endblock %}
 
 {% block content %}
-<h1>Profile</h1>
+<h1>Profiles</h1>
 
-{% for userData in users %}
-<a href="/profile/{{userData.username}}"><img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture from {{ userData.username }}"></a>
-
-<a href="/profile/{{userData.username}}"><p>Username: {{userData.username}}</p></a>
-{% endfor %}
+<div class="allProfiles">
+    {% for userData in users %}
+        <div class="allProfiles_profile">
+            <div class="allProfiles_profile_picture">
+                <a href="/profile/{{userData.username}}"><img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture from {{ userData.username }}"></a>
+            </div>
+            <div class="allProfiles_profile_username">
+                <a href="/profile/{{userData.username}}"><p>{{userData.username}}</p></a>
+            </div>
+        </div>    
+    {% endfor %}
+</div>
 
 {% endblock %}

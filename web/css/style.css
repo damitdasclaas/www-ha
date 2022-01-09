@@ -32,6 +32,8 @@ nav ul {
   margin-left: 1em;
   margin-right: 1em;
 
+  min-width: 320px;
+
   border: 1px solid aliceblue;
 
   list-style-type: none;
@@ -47,6 +49,8 @@ nav ul li {
   text-align: center;
   border-left: 1px solid aliceblue;
   padding: 0.5em;
+
+  min-width: 100px;
 
   margin-top: auto;
   margin-bottom: auto;

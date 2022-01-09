@@ -57,7 +57,7 @@ a:hover {
   min-width: 300px;
 }
 
-nav ul {
+.nav_logout ul {
   background-color: hsl(216, 15%, 20%);
   padding: 1em;
 
@@ -77,14 +77,14 @@ nav ul {
   gap: 0.5em;
 }
 
-nav ul li {
+.nav_logout ul li {
   text-align: left;
 
   margin-top: auto;
   margin-bottom: auto;
 }
 
-nav ul li a {
+.nav_logout ul li a {
   background-color: hsl(216, 15%, 25%);
   text-align: center;
   border-left: 1px solid #f0f8ff;
@@ -96,7 +96,48 @@ nav ul li a {
   margin-bottom: auto;
 }
 
-nav ul li a:hover {
+.nav_logout ul li a:hover {
+  background-color: hsl(216, 15%, 35%);
+}
+
+.nav_login ul {
+  background-color: hsl(216, 15%, 20%);
+  padding: 1em;
+
+  border: 1px solid aliceblue;
+
+  min-width: 500px;
+  max-width: 800px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  list-style-type: none;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav_login ul li {
+  text-align: left;
+
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.nav_login ul li a {
+  background-color: hsl(216, 15%, 25%);
+  text-align: center;
+  border-left: 1px solid #f0f8ff;
+  padding: 0.5em;
+
+  min-width: 100px;
+
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.nav_login ul li a:hover {
   background-color: hsl(216, 15%, 35%);
 }
 

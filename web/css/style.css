@@ -39,14 +39,21 @@ nav ul {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+  gap: 0.5em;
 }
 
 nav ul li {
+  background-color: hsl(216, 15%, 25%);
   text-align: center;
+  border-left: 1px solid aliceblue;
   padding: 0.5em;
 
   margin-top: auto;
   margin-bottom: auto;
+}
+
+nav ul li:hover {
+  background-color: hsl(216, 15%, 35%);
 }
 
 main {
@@ -54,6 +61,11 @@ main {
 }
 
 footer {
+  background-color: hsl(216, 15%, 20%);
+  border: 1px solid aliceblue;
+  margin-top: 3em;
+  padding: 1em;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -87,21 +99,31 @@ footer {
 }
 
 .index_upload {
+  background-color: hsl(216, 15%, 20%);
+
   display: flex;
   flex-direction: column;
 }
 
+.upload_image a {
+  background-color: aliceblue;
+}
+
 .upload_image img {
   max-width: 100%;
-  border: 3px solid hsl(216, 100%, 32%);
+
+  border: 3px solid aliceblue;
 }
 
 .upload_infos {
+  padding: 0.5em;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
 .upload_infos p {
-  margin-top: 0;
+  margin-top: auto;
+  margin-bottom: auto;
 }

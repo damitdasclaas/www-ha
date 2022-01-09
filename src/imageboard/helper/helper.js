@@ -60,7 +60,7 @@ export function containsSecurePassword(string) {
 }
 
 export function validateUsername(username) {
-  return !containsText(username) ? "Bitte einen Username eingeben." : undefined;
+  return !containsText(username) ? "Der Username ist zu kurz." : undefined;
 }
 
 export function validatePassword(password) {

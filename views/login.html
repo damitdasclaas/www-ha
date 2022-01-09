@@ -6,27 +6,26 @@
 <h1>Login</h1>
 
 <div>
-    <form action="#" method="post">
+    <form class="loginForm" action="#" method="post">
         <input type="hidden" name="_csrf" value="{{csrf}}">
         
         <label for="username">Username</label>
         <input type="text" name = "username" required="required" value="{{ form.username }}"/>
 
-        {% if form.errors %}
-        <p>{{form.errors.username}}</p>
-        {% endif %}
-
         <label for="password">Passwort</label>
         <input type="password" name="password" required="required"/>
 
-        {% if form.errors %}
-        <p>{{form.errors.password}}</p>
-        {% endif %}
-
-        <input type="submit" value="Einloggen">
-
+        <input class="submitButton" type="submit" value="Login">
     </form>
 </div>
+
+{% if form.errors %}
+<p>{{form.errors.username}}</p>
+{% endif %}
+
+{% if form.errors %}
+<p>{{form.errors.password}}</p>
+{% endif %}
 
 <p>
     Noch nicht Mitglied? <a href="/create">User erstellen</a>

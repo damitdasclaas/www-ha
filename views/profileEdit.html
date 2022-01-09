@@ -15,7 +15,7 @@
             <label for="image">Change Profile Picture</label>
             <input type="file" name = "image"/>
     
-            <input type="submit" value="Upload">
+            <input class="submitButton" type="submit" value="Upload">
         </form>
     </div>
     
@@ -33,7 +33,7 @@
             <label for="email">Email</label>
             <input type="text" name="email" value="{{ userData.email }}">
     
-            <input type="submit" value="Speichern"/>
+            <input class="submitButton" type="submit" value="Save"/>
         </form>
     </div>
 
@@ -45,13 +45,15 @@
     
                     <label>Role:</label>
 
-                    <label for="admin">Admin</label>
-                    <input type="radio" id="admin" name="role" value="admin" checked>
-    
-                    <label for="user">User</label>
-                    <input type="radio" id="user" name="role" value="user">
-    
-                    <input type="submit" value="Speichern"/>
+                    <div>
+                        <label for="admin">Admin</label>
+                        <input type="radio" id="admin" name="role" value="admin" checked>
+
+                        <label for="user">User</label>
+                        <input type="radio" id="user" name="role" value="user">
+                    </div>
+
+                    <input class="submitButton" type="submit" value="Save"/>
                 </form>
             </div>
         {% endif %}
@@ -62,20 +64,30 @@
     
                     <label>Role: </label>
 
-                    <label for="admin">Admin</label>
-                    <input type="radio" id="admin" name="role" value="admin">
-    
-                    <label for="user">User</label>
-                    <input type="radio" id="user" name="role" value="user" checked>
-    
-                    <input type="submit" value="Speichern"/>
+                    <div>
+                        <label for="admin">Admin</label>
+                        <input type="radio" id="admin" name="role" value="admin">
+        
+                        <label for="user">User</label>
+                        <input type="radio" id="user" name="role" value="user" checked>    
+                    </div>
+
+                    <input class="submitButton" type="submit" value="Save"/>
                 </form>
             </div>
         {% endif %}
     {% endif %}
     
-    <a href="/profile/{{userData.username}}/delete">Delete User</a>
-    <a href="/profile/{{userData.username}}">Cancel</a>
+    <div class="editProfile_footer">            
+        <div class="editProfile_cancel">
+            <a href="/profile/{{userData.username}}">Cancel</a>
+        </div>
+
+        <div class="deleteProfile">
+            <a href="/profile/{{userData.username}}/delete">Delete User</a>
+        </div>
+    </div>
+
 </div>
 
 

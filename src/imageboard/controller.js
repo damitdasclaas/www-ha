@@ -12,6 +12,13 @@ export async function index(ctx) {
 
   const imageData = await imageModel.getAllImages(ctx.db);
 
+  if (imageData[0] != undefined) {
+    imageData.map(
+      (image) =>
+        (image.date_uploaded = helper.formatISODate(image.date_uploaded))
+    );
+  }
+
   await ctx.render("index", { images: imageData });
 }
 

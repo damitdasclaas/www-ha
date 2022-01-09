@@ -6,7 +6,7 @@
 <h1>Create User</h1>
 
 <div>
-    <form action="#" method="post">
+    <form class="createForm" action="#" method="post">
         <input type="hidden" name="_csrf" value="{{csrf}}">
 
         <label for="fullname">Fullname</label>
@@ -15,22 +15,22 @@
         <label for="username">Username</label>
         <input type="text" name = "username" required="required" value="{{form.username}}"/>
 
-        {% if error %}
-            <p>{{error.username}}</p>
-         {% endif %}
-
-
         <label for="email">Email</label>
         <input type="text" name = "email" value="{{form.email}}"/>
 
         <label for="password">Password</label>
         <input type="password" name="password" required="required"/>
 
-        {% if error %}
-            <p>{{error.password}}</p>
-        {% endif %}
-
-        <input type="submit" value="Create">
+        <input class="submitButton" type="submit" value="Create">
     </form>
 </div>
+
+{% if error %}
+<p>{{error.username}}</p>
+{% endif %}
+
+{% if error %}
+<p>{{error.password}}</p>
+{% endif %}
+
 {% endblock %}

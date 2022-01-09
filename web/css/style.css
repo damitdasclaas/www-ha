@@ -6,8 +6,11 @@ body {
   margin-top: 0;
   margin-bottom: 0;
 
-  margin-left: 1em;
-  margin-right: 1em;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 80%;
+  max-width: 1100px;
 }
 
 * {
@@ -16,11 +19,23 @@ body {
 
 html {
   scroll-behavior: smooth;
+  text-align: center;
 }
 
 main {
   display: flex;
   flex-direction: column;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 80%;
+  max-width: 800px;
+  min-width: 500px;
+}
+
+img {
+  max-width: 500px;
 }
 
 h1 {
@@ -37,25 +52,22 @@ a:hover {
 }
 
 .logo_top img {
-  max-width: 100%;
   background-color: hsl(216, 15%, 25%);
   border: 1px solid aliceblue;
-}
-
-nav {
-  margin: 0;
-  padding: 0;
+  min-width: 300px;
 }
 
 nav ul {
   background-color: hsl(216, 15%, 20%);
   padding: 1em;
-  margin-left: 1em;
-  margin-right: 1em;
-
-  min-width: 360px;
 
   border: 1px solid aliceblue;
+
+  min-width: 500px;
+  max-width: 800px;
+
+  margin-left: auto;
+  margin-right: auto;
 
   list-style-type: none;
 
@@ -66,6 +78,13 @@ nav ul {
 }
 
 nav ul li {
+  text-align: left;
+
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+nav ul li a {
   background-color: hsl(216, 15%, 25%);
   text-align: center;
   border-left: 1px solid #f0f8ff;
@@ -77,7 +96,7 @@ nav ul li {
   margin-bottom: auto;
 }
 
-nav ul li:hover {
+nav ul li a:hover {
   background-color: hsl(216, 15%, 35%);
 }
 
@@ -86,18 +105,26 @@ nav ul li:hover {
   background-color: hsl(120, 30%, 60%);
   text-align: center;
 
+  max-width: 800px;
   border: 2px solid rgb(0, 77, 0);
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
-main {
-  margin: 0.5em;
+.content {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 footer {
   background-color: hsl(216, 15%, 20%);
   border: 1px solid aliceblue;
   margin-top: 3em;
+  margin-bottom: 0.5em;
   padding: 1em;
+
+  min-width: 500px;
 
   display: flex;
   flex-direction: row;
@@ -118,8 +145,12 @@ footer {
 }
 
 .nav_profile_picture {
-  max-width: 3.5rem;
   border-radius: 50%;
+
+  max-width: 3.5em;
+  height: 3.5em;
+
+  object-fit: cover;
 
   border: 1px solid aliceblue;
 }
@@ -133,6 +164,11 @@ footer {
 
 .index_upload {
   background-color: hsl(216, 15%, 20%);
+
+  max-width: 70%;
+
+  margin-left: auto;
+  margin-right: auto;
 
   display: flex;
   flex-direction: column;
@@ -166,11 +202,18 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   row-gap: 0.5em;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 80%;
+  max-width: 800px;
 }
 
 .allProfiles_profile {
   display: flex;
   flex-direction: column;
+  max-width: 500px;
 
   margin-bottom: 2em;
 }
@@ -178,20 +221,18 @@ footer {
 .allProfiles_profile_picture img {
   max-width: 100%;
   border: 3px solid aliceblue;
-  border-radius: 50%;
 }
 
 .allProfiles_profile_username {
-  padding: 0.5em;
+  border-bottom: 1px solid aliceblue;
 }
 
-.allProfiles_profile_username p {
-  border-bottom: 1px solid aliceblue;
+.allProfiles_profile_username a {
   margin: 0;
   text-align: center;
 }
 
-.adminP {
+.important {
   color: red;
   text-align: center;
 }
@@ -215,10 +256,19 @@ footer {
   border-bottom: 1px solid aliceblue;
 }
 
+.detailProfile {
+  justify-content: center;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 80%;
+  max-width: 800px;
+}
+
 .detailProfile_profile_picture img {
   max-width: 100%;
   border: 3px solid aliceblue;
-  border-radius: 50%;
 }
 
 .detailProfile_profile_edit {
@@ -238,17 +288,268 @@ footer {
   display: flex;
   flex-direction: column;
 
+  justify-content: center;
   row-gap: 2em;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 80%;
+  max-width: 800px;
 }
 
 .editProfile img {
-  max-width: 100%;
+  max-width: 400px;
+
   border: 3px solid aliceblue;
-  border-radius: 50%;
+
+  max-width: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .editProfile_infoForm {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+
+  text-align: left;
+  gap: 1em;
+}
+
+.submitButton {
+  border: 1px solid aliceblue;
+  color: aliceblue;
+  background-color: hsl(216, 15%, 20%);
+
+  max-width: 7rem;
+  padding: 1em;
+
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.submitButton:hover {
+  background-color: hsl(216, 15%, 25%);
+  cursor: pointer;
+}
+
+.editProfile_profile_pictureForm {
+  display: flex;
+  flex-direction: column;
+
+  row-gap: 1em;
+}
+
+.editProfile_roleForm {
+  display: flex;
+  flex-direction: column;
+
+  text-align: left;
+
+  row-gap: 1em;
+}
+
+.editProfile_footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editProfile_cancel a {
+  background-color: hsl(216, 15%, 20%);
+
+  border: 1px solid aliceblue;
+
+  padding: 0.5em;
+  text-align: center;
+}
+
+.deleteProfile a {
+  background-color: hsl(0, 20%, 20%);
+
+  border: 1px solid red;
+
+  color: red;
+
+  padding: 0.5em;
+  text-align: center;
+}
+
+.deleteProfile a:hover {
+  border: 1px solid aliceblue;
+
+  padding: 0.5em;
+  text-align: center;
+}
+
+.askDelete {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+}
+
+.askDelete :first-child {
+  margin-bottom: 0;
+}
+
+.deleteButton {
+  background-color: hsl(0, 20%, 20%);
+
+  border: 1px solid red;
+
+  color: red;
+
+  padding: 0.5em;
+  text-align: center;
+}
+
+.deleteButton:hover {
+  border: 1px solid aliceblue;
+  cursor: pointer;
+
+  padding: 0.5em;
+  text-align: center;
+}
+
+.askDelete_deleteForm_cancel {
+  margin-top: 2em;
+}
+
+.askDelete_deleteForm_cancel a {
+  background-color: hsl(216, 15%, 20%);
+
+  border: 1px solid aliceblue;
+
+  padding: 0.5em;
+  text-align: center;
+}
+
+.loginForm {
+  display: grid;
+
+  gap: 1em;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.loginForm :last-child {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.createForm {
+  display: grid;
+
+  gap: 1em;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.createForm :last-child {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 5;
+  grid-row-end: 6;
+
+  align-self: center;
+}
+
+.detailImage {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+}
+
+.detailImage_image {
+  margin-bottom: 2em;
+}
+
+.detailImage_info {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 0.5em;
+}
+
+.imageDelete {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.imageDelete a {
+  padding: 0.5em;
+  color: red;
+  background-color: hsl(0, 20%, 20%);
+
+  border: 1px solid red;
+}
+
+.imageDelete a:hover {
+  background-color: hsl(216, 15%, 25%);
+}
+
+.detailImage_imgContainer img {
+  border: 3px solid aliceblue;
+
+  max-width: 100%;
+}
+
+.detailImage_comment {
+  display: flex;
+  flex-direction: column;
+
+  background-color: hsl(216, 15%, 20%);
+  margin-bottom: 1em;
+}
+
+.detailImage_comment_info {
+  display: flex;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid aliceblue;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.commentDelete {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.commentDelete a {
+  padding: 0.5em;
+  color: red;
+  background-color: hsl(0, 20%, 20%);
+
+  border: 1px solid red;
+}
+
+.commentDelete a:hover {
+  background-color: hsl(216, 15%, 25%);
+}
+
+.detailImage_comment_text {
+  background-color: hsl(216, 15%, 25%);
+  text-align: left;
+  word-wrap: break-word;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+}
+
+.commentForm textarea {
+  background-color: hsl(216, 15%, 20%);
+  min-height: 100px;
+  color: aliceblue;
+  resize: vertical;
 }

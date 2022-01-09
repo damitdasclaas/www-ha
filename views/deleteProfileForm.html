@@ -3,16 +3,22 @@
 {% block title %}You sure?{% endblock %}
 
 {% block content %}
-<h2>Wollen Sie das Profil mit dem Username {{userData.username}} wirklich löschen?</h2>
-<h2>Dies kann nicht ruckgängig gemacht werden.</h2>
 <div>
-    <form action="/profile/{{userData.username}}/delete" method="post">
-        <input type="hidden" name="_csrf" value="{{csrf}}">
+    <p>Wollen Sie das Profil <strong>{{userData.username}}</strong> wirklich löschen?</p>
+    <p>Damit werden alle Einträge und Kommentare ebenfalls entfernt.</p>
 
-        <input type="submit" value="Löschen"/>
-    </form>
-    <p>
-        <a href="/profile/{{userData.username}}/">Abbrechen</a>
-    </p>
+        
+    <div class="askDelete_deleteForm">
+        <form action="/profile/{{userData.username}}/delete" method="post">
+           <input type="hidden" name="_csrf" value="{{csrf}}">
+        
+            <input class="deleteButton" type="submit" value="Delete"/>
+        </form>
+        
+    </div>
+    <div class="askDelete_deleteForm_cancel">
+        <a href="/profile/{{userData.username}}/">Cancel</a>
+    </div>
 </div>
+
 {% endblock %}

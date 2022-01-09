@@ -3,16 +3,19 @@
 {% block title %}You sure?{% endblock %}
 
 {% block content %}
-<h2>Wollen Sie den Kommentar #{{comment.id}} wirklich löschen?</h2>
-
 <div>
-    <form action="/image/{{image.id}}/{{comment.id}}" method="post">
-        <input type="hidden" name="_csrf" value="{{csrf}}">
+    <p>Wollen Sie den Kommentar #{{comment.id}} wirklich löschen?</p>
 
-        <input type="submit" value="Löschen"/>
-    </form>
+    <div>
+        <form action="/image/{{image.id}}/{{comment.id}}" method="post">
+            <input type="hidden" name="_csrf" value="{{csrf}}">
+    
+            <input class="deleteButton" type="submit" value="Delete"/>
+        </form>
+    </div>
+    <div class="askDelete_deleteForm_cancel">
+        <a href="/image/{{image.id}}">Cancel</a>
+    </div>
 </div>
-<p>
-    <a href="/image/{{image.id}}">Abbrechen</a>
-</p>
+
 {% endblock %}

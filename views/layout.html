@@ -6,46 +6,47 @@
 </head>
 
 <body>
-    <main>
-      <div class="logo_top">
-        <a href="/"><img src="/images/logo_memeboard.png" alt="Logo Memeboard"></a>
-      </div>
-        <nav>
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/profile">All Profiles</a></li>
+  <div class="logo_top">
+    <a href="/"><img src="/images/logo_memeboard.png" alt="Logo Memeboard"></a>
+  </div>
+    <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/profile">All Profiles</a></li>
 
-              {% if user %}
-              <li><a href="/upload">Upload</a></li>
-              <li><a href="/logout">Logout</a></li>            
-              
-              <div class="mini_profile">
-                <a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture from {{user.username}}" class="nav_profile_picture"></a>
-                <a href="/profile/{{user.username}}">{{user.username}}</a>
-              </div>
-              {% else %}
-              <li><a href="/login">Login</a></li>
-              {% endif %}
-
-
-            </ul>
-
-          </nav>
-
-            {% if flash %}
-          <div class="flash">
-            <p>{{ flash }}</p> 
+          {% if user %}
+          <li><a href="/upload">Upload</a></li>
+          <li><a href="/logout">Logout</a></li>            
+          
+          <div class="mini_profile">
+            <a href="/profile/{{user.username}}"><img src="/images/profile_pictures/{{user.picture_src}}" alt="Profile Picture from {{user.username}}" class="nav_profile_picture"></a>
+            <a href="/profile/{{user.username}}">{{user.username}}</a>
           </div>
-            {% endif %}
+          {% else %}
+          <li><a href="/login">Login</a></li>
+          {% endif %}
 
-        {% block content %}
-        {% endblock %}
 
-        <footer>
-          <a href="/documentation">Doku</a>
-          <a href="/diary">Projekttagebuch</a>
-          <a href="/impressum">Impressum</a>
-        </footer>
-    </main>
+        </ul>
+
+      </nav>
+
+        {% if flash %}
+      <div class="flash">
+        <p>{{ flash }}</p> 
+      </div>
+        {% endif %}
+
+      <main>
+      {% block content %}
+      {% endblock %}
+      </main>
+
+
+    <footer>
+      <a href="/documentation">Doku</a>
+      <a href="/diary">Projekttagebuch</a>
+      <a href="/impressum">Impressum</a>
+    </footer>
 </body>
 

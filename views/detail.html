@@ -1,46 +1,57 @@
 {% extends 'layout.html' %}
 
-{% block title %}Detail{% endblock %}
+{% block title %}Image {{ image.id }}{% endblock %}
 
 {% block content %}
-<h1>Detail</h1>
 
-<p>{{image.date_uploaded}}</p>
-<p>{{image.author}}</p>
-<p><img src="/images/uploads/{{ image.src }}" alt="Upload {{ image.id }}"></p>
+<div class="detailImage">
+    <div class="detailImage_image">
+        <div class="detailImage_info">
+            <p>{{image.date_uploaded}} by <a href="/profile/{{image.author}}">{{image.author}}</a></p>
+    
+            {% if user.username == image.author or user.role == "admin" %}
+            <div class="imageDelete">
+                <a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
+            </div>
+            {% endif %}
+        </div>
+    
+        <div class="detailImage_imgContainer">
+            <img src="/images/uploads/{{ image.src }}" alt="Upload {{ image.id }}">
+        </div>
+    </div>   
+    
+    {% for comment in comments %}
+    <div class="detailImage_comment">
+        <div class="detailImage_comment_info">
+            <p><a href="/profile/{{comment.author}}">{{comment.author}}</a> | {{comment.date_uploaded}}</p>
 
-{% if user.username == image.author or user.role == "admin" %}
-<a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
-{% endif %}
-
-
-{% for comment in comments %}
-
-<p>{{comment.author}}</p>
-<p>{{comment.date_uploaded}}</p>
-<p>{{comment.text}}</p>
-
-{% if user.username == comment.author or user.role == "admin" %}
-<a href="/image/{{ image.id }}/{{comment.id}}">Kommentar löschen</a>
-{% endif %}
-
-
-{% endfor %}
-
-{% if user %}
-<div>
-    <form action="/image/{{ image.id }}/addcomment" method="post">
-        <input type="hidden" name="_csrf" value="{{csrf}}">
-
-        <textarea name="text" placeholder="Kommentar hinzufügen..."></textarea>
-
-        <input type="submit" value="Absenden">
-    </form>
+            {% if user.username == comment.author or user.role == "admin" %}
+            <div class="commentDelete">
+                <a href="/image/{{ image.id }}/{{comment.id}}">Kommentar löschen</a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="detailImage_comment_text">
+            <p>{{comment.text}}</p>
+        </div>
+    </div>    
+    {% endfor %}
+    
+    {% if user %}
+    <div>
+        <form class="commentForm" action="/image/{{ image.id }}/addcomment" method="post">
+            <input type="hidden" name="_csrf" value="{{csrf}}">
+    
+            <textarea name="text" placeholder="Kommentar hinzufügen..."></textarea>
+    
+            <input class="submitButton" type="submit" value="Absenden">
+        </form>
+    </div>
+    {% endif %}
+    
+    {% if error %}
+    <p>{{error.comment}}</p>
+    {% endif %}
 </div>
-{% endif %}
-
-{% if error %}
-<p>{{error.comment}}</p>
-{% endif %}
-
 {% endblock %}

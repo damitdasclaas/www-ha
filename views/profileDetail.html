@@ -3,7 +3,12 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+
+{% if userData.username == user.username%}
+<h1>Your Profile</h1>
+{% else %}
 <h1>{{userData.username}}s Profile</h1>
+{% endif %}
 
 <div class="detailProfile">
     <div class="detailProfile_profile_picture">
@@ -11,7 +16,7 @@
     </div>
 
     {% if userData.role == "admin" %}
-    <p class="adminP">Admin</p>
+    <p class="important">Admin</p>
     {% endif %}
 
     <div class="detailProfile_profile_infos">

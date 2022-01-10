@@ -18,10 +18,6 @@ export default router;
 
 router.get("/", flash(), controller.index);
 
-router.get("/documentation", controller.documentation);
-router.get("/diary", controller.diary);
-router.get("/impressum", controller.impressum);
-
 router.get("/login", isLoggedOut(), flash(), loginFormController.login);
 router.post(
   "/login",
@@ -143,3 +139,7 @@ router.post(
   koaBody(),
   commentFormController.deleteCommentById
 );
+
+router.get("/documentation", controller.documentation);
+router.get("/diary", controller.diary);
+router.get("/impressum", controller.impressum);

@@ -5,7 +5,7 @@ import session from "koa-session";
 import SQLite3Store from "koa-sqlite3-session";
 
 import http from "http";
-import router from "./imageboard/router.js";
+import router from "./memeboard/router.js";
 
 export default async function webApp(config) {
   const app = new Koa();

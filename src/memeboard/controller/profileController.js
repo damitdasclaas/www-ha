@@ -82,7 +82,9 @@ export async function submitEditProfilePicture(ctx) {
   } else {
     await userModel.editProfilePicture(ctx.db, ctx.params.username, fileName);
 
-    ctx.session.user = await userModel.getUser(ctx.db, ctx.params.username);
+    if (ctx.session.user.username == ctx.params.username) {
+      ctx.session.user = await userModel.getUser(ctx.db, ctx.params.username);
+    }
 
     ctx.redirect("/profile/" + ctx.params.username + "/settings");
   }

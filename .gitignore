@@ -103,11 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
-# images
-*/images
+# images */images
 
-# databases
-*/data
+# databases */data
 
 # DS Store
 .DS_Store

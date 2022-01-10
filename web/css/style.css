@@ -172,9 +172,9 @@ a:hover {
   min-width: 350px;
   max-width: 800px;
 
-  max-width: 800px;
   border: 2px solid rgb(0, 77, 0);
 
+  margin-top: 1em;
   margin-left: auto;
   margin-right: auto;
 }
@@ -458,6 +458,10 @@ footer {
   row-gap: 1em;
 }
 
+.askDelete_form {
+  text-align: left;
+}
+
 .askDelete :first-child {
   margin-bottom: 0;
 }
@@ -482,6 +486,7 @@ footer {
 }
 
 .askDelete_deleteForm_cancel {
+  text-align: left;
   margin-top: 2em;
 }
 
@@ -621,6 +626,15 @@ footer {
   min-height: 100px;
   color: aliceblue;
   resize: vertical;
+}
+
+.logo-impr {
+  min-width: 350px;
+  max-width: 800px;
+}
+
+.logo-impr img {
+  max-width: 100%;
 }
 
 .diary {

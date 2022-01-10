@@ -3,8 +3,8 @@
 {% block title %}You sure?{% endblock %}
 
 {% block content %}
-<div>
-    <p>Wollen Sie den Kommentar #{{comment.id}} wirklich löschen?</p>
+<div class="askDelete_form">
+    <p>Wollen Sie diesen Kommentar wirklich löschen?</p>
 
     <div>
         <form action="/image/{{image.id}}/{{comment.id}}" method="post">

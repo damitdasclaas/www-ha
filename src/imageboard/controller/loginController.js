@@ -1,5 +1,5 @@
-import * as userModel from "./userModel.js";
-import * as helper from "./helper/helper.js";
+import * as userModel from "../model/userModel.js";
+import * as helper from "../helper/helper.js";
 
 async function renderForm(ctx, preparedData) {
   const token = await helper.generateToken();

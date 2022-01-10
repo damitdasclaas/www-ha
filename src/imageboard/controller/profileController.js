@@ -1,7 +1,7 @@
-import * as userModel from "./userModel.js";
-import * as imageModel from "./imageModel.js";
-import * as commentModel from "./commentModel.js";
-import * as helper from "./helper/helper.js";
+import * as userModel from "../model/userModel.js";
+import * as imageModel from "../model/imageModel.js";
+import * as commentModel from "../model/commentModel.js";
+import * as helper from "../helper/helper.js";
 
 export async function renderForm(ctx, errors) {
   const token = await helper.generateToken();

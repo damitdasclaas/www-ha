@@ -1,7 +1,7 @@
 import * as helper from "../helper/helper.js";
-import * as imageModel from "../imageModel.js";
-import * as commentModel from "../commentModel.js";
-import * as userModel from "../userModel.js";
+import * as imageModel from "../model/imageModel.js";
+import * as commentModel from "../model/commentModel.js";
+import * as userModel from "../model/userModel.js";
 
 export default function hasPermission(permission) {
   return async function (ctx, next) {

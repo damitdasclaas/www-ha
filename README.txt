@@ -7,11 +7,11 @@ Author mit User Login verbinden damit username immer = author ist !ERLEDIGT
 
 Bei create user den username auf existenz abfragen und ansonsten fehler schmeißen !ERLEDIGT
 
-Alle Form Fehler abfangen !ERLEDIGT glaube ich
+Alle Form Fehler abfangen !ERLEDIGT
 
 Sign In Seite mit Verlinkung zu Create User, wenn eingeloggt nicht mehr aufrufbar -> nicht mehr erlauben !ERLEDIGT
 
-UserPermissions erstellen !ERLEDIGT glaube ich
+UserPermissions erstellen !ERLEDIGT
     Admin kann alles was User kann und:
     -kann alles entfernen und erstellen
 
@@ -27,9 +27,8 @@ UserPermissions erstellen !ERLEDIGT glaube ich
     -kann sich einloggen
 
 -----------------------------
-Dokuseite und Zeitstrahlseite
+Dokuseite und Zeitstrahlseite !ERLEDIGT
 Doku Inhalt
-Zeitstrahl Inhalt
+Zeitstrahl Inhalt !ERLEDIGT
 
-<li><a href="/profile/{{user.username}}">Own Profile</a></li>
 

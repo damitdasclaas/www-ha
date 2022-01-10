@@ -1,9 +1,9 @@
-import * as controller from "./controller.js";
-import * as createFormController from "./createController.js";
-import * as loginFormController from "./loginController.js";
-import * as profileFormController from "./profileController.js";
-import * as imageFormController from "./imageController.js";
-import * as commentFormController from "./commentController.js";
+import * as controller from "./controller/defaultController.js";
+import * as createFormController from "./controller/createController.js";
+import * as loginFormController from "./controller/loginController.js";
+import * as profileFormController from "./controller/profileController.js";
+import * as imageFormController from "./controller/imageController.js";
+import * as commentFormController from "./controller/commentController.js";
 
 import hasPermission from "./middleware/hasPermission.js";
 import flash from "./middleware/flash.js";

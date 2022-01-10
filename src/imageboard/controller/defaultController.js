@@ -1,6 +1,6 @@
-import * as imageModel from "./imageModel.js";
-import * as userModel from "./userModel.js";
-import * as helper from "./helper/helper.js";
+import * as imageModel from "../model/imageModel.js";
+import * as userModel from "../model/userModel.js";
+import * as helper from "../helper/helper.js";
 
 export async function index(ctx) {
   const token = await helper.generateToken();

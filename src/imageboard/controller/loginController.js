@@ -37,11 +37,11 @@ export async function submitLogin(ctx) {
       if (await userModel.validatePassword(user, loginData.password)) {
         user.password_hash = undefined;
         ctx.session.user = user;
-        ctx.session.flash = "Du bist als " + user.username + " eingeloggt.";
+        ctx.session.flash = "You are logged in as " + user.username + ".";
 
         ctx.redirect("/profile/" + user.username);
       } else {
-        errors = { password: "Das Passwort für diesen Usernamen ist falsch." };
+        errors = { password: "Password doesn't match." };
 
         loginData.password = undefined;
         loginData = { ...loginData, errors };
@@ -49,7 +49,7 @@ export async function submitLogin(ctx) {
         await renderForm(ctx, loginData);
       }
     } else {
-      errors = { username: "Dieser Username existiert nicht." };
+      errors = { username: "This username doesn't exists." };
 
       loginData.password = undefined;
       loginData = { ...loginData, errors };

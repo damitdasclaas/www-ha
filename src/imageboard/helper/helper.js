@@ -60,28 +60,28 @@ export function containsSecurePassword(string) {
 }
 
 export function validateUsername(username) {
-  return !containsText(username) ? "Der Username ist zu kurz." : undefined;
+  return !containsText(username) ? "The username is too short." : undefined;
 }
 
 export function validatePassword(password) {
-  return !containsText(password) ? "Bitte gib ein Passwort ein." : undefined;
+  return !containsText(password) ? "Please insert a password" : undefined;
 }
 
 export function validateCreatePassword(password) {
   return !containsSecurePassword(password)
-    ? "Das Passwort muss aus mindestens 7 Zeichen bestehen."
+    ? "Password must be at least 7 characters."
     : undefined;
 }
 
 export function validateComment(comment) {
-  return !containsText(comment) ? "Bitte Text eingeben." : undefined;
+  return !containsText(comment) ? "Please insert some text." : undefined;
 }
 
 export function validateFileType(fileType) {
   if (fileType.includes("image/png") || fileType.includes("image/jpeg")) {
     return undefined;
   } else {
-    return "Bitte .PNG oder .JPEG hochladen.";
+    return "Only .PNG or .JPEG allowed.";
   }
 }
 

@@ -39,7 +39,7 @@ export async function profile(ctx) {
 
 export async function logout(ctx) {
   ctx.session.user = undefined;
-  ctx.session.flash = "Erfolgreich ausgeloggt.";
+  ctx.session.flash = "Successfully logged out.";
 
   ctx.redirect("/");
 }

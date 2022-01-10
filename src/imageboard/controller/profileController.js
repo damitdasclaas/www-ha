@@ -121,7 +121,7 @@ export async function deleteProfile(ctx) {
       ctx.session.user = undefined;
     }
     ctx.session.flash =
-      "Der User " + ctx.params.username + " wurde erfolgreich gelöscht.";
+      "Successfully deleted user " + ctx.params.username + ".";
 
     ctx.redirect("/");
   } else {

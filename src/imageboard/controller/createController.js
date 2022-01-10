@@ -31,15 +31,14 @@ export async function submitCreateUser(ctx) {
   let errors = await helper.validateCreateForm(formData);
 
   if ((await userModel.getUser(ctx.db, formData.username)) != undefined) {
-    errors = { username: "Dieser Username wird bereits verwendet." };
+    errors = { username: "This username already exists." };
   }
 
   if (Object.values(errors).some(Boolean)) {
     await renderForm(ctx, formData, errors);
   } else {
     await userModel.addUser(ctx.db, ctx.request.body);
-    ctx.session.flash =
-      "Der User " + formData.username + " wurde erfolgreich erstellt.";
+    ctx.session.flash = "Successfully created user " + formData.username + ".";
 
     ctx.redirect("/login");
   }

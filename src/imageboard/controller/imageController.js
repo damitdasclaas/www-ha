@@ -36,7 +36,7 @@ export async function submitUpload(ctx) {
     await renderForm(ctx, errors);
   } else {
     await imageModel.addImage(ctx.db, fileName, ctx.session.user.username);
-    ctx.session.flash = "Bild erfolgreich hochgeladen.";
+    ctx.session.flash = "Image successfully uploaded.";
 
     ctx.redirect("/");
   }
@@ -67,7 +67,7 @@ export async function deleteImageById(ctx) {
   await imageModel.deleteImageById(ctx.db, ctx.params.id);
   await commentModel.deleteCommentsByImage(ctx.db, ctx.params.id);
 
-  ctx.session.flash = "Eintrag wurde gelöscht.";
+  ctx.session.flash = "Post successfully deleted.";
 
   ctx.redirect("/");
 }

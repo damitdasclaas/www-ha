@@ -3,7 +3,11 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+{% if userData.username == user.username%}
+<h1>Your Profile</h1>
+{% else %}
 <h1>{{userData.username}}s Profile</h1>
+{% endif %}
 
 <div class="editProfile">
     <img src="/images/profile_pictures/{{userData.picture_src}}" alt="Profile Picture">

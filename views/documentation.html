@@ -23,26 +23,291 @@ Ggf. eine Erklärung, dass sie über die nötigen Rechte für externe Inhalte, B
 
 {% block content %}
 <h1>Dokumentation</h1>
+<h2>Claas Thore Klein, 670594</h2>
+<h2>Jannek Voigt, 670390</h2>
 <div class="documentation">
+    <h2>Idee und Ziel unserer Web-Anwendung</h2>
+    <article>
+        <p>Während des erstellen unseres Konzepts haben wir sehr genau überlegt welche Art von Web-Anwendungen wir überhaupt erstellen wollen. Wir waren uns einig, dass wir die Hausarbeit aus dem vorherigen Semester in Frontend-Design nicht erweitern wollen, da uns zwar dadurch viel Frontend-Arbeit erspart bleiben würde, aber auch beim Thema der aktuellen Hausarbeit sehr einschränkt. Denn für einen Fotografen Webseite sind viele Backend nicht notwendig. Als wir uns dann auf eine Art Imageboard mit Kommentarfunktion und Login-Möglichkeit entschieden haben, stand endgültig fest, dass wir etwas komplett neues erstellen werden.</p>
+        <p>Unser Ziel war es nun eine Web-Anwendung zu erschaffen, auf der man seine Bilder, hauptsächlich Memes, hochladen und teilen kann, sodass andere und man selber Darunter kommentieren können. Diese Idee gibt uns eine weitaus größere Menge an Möglichkeiten für Features und Funktionen, sei es eine Like-Funktion oder mehrere Profile.</p>
+    </article>
 
--Ziel und Funktionsumfang und Konzept
--Aufbau
-    -URI namen
-        warum?
-    -Aufgabenteilung, was übernimmt was
-        warum?
-    -Datenbankaufbau
-        warum?
-    -Nutzung von JS im Frontend
-        warum?
--Progressive Enhancement Überlegungen
--Besonderheiten
--Externen Sachen (npm module)
-    warum?
--Inspirationen
--Probleme und Lösungen
--Wer hat was gemacht?
--Nutzungsrechte
+    <h2>Aufbau und Funktionsweise der Anwendung</h2>
+    <article>
+        <p>Für den Aufbau haben wir uns sehr an den Laboraufgaben und Vorlesungsinhalten orientiert. Im Hauptverzeichnis befinden sich die server.js und das node_modules-Verzeichnis sowie die Unterverzeichnisse data, src, views und web. Wie aus den Laboren und Vorlesungen übernommen befinden sich im data-Verzeichnis die Datenbank-Dateien database.sqlite und session.sqlite. Im src-Verzeichnis befindet sich zum einen die app.js und zum anderen das weitere Unterverzeichnis memeboard in dem die router.js sowie alle Controller, Model, Middleware und Helper Dateien gespeichert sind. Das Unterverzeichnis views enthält alle HTML-Dateien und im Unterverzeichnis web befinden sich alle statischen Dateien wie zum Beispiel die CSS-Datei, JS-Dateien für das Frontend oder Bilder für die Webseite.</p>
+        <p>Wie schon erwähnt sind wird nach dem MVC-Pattern aus der Vorlesung gegangen damit das austauschen und bearbeiten der Dateien so modular, übersichtlich und einfach wie möglich gestaltet ist.</p>
+    
+        <ul>
+            <li>
+                <h3>database.sqlite</h3>
+                <p>Unsere Datenbank besteht aus drei Tabellen:</p>
+                <ul>
+                    <li>
+                        <h4>user</h4>
+                        <p>Hier werden die User-Konten gespeichert. Jeder User hat eine ID, einen Fullname, einen Usernamen, eine Email, ein Passwort, ein Profilbild-Pfad und eine Rolle. Die Spalten Fullname und Email sind jedoch nicht verpflichtend. Der Username muss außerdem einmalig sein.</p>
+                    </li>
+                    <li>
+                        <h4>image</h4>
+                        <p>Hier werden die Daten der Upload-Bilder gespeichert. Jedes Image hat eine ID, ein Bild-Pfad, einen Author und ein Datum wann es veröffentlicht wurde.</p>
+                    </li>
+                    <li>
+                        <h4>comment</h4>
+                        <p>Hier werden die Kommentare gespeichert. Jeder Kommentar hat eine ID, eine Image-ID zur Bildzugehörigkeit, einen Author, einen Text und einen Datum wann der Kommentar veröffentlicht wurde.</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>server.js</h3>
+                <p>Die server.js ist sehr kurz und knapp gehalten. Wie auch schon aus den Laboraufgaben bekannt wird hier die app.js und die Module sqlite und sqlite3 importiert. Der Port wird festgelegt und mittels einer asynchronen IIFE (Immediately Invoked Function Expression) wird zu erst die Datenbank in unseren data Verzeichnis geöffnet und in der Konstanten db gespeichert. Danach wird in ein config-Objekt erstellt indem wir den Port und unsere Datenbank speichern. Zuletzt führen wir die als webApp importierte app.js aus und übergeben dieser unser config-Objekt als Parameter.</p>
+            </li>
+            <li>
+                <h3>app.js</h3>
+                <p>In der app.js importieren wir den größten Teil an externen Modulen. Wie auch in den Laboraufgaben verwenden wir das Web-Framework Koa. Für das darstellen von HTML-Dateien verwenden wir koa-views, für das nutzen von statischen Dateien nutzen wir koa-static und für das nutzen einer Session-Datenbank nutzen wir koa-session und koa-sqlite3-session. Hinzu kommen noch das HTTP module von Node und unsere router.js als router.</p>
+                <p>Die in der server.js aufgerufene Funktion webApp erstellt ein neues Koa-Objekt namens app. Dieser app geben wir einen Render mit der Template Engine Nunjucks, einen Signatur-Schlüssel sowie eine Datenbank. Mittels app.use rufen wir danach zuerst unsere statischen Dateien auf, dann unsere Session-Daatenbank und zuletzt unseren router. Zum Schluss geben wir einen neuen Server zurück und geben im Terminal eine Bestätigunsnachricht aus in der nochmal auf den Port hingewiesen wird.</p>
+            </li>
+            <li>
+                <h3>router.js</h3>
+                <p>In der router.js werden alle unserer selbsterstellten Controller, unsere selbsterstellte weitere Middleware sowie die externen Module koa-body, zum parsen von Request-bodys, und der Koa-Router importiert. Der Router gibt an welche Middleware und welcher Controller bei welcher Art von Request auf welche URI ausgeführt werden soll. Dies nimmt eine Menge Arbeit ab, da man diesen Router sonst selber schreiben müsste.</p>
+                <p>Nachdem importieren aller benötigten Controller etc definieren wir unsere Routen bzw. URIs.</p>
+                <ul>
+                    <li>
+                        <h4>"/"</h4>
+                        <p>Get-Route: Unsere Startseite oder auch Index-Seite mit allen Uploads</p>
+                    </li>
+                    <li>
+                        <h4>"/login"</h4>
+                        <p>Get-Route: Darstellen unserer Login-Seite</p>
+                        <p>Post-Route: Verarbeiten der Login-Daten</p>
+                    </li>
+                    <li>
+                        <h4>"/logout"</h4>
+                        <p>Get-Route: Ausloggen aus dem Konto</p>                        
+                    </li>
+                    <li>
+                        <h4>"/create"</h4>
+                        <p>Get-Route: Darstellen unserer Seite zum erstellen eines neuen Users</p>
+                        <p>Post-Route: Verarbeiten der Formdaten</p>
+                    </li>
+                    <li>
+                        <h4>"/upload"</h4>
+                        <p>Get-Route: Darstellen der Upload-Seite</p>
+                        <p>Post-Route: Verarbeiten der Upload-File Daten</p>
+                    </li>
+                    <li>
+                        <h4>"/profile"</h4>
+                        <p>Get-Route: Darstellen aller User-Profile</p>
+                    </li>
+                    <li>
+                        <h4>"/profile/:username"</h4>
+                        <p>Get-Route: Darstellen des Users mit dem in der URI verwendeten Usernamens</p>
+                    </li>
+                    <li>
+                        <h4>"/profile/:username/settings"</h4>
+                        <p>Get-Route: Darstellen der Profilbearbeitungsseite des in der URI verwendeten Usernamens</p>
+                        <p>Post-Route: Verarbeiten der User Formdaten</p>
+                    </li>
+                    <li>
+                        <h4>"/profile/:username/settings/profile_picture"</h4>
+                        <p>Post-Route: Verarbeiten der Profilbild Upload-File Daten</p>
+                    </li>
+                    <li>
+                        <h4>"/profile/:username/settings/change_role"</h4>
+                        <p>Post-Route: Verarbeiten der Rollen Formdaten</p>
+                    </li>
+                    <li>
+                        <h4>"/profile/:username/delete"</h4>
+                        <p>Get-Route: Darstellen der Nachfrage-Seite ob User wirklich gelöscht werden soll</p>
+                        <p>Post-Route: Löschen von Nutzer mit Uploads und Kommentaren des Users aus der Datenbank</p>
+                    </li>
+                    <li>
+                        <h4>"/image/:id/"</h4>
+                        <p>Get-Route: Darstellen der Detail-Seite eines Uploads mit allen Kommentaren</p>
+                    </li>
+                    <li>
+                        <h4>"/image/:id/delete"</h4>
+                        <p>Get-Route: Darstellen der Nachfrage-Seite ob Upload wirklich gelöscht werden soll</p>
+                        <p>Post-Route: Löschen des Uploads mit allen Kommentaren aus der Datenbank und dem Dateiverzeichnis</p>
+                    </li>
+                    <li>
+                        <h4>"/image/:id/:commentid"</h4>
+                        <p>Get-Route: Darstellen der Nachfrage-Seite ob Kommentar wirklich gelöscht werden soll</p>
+                        <p>Post-Route: Löschen des Kommentars aus der Datenbank</p>
+                    </li>
+                    <li>
+                        <h4>"/documentation"</h4>
+                        <p>Get-Route: Darstellen der Dokumentation</p>
+                    </li>
+                    <li>
+                        <h4>"/diary"</h4>
+                        <p>Get-Route: Darstellen des Projekttagebuch</p>
+                    </li>
+                    <li>
+                        <h4>"/impressum"</h4>
+                        <p>Get-Route: Darstellen des Impressum</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Controller</h3>
+                <p>Im Verzeichnis controller befinden sich alle Controller die zur Darstellung und Verarbeitung der Seiten verwendet werden.</p>
 
+                <ul>
+                    <li>
+                        <h4>defaultController.js</h4>
+                        <p>Der defaultController ist für alle Seiten zuständig, die keine großartige Datenverarbeitung benötigen. Hier wird die Datenbank nicht verändert und nur verwendet um Daten einzusehen ohne sie in irgendeiner Weise zu bearbeiten oder zu verwenden.</p>
+                    </li>
+                    <li>
+                        <h4>loginController.js</h4>
+                        <p>Der loginController dient zur Darstellung und Datenverarbeitung der Login-Seite. Auf der Get-Route wird einfach nur das Formular der Seite dargestellt. Bei der Post-Route werden jedoch die Login-Daten verarbeitet. Dazu wird als erstes überprüft, ob in den Textfelder des Formulars auch etwas drin steht, wenn nicht wird dies als Fehler dargestellt und auf der Seite beschrieben. Nun wird überprüft ob der Username überhaupt in der Datenbank existiert, falls nicht, wird wieder ein Fehler angezeigt. Zuletzt wird überprüft ob das Passwort auch mit dem Usernamen übereinstimmt. Sollte dies passen wird man zu seiner eigenen Profilseite weitergeleitet, falls nicht wird dies wieder als Fehler auf der Login-Seite angezeigt.</p>
+                    </li>
+                    <li>
+                        <h4>createController.js</h4>
+                        <p>Der createController dient zur Darstellung und Datenverarbeitung der User-erstellen-Seite. Auch hier wird auf der Get-Route wieder nur die Seite mit dem Formular ausgefüllt und auf der Post-Route die Formular-Daten verarbeitet. Wie bei der Login-Seite wird hier als erstes überprüft, ob die Pflichtfelder auch ausgefüllt wurden. Danach wird kontrolliert ob der gewünschte Username bereits in der Datenbank existiert. Sollte dies nicht der Fall wird der neue User in der Datenbank angelegt und man wird zur Login-Seite weitergeleitet um sich direkt anzumelden. Im Falle eines Fehlers wird auch wieder der jeweilige Fehler auf der Seite angezeigt.</p>
+                    </li>
+                    <li>
+                        <h4>imageController.js</h4>
+                        <p>Der imageController dient einerseits zur Darstellung der Upload Seite und andererseits zur bearbeitung der Bild-Dateien. </p>
+                        <p>Beim Upload wird das jeweilige ersteinmal über den koa-body-parser in dem in der Route angegebenen Verzeichnis gespeichert. Im Controller wird dann der Datei-Pfad und der Datei-Typ abgefragt. Sollte der Datei-Typ passen, wird das Bild in der Datenbank gespeichert und man wird zur Startseite weitergeleitet. Wenn der Datei-Typ nicht passt, wird die Datei wieder aus dem Verzeichnis gelöscht und es wird kein Datenbank-Eintrag angelegt und ein Fehler angezeigt.</p>
+                        <p>Beim löschen eines Bildes wird als erstes ein Formular angezeigt, ob das Bild wirklich gelöscht werden möchte. Falls ja wird das Bild mit der aus der URI entnommenen ID sowie all die dazugehörenden Kommentare aus der Datenbank gelöscht.</p>
+                    </li>
+                    <li>
+                        <h4>commentController.js</h4>
+                        <p>Der commentController ist für die Darstellung der Detail-Seite und der Verarbeitung der Kommentare zuständig. Beim hinzufügen eines Kommentars wird wieder überprüft ob das Textfeld überhaupt etwas beinhaltet, sollte dies nicht zutreffen wird auch da der Fehler auf der Seite angezeigt. Desweiteren wird ebenfalls wie beim imageController beim Versuch des löschens eines Kommentar zuerst ein Formular angezeigt, ob der Kommentar wirklich gelöscht werden soll. Falls ja, wird der Kommentar mit der aus der URI entnommenen ID aus der Datenbank gelöscht.</p>
+                    </li>
+                    <li>
+                        <h4>profileController.js</h4>
+                        <p>Im profileController befindet sich alles zur Darstellung und Bearbeitung des Profils. Auf der einzelnen Profilseite selber befindet sich noch nicht so viel. In der Bearbeitungs-Seite des Profil jedoch schon mehr. Dort gibt es drei verschiedene Formulare.</p>
+                        <p>Das erste dient zum Upload eines Profilbildes. Dies wird wie der Upload eines Bildeintrages gehandhabt und auf die gleiche Weise auf den korrekten Datei-Typ kontrolliert.</p>
+                        <p>Das zweite dient zur Bearbeitung der Profildaten. Dort lassen sich der Fullname und die Email jederzeit beliebig verändern.</p>
+                        <p>Beim dritten Formular lässt sich, wenn authorisiert, die Rolle eines Profils einstelle</p>
+                        <p>Bei allen drei Formularen wird im Fehlerfall eine Fehlermeldung mit dem entsprechenden Fehlern auf der Seite angezeigt.</p>
+                        <p>Wie auch beim imageController und commentController wird auch hier beim Versuch des Löschens erst ein weiteres Formular angezeigt, ob das Löschen dieses Profils wirklich gewünscht ist. Beim bestätigen wird der User mit dem aus der URI entnommenen Usernamen und alle seine Bilder und Kommentare aus der Datenbank gelöscht.</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Model</h3>
+                <p>Im Verzeichnis model befinden sich alle Dateien zum bearbeiten, verändern und extrahieren von Daten aus der Datenbank.</p>
+
+                <ul>
+                    <li>
+                        <h4>imageModel.js</h4>
+                        <p>Im imageModel wird alles bezüglich der image Tabelle verarbeitet sowie Dateien bei falschem Daten-Typ aus dem Verzeichnis gelöscht. Bei den meisten Funktionen werden die Befehle mittels einfacher SQL-Queries durchgeführt. Beim Löschen jedoch werden jedoch nicht nur die Einträge in der Datenbank gelöscht, sondern auch alle Dateien innerhalb des Bildverzeichnisses, da es sonst eine unendliche Menge an Dateien im Verzeichnis geben könnte.</p>
+                    </li>
+                    <li>
+                        <h4>commentModel.js</h4>
+                        <p>Im commentModel befindet sich die Verarbeitung mit der comment Tabelle. Dies wird alles mittels einfacher SQL-Queries durchgeführt.</p>
+                    </li>
+                    <li>
+                        <h4>userModel.js</h4>
+                        <p>Im userModel befindet sich die Verarbeitung der user Tabelle. Wie auch beim imageModel und commentModel werden hier die meisten Sachen mittels simpler SQL-Queries durchgeführt. Jedoch gibt es hier ein paar Besonderheiten. Beim erstellen eines Users ist es wichtig, dass gewünschte Passwort keinesfalls als Klartext zu speichern. Dazu verwenden wir hier wie in der Vorlesung gezeigt Argon2 um das Passwort in der Datenbank als Hash zu speichern. Ebenfalls bekommt User beim erstellen ein Standardprofilbild. Beim löschen eines Profils oder verändern eines Profilbilds muss auch wie beim imageController wieder jedes Bild welches nicht mehr benötigt wird wieder aus den Bild Verzeichnissen gelöscht werden, um eine über Zeit riesig angesammelte Datenmenge zu umgehen.</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Helper</h3>
+                <p>Im Verzeichnis helper befindet sich die helper.js. Diese stellt kleinere Hilfsfunktionen zur Verfügung, die hauptsächlich zur String-Verarbeitung dienen.</p>
+            </li>
+            <li>
+                <h3>Middleware</h3>
+                <p>Im middelware Verzeichnis befindet sich weitere Middleware die zwar auch zur Darstellung von Flash-Nachrichten genutzt wird aber hauptsächlich der Authorisierung von Routen dient.</p>
+
+                <ul>
+                    <li>
+                        <h4>flash.js</h4>
+                        <p>Setzt die ctx.state.flash Variable für die HTML-Templates mittels der in den Controller angegebenen ctx.session.flash Nachrichten.</p>
+                    </li>
+                    <li>
+                        <h4>isLoggedIn.js</h4>
+                        <p>Gibt Fehler beim Zugriff auf eine Route im ausgeloggten Zustand.</p>
+                    </li>
+                    <li>
+                        <h4>isLoggedOut.js</h4>
+                        <p>Gibt Fehler beim Zugriff auf eine Route im eingeloggten Zustand.</p>
+                    </li>
+                    <li>
+                        <h4>hasPermission.js</h4>
+                        <p>Kontrolliert die Zugangsrechte eines Nutzers auf die verschiedenen Routen. Sollte man ein Admin sein, wird jede Route erlaubt ansonsten wird überprüft ob der Username des eingeloggten Nutzers mit dem übereinstimmt, dessen Profil, Upload oder Kommentar man bearbeiten möchte. Damit wird verhindert, dass ich mittels der URI auf die Bearbeitungsseite eines anderen Nutzers komme.</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Views / HTML-Dateien</h3>
+                <p>Im Verzeichnis befinden sich alle HTML-Dateien. Die Daten in den HTML-Dateien werden mit der nunjucks-Template-Engine beim rendern übergeben.</p>
+            </li>
+            <li>
+                <h3>Web / Statische Dateien</h3>
+                <p>Im web Verzeichnis befinden sich alle statischen Dateien. Hier befindet sich die CSS-Datei zum Styling der Seiten sowie alle Bild-Dateien, die über die Webseite hochgeladen und dargestellt werden. Im Unterverzeichnis Image wird unterschieden zwischen Profilbildern und Uploads/Postings für die Webseite. Wir haben zwar bei uns auf JavaScript im Frontend verzichtet, die Dateien dazu würden aber ebenfalls in diesem Verzeichnis landen.</p>
+            </li>
+            <li>
+                <h3>CSS</h3>
+                <p>Da vorallem wir bei der Bearbeitung der Hausarbeit den Fokus auf die Funktionen der Webseite gelegt haben, haben wir nicht ganz so viel Zeit in das gestalten der Webseite gesetzt. Ziel war für uns das bedienen und verwenden der Webseite auf allen möglichen Geräten nicht zu perfektionieren aber dafür zu Sorgen, dass man die Webseite in all ihren Funktionen nutzen kann. Daher ist die Desktop Version eine nur ganz leicht abgewandelte Version der Mobile Version. Trotzdem sind alle Funktionen gut erkennbar und nutzbar und das wollten wir erreichen.</p>
+            </li>
+        </ul>
+    </article>
+
+    <h2>Externe Komponenten</h2>
+    <article>
+        <p>Unsere Externen Komponenten bestehen nur aus den in der Vorlesung gezeigten Inhalten und eventuellen Stock-Bildern als Beispielinhalt. Das komplette CSS ist selbst hergestellt.</p>
+        <p>Die installierten npm Module sind:</p>
+            
+        <ul>
+            <li>sqlite und sqlite3 zur Datenbankverarbeitung</li>
+            <li>koa</li>
+            <li>@koa/router für das Routing</li>
+            <li>koa-body für das Body parsen</li>
+            <li>koa-views für das templating</li>
+            <li>koa-static für statische Dateien</li>
+            <li>koa-session und koa-sqlite3-session zur Session-Datenbankverarbeitung</li>
+            <li>nunjucks für autoescaping und templating</li>
+            <li>jsdom zum testen</li>
+            <li>argon2 zum sicheren hashen und verifizieren von Passwörtern</li>
+            <li>nodemon zum einfacheren Testen des Servers</li>
+        </ul>
+    </article>
+
+    <h2>Besonderheiten</h2>
+    <article>
+        <p>Die größte Besonderheit ist vermutlich die Sicherung. Es wurde großen Wert daraufgelegt, dass nicht nur die Passwörter nicht als Klartext gespeichert werden, sondern auch, dass Routen für unbefugte Nutzer nicht zugänglich sind. Alle Formulare sind mittel eines CSRF-Token gesichert. Dieser CSRF-Token wird bei jedem aufrufen der Seite neu erstellt. Desweiteren gibt es ein kleines Rechte-/Rollensystem. Es gibt drei Rollen: Admin, User und Guest.</p>
+        
+        <h3>Guest / ausgeloggter Nutzer</h3>
+        <p>Als Guest ist es möglich alle Bilder mit Kommentaren zusehen, Alle Profile mit Profilinfos zusehen und sich einzuloggen bzw. einen neuen User zu erstellen. Alles andere jedoch wird in der HTML-Datei nicht angezeigt und ist auch über die Routen nicht aufrufbar.</p>
+        
+        <h3>User</h3>
+        <p>Als User ist einem der volle Funktionsumfang möglich. Man kann alle Bilder und Kommentare sehen und auch die Bilder kommentieren, man kann Bilder hochladen, man kann seine eigenen Kommentare und Bilder entfernen aber die anderer User nicht, man kann sein eigenes Profil bearbeiten oder löschen, jedoch kein anderes. Auch über die Routen lässt sich die Bearbeitungsseite anderer Profile nicht öffnen. Ebenfalls wird die Rollenzuweisung des Profils nicht angezeigt und ist auch über die Route gesperrt.</p>
+    
+        <h3>Admin</h3>
+        <p>Als Admin ist alles erlaubt. Man kann alle Bilder sehen, kommentieren und löschen, man kann alle Kommentare löschen, man kann alle Profile bearbeiten oder löschen und auch anderer Nutzer zu Admins machen. Als Admin ist fast jede Route aufrufbar.</p>
+    
+        <p>Die einzigen Routen die auch ein Admin nicht aufrufen kann, sind Routen die man nur als ausgeloggter Nutzer aufrufen kann. Das sind die Login-Seite und die Create User Seite. Als ausgeloggter Nutzer lässt sich die Logout Route natürlich auch nicht aufrufen.</p>          
+    </article>
+
+    <h2>Inspirationen</h2>
+    <article>
+        <p>Bewusst hatten wir keine Inspirationen jedoch unterbewusst haben wir uns an typische Social Media Webseiten von heute orientiert. Vorallem Seiten wie Reddit, Facebook, Instagram oder Twitter nutzen heute eine einfache Timeline in der die Inhalte dargestellt werden und mit einer Detailansicht genauer angeschauert werden können. Wenn man nun unsere finale Webseite sieht, kann man viele Paralellen zu den genannten Social Media Seiten erkennen, denn sowohl die Timeline als auch die Kommentarfunktion findet man in sehr ähnlich Ausführung auf allen Seiten wieder.</p>
+    </article>
+    
+    <h2>Probleme und Lösungen</h2>
+    <article>
+        <p>Die größten Probleme für uns waren vorallem der Datei-Upload, da dieser nicht explizit in den Vorlesungsfolien oder in den Laboraufgaben behandelt wurde. Dank den Online-Dokumentation ließen sich zwar schnell die einzelnen Funktionen erklären, jedoch an der Umsetzung scheiterte es zu Beginn noch einige Male. Vorallem die Überprüfungen des Datei-Typ stellte sich als Herausforderung dar, da man mittels OnFileBegin zwar die Datei noch vor dem speichern im Verzeichnis bearbeiten kann, jedoch wir nicht wussten wir zu dem Zeitpunkt bei einem falschen Datei-Typ die bearbeitung abbrechen. Um die zu umgehen wird jetzt jede Datei erst nach dem Upload auf den Datei-Typ überprüft und bei einem Fehler wieder aus dem Ordner gelöscht. Dies kann natürlich eine riesen Sicherheitslücke darstellen, da die Datei somit schon kurzweilig auf dem Server liegen bevor gelöscht werden, anstatt sie schon vor dem Speichern auszusortieren.</p>
+        <p>Das zweitgrößte Problem war es die Session-Datenbank zum laufen zu bringen. Zwar wurde diese erstellt und alles lief ohne Fehlermeldung, jedoch wurde nichts innerhalb der Datenbank gespeichert. Dies hat vorallem Claas ne Menge Zeit und Nerven gekostet bis dann festgestellt wurde, dass es an der Reihenfolge der Middleware in der app.js lag. Nachdem dieser Fehler dann gefunden wurde war das arbeiten mit der Session-Datenbank glücklicherweise sehr einfach.</p>
+        <p>Alle weiteren Probleme ließen sich relativ schnell beheben. Zwischendurch gab es zwar mal Probleme, da ein await vergessen aber bei der größe von Problemen blieb es dann auch.</p>
+    </article>
+
+    <h2>Arbeitsaufteilung</h2>
+    <article>
+        <p>Arbeitsaufteilung hat sich bei uns sehr ausgeglichen dargestellt. Janneks Schwerpunkt lag im Frontend, im Testen und in der Dokumentation während Claas' Schwerpunkt sich vorallem um das Backend und die Datenbankverarbeitung gedreht hat. Dies lies sich mittels Git sehr gut bewerkstelligen.</p>
+    </article>
+    
+    <h2>Nutzungsrechte</h2>
+    <article>
+        <p>Unsere Webseite ist zwar als Memeseite gedacht, jedoch hat sich laufe des bearbeitens herausgestellt, dass es egal ist was für Bilder hochgeladen werden. Deshalb haben wir zwar den Namen "memeboard" behalten, haben aber als Beispielinhalte verschiedene Stock-Bilder genutzt. Das Logo ist selbst entwickelt und besteht allein aus dem "Memeboard" Schriftzug in der Schriftart <a href="https://fontesk.com/aber-mono-typeface/">Aber Mono</a>.</p>
+    </article>
+    
+    <h2>Fazit und Ausblick</h2>
+    <article>
+        <p>Zusammengefasst hat uns die Arbeit an der Hausarbeit sehr viel Spaß bereitet. Vorallem das Endergebnis zu sehen und das Gefühl zu haben, dass diese Webseite so wie sie jetzt ist auch im Netz zufinden sein könnte ist unglaublich. Natürlich ist die Webseite noch ein Anfang und hat viele Baustellen, die man für eine wirklich Nutzung heutzutage noch ausbessern müsste. Desweiteren müsste das Design komplett überarbeitet werden, da es zwar aktuell nutzbar aber definitiv nicht das schönste Design. Auch die Sicherheit ist für einen leihen bestimmt schon sehr hoch, für das wirkliche Web ist die Webseite jedoch vermutlich an vielen Stellen noch angreifbar. Ebenfalls weitere Features wie eine Like-Funktion, das kommentieren von Kommentaren oder eine Suchfunktion mittels Tags sind noch Dinge die hinzugefügt werden müssten um den Nutzer ein wirklich schönes Erlebnis auf der Webseite zu ermöglichen und somit einen Verbleib auf der Seite zu garantieren. Dennoch, für eine erste Webseite mit Backend ist dies für uns ein sehr zufriedenstellendes Ergebnis.</p>
+    </article>
+    
 </div>
 {% endblock %}

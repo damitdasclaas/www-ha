@@ -37,6 +37,25 @@ export async function profile(ctx) {
   });
 }
 
+export async function profileDetail(ctx) {
+  const token = await helper.generateToken();
+  ctx.session.csrf = token;
+
+  if (ctx.session.user) {
+    ctx.state.user = ctx.session.user;
+  }
+
+  const userData = await userModel.getUser(ctx.db, ctx.params.username);
+
+  if (userData != undefined) {
+    await ctx.render("profileDetail", {
+      userData: userData,
+    });
+  } else {
+    ctx.throw(404);
+  }
+}
+
 export async function logout(ctx) {
   ctx.session.user = undefined;
   ctx.session.flash = "Successfully logged out.";
@@ -75,23 +94,4 @@ export async function impressum(ctx) {
   }
 
   await ctx.render("impressum");
-}
-
-export async function profileDetail(ctx) {
-  const token = await helper.generateToken();
-  ctx.session.csrf = token;
-
-  if (ctx.session.user) {
-    ctx.state.user = ctx.session.user;
-  }
-
-  const userData = await userModel.getUser(ctx.db, ctx.params.username);
-
-  if (userData != undefined) {
-    await ctx.render("profileDetail", {
-      userData: userData,
-    });
-  } else {
-    ctx.throw(404);
-  }
 }

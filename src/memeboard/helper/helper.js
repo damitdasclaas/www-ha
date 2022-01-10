@@ -17,10 +17,6 @@ export async function getFileName(filePath) {
   }
 }
 
-export function checkPermission(user, permission) {
-  return user.permissions.includes(permission);
-}
-
 export function checkAdmin(user) {
   return user.role == "admin";
 }

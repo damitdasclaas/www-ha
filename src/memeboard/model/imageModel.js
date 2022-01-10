@@ -75,7 +75,7 @@ export async function deleteImageById(db, id) {
 }
 
 /**
- * Deletes an image from the database and folder.
+ * Deletes all images from the database and folder with given username as author.
  * @param {sqlite.Database} db
  * @param {String} username
  * =>

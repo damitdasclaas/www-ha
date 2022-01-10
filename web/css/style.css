@@ -661,6 +661,20 @@ footer {
   border-bottom: 2px solid aliceblue;
 }
 
+.documentation {
+  text-align: justify;
+  font-weight: lighter;
+  line-height: 1.3em;
+}
+
+h4 {
+  margin: 0;
+}
+
+ul li ul li p {
+  margin-top: 0.5em;
+}
+
 @media only screen and (min-width: 1200px) {
   .topbar {
     flex-direction: row;

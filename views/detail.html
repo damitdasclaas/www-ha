@@ -11,7 +11,7 @@
     
             {% if user.username == image.author or user.role == "admin" %}
             <div class="imageDelete">
-                <a href="/image/{{ image.id }}/delete">Eintrag löschen</a>
+                <a href="/image/{{ image.id }}/delete">Delete post</a>
             </div>
             {% endif %}
         </div>
@@ -28,7 +28,7 @@
 
             {% if user.username == comment.author or user.role == "admin" %}
             <div class="commentDelete">
-                <a href="/image/{{ image.id }}/{{comment.id}}">Kommentar löschen</a>
+                <a href="/image/{{ image.id }}/{{comment.id}}">Delete comment</a>
             </div>
             {% endif %}
         </div>
@@ -45,9 +45,9 @@
         <form class="commentForm" action="/image/{{ image.id }}/addcomment" method="post">
             <input type="hidden" name="_csrf" value="{{csrf}}">
     
-            <textarea name="text" placeholder="Kommentar hinzufügen..."></textarea>
+            <textarea name="text" placeholder="Add comment..."></textarea>
     
-            <input class="submitButton" type="submit" value="Absenden">
+            <input class="submitButton" type="submit" value="Submit">
         </form>
     </div>
     {% endif %}

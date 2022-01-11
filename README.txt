@@ -5,6 +5,9 @@ admin
 
 user logins zum testen:
 
+testuser1
+testuser1
+
 james_bond
 jamesbond
 

@@ -1,3 +1,7 @@
+Zu den aus den Laboraufgaben bekannten müssen folgende Module installiert sein:
+
+npm install argon2 
+
 admin logins zum testen:
 
 admin

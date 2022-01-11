@@ -232,7 +232,7 @@ footer {
 .index_upload {
   background-color: hsl(216, 15%, 20%);
 
-  max-width: 70%;
+  width: 70%;
 
   margin-left: auto;
   margin-right: auto;

@@ -1,22 +1,3 @@
-<!-- 
-Ziel und Funktionsumfang der Anwendung
-Aufbau der Anwendung
-Überlegungen zu den URIs
-Aufgabenteilung: Welcher Teil übernimmt welche Aufgaben?
-Warum wurde diese Aufteilung gewählt?
-Aufbau der Datenbank
-Nutzung von JS im Frontend
-Überlegungen zum Progressive Enhancement
-Besonderheiten
-Welche externen Komponenten, Scripte, CSS etc werden verwendet?
-Warum werden sie verwendet?
-Welchen vorhandenen Lösungen haben Sie als Vorlage oder Inspiration genutzt?
-Projekttagebuch
-Aufgetretene Probleme und deren Lösungen
-Wer hat was umgesetzt?
-Ggf. eine Erklärung, dass sie über die nötigen Rechte für externe Inhalte, Bilder und Komponenten verfügen, ggf. mit URIs. Keine Ausdrucke der AGBs beifügen! 
--->
-
 {% extends 'layout.html' %}
 
 {% block title %}Dokumentation{% endblock %}
@@ -26,6 +7,7 @@ Ggf. eine Erklärung, dass sie über die nötigen Rechte für externe Inhalte, B
 <h2>Claas Thore Klein, 670594</h2>
 <h2>Jannek Voigt, 670390</h2>
 <div class="documentation">
+    <p>Hinweise zu Login Daten in der Readme!</p>
     <h2>Idee und Ziel unserer Web-Anwendung</h2>
     <article>
         <p>Während des erstellen unseres Konzepts haben wir sehr genau überlegt welche Art von Web-Anwendungen wir überhaupt erstellen wollen. Wir waren uns einig, dass wir die Hausarbeit aus dem vorherigen Semester in Frontend-Design nicht erweitern wollen, da uns zwar dadurch viel Frontend-Arbeit erspart bleiben würde, aber auch beim Thema der aktuellen Hausarbeit sehr einschränkt. Denn für einen Fotografen Webseite sind viele Backend nicht notwendig. Als wir uns dann auf eine Art Imageboard mit Kommentarfunktion und Login-Möglichkeit entschieden haben, stand endgültig fest, dass wir etwas komplett neues erstellen werden.</p>
@@ -270,15 +252,20 @@ Ggf. eine Erklärung, dass sie über die nötigen Rechte für externe Inhalte, B
     <article>
         <p>Die größte Besonderheit ist vermutlich die Sicherung. Es wurde großen Wert daraufgelegt, dass nicht nur die Passwörter nicht als Klartext gespeichert werden, sondern auch, dass Routen für unbefugte Nutzer nicht zugänglich sind. Alle Formulare sind mittel eines CSRF-Token gesichert. Dieser CSRF-Token wird bei jedem aufrufen der Seite neu erstellt. Desweiteren gibt es ein kleines Rechte-/Rollensystem. Es gibt drei Rollen: Admin, User und Guest.</p>
         
-        <h3>Guest / ausgeloggter Nutzer</h3>
-        <p>Als Guest ist es möglich alle Bilder mit Kommentaren zusehen, Alle Profile mit Profilinfos zusehen und sich einzuloggen bzw. einen neuen User zu erstellen. Alles andere jedoch wird in der HTML-Datei nicht angezeigt und ist auch über die Routen nicht aufrufbar.</p>
-        
-        <h3>User</h3>
-        <p>Als User ist einem der volle Funktionsumfang möglich. Man kann alle Bilder und Kommentare sehen und auch die Bilder kommentieren, man kann Bilder hochladen, man kann seine eigenen Kommentare und Bilder entfernen aber die anderer User nicht, man kann sein eigenes Profil bearbeiten oder löschen, jedoch kein anderes. Auch über die Routen lässt sich die Bearbeitungsseite anderer Profile nicht öffnen. Ebenfalls wird die Rollenzuweisung des Profils nicht angezeigt und ist auch über die Route gesperrt.</p>
-    
-        <h3>Admin</h3>
-        <p>Als Admin ist alles erlaubt. Man kann alle Bilder sehen, kommentieren und löschen, man kann alle Kommentare löschen, man kann alle Profile bearbeiten oder löschen und auch anderer Nutzer zu Admins machen. Als Admin ist fast jede Route aufrufbar.</p>
-    
+        <ul>
+            <li>
+                <h3>Guest / ausgeloggter Nutzer</h3>
+                <p>Als Guest ist es möglich alle Bilder mit Kommentaren zusehen, Alle Profile mit Profilinfos zusehen und sich einzuloggen bzw. einen neuen User zu erstellen. Alles andere jedoch wird in der HTML-Datei nicht angezeigt und ist auch über die Routen nicht aufrufbar.</p>
+            </li>
+            <li>
+                <h3>User</h3>
+                <p>Als User ist einem der volle Funktionsumfang möglich. Man kann alle Bilder und Kommentare sehen und auch die Bilder kommentieren, man kann Bilder hochladen, man kann seine eigenen Kommentare und Bilder entfernen aber die anderer User nicht, man kann sein eigenes Profil bearbeiten oder löschen, jedoch kein anderes. Auch über die Routen lässt sich die Bearbeitungsseite anderer Profile nicht öffnen. Ebenfalls wird die Rollenzuweisung des Profils nicht angezeigt und ist auch über die Route gesperrt.</p>
+            </li>
+            <li>
+                <h3>Admin</h3>
+                <p>Als Admin ist alles erlaubt. Man kann alle Bilder sehen, kommentieren und löschen, man kann alle Kommentare löschen, man kann alle Profile bearbeiten oder löschen und auch anderer Nutzer zu Admins machen. Als Admin ist fast jede Route aufrufbar.</p>
+            </li>
+        </ul>
         <p>Die einzigen Routen die auch ein Admin nicht aufrufen kann, sind Routen die man nur als ausgeloggter Nutzer aufrufen kann. Das sind die Login-Seite und die Create User Seite. Als ausgeloggter Nutzer lässt sich die Logout Route natürlich auch nicht aufrufen.</p>          
     </article>
 
@@ -301,7 +288,7 @@ Ggf. eine Erklärung, dass sie über die nötigen Rechte für externe Inhalte, B
     
     <h2>Nutzungsrechte</h2>
     <article>
-        <p>Unsere Webseite ist zwar als Memeseite gedacht, jedoch hat sich laufe des bearbeitens herausgestellt, dass es egal ist was für Bilder hochgeladen werden. Deshalb haben wir zwar den Namen "memeboard" behalten, haben aber als Beispielinhalte verschiedene Stock-Bilder genutzt. Das Logo ist selbst entwickelt und besteht allein aus dem "Memeboard" Schriftzug in der Schriftart <a href="https://fontesk.com/aber-mono-typeface/">Aber Mono</a>.</p>
+        <p>Da unsere Seite sich um Memes drehen sollen, verwenden wir auch diese als Beispielinhalte, da die Seite sonst nicht den selben Effekt erhalten würde. Da bei dieser Art von Bildern die rechtliche Lage häufig ungewiss ist, kann diese Hausarbeit mit den aktuell verwendeten Beispielinhalten nicht veröffentlicht werden. Das Logo ist selbst entwickelt und besteht allein aus dem "Memeboard" Schriftzug in der Schriftart <a href="https://fontesk.com/aber-mono-typeface/">Aber Mono</a>.</p>
     </article>
     
     <h2>Fazit und Ausblick</h2>

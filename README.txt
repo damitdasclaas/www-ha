@@ -1,6 +1,21 @@
-Zu den aus den Laboraufgaben bekannten müssen folgende Module installiert sein:
+zur Verwendung muss Node installiert sein und folgende Befehle ausgeführt werden:
 
-npm install argon2 
+npm install sqlite
+npm install sqlite3
+
+npm install koa
+npm install @koa/router
+npm install koa-body
+
+npm install koa-views
+npm install nunjucks
+npm install koa-static
+npm install jsdom
+npm install argon2
+
+npm install koa-session
+npm install koa-sqlite3-session
+
 
 admin logins zum testen:
 
